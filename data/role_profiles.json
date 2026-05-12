@@ -1,0 +1,367 @@
+{
+  "schema_version": "0.4",
+  "kind": "role_profiles",
+  "maintenance_note": "This file is the source of truth for role-aware question biasing. If profile aliases, names, or layer_priority_terms change here, also update the mapping table in CS技术面试官Skill想法完善版.md.",
+  "profiles": {
+    "backend": {
+      "aliases": ["backend", "后端", "服务端", "后端开发", "backend-general"],
+      "base_roles": ["backend"],
+      "layer_priority_terms": {
+        "basic": {
+          "后端工程": 4.0,
+          "数据库": 3.0,
+          "Redis": 2.5,
+          "计算机网络": 2.0,
+          "HTTP": 1.5,
+          "操作系统": 1.0,
+          "接口设计": 1.5
+        },
+        "standard": {
+          "MySQL": 3.5,
+          "数据库": 3.0,
+          "Redis": 3.0,
+          "计算机网络": 2.0,
+          "操作系统": 2.0,
+          "Spring": 2.5,
+          "并发": 2.5,
+          "JVM": 1.5,
+          "消息队列": 2.0,
+          "系统设计": 2.0
+        },
+        "deep": {
+          "MySQL": 4.5,
+          "Redis": 4.5,
+          "分布式": 4.0,
+          "消息队列": 4.0,
+          "系统设计": 3.5,
+          "Spring": 3.0,
+          "并发": 3.0,
+          "JVM": 2.5,
+          "高可用": 2.5,
+          "RPC": 2.5,
+          "网关": 2.0,
+          "幂等性": 2.0
+        }
+      }
+    },
+    "backend-java": {
+      "aliases": ["backend-java", "java-backend", "java后端", "后端-java", "后端java"],
+      "base_roles": ["backend", "java"],
+      "layer_priority_terms": {
+        "basic": {
+          "数据库": 3.0,
+          "Redis": 2.5,
+          "Spring": 3.0,
+          "Java": 2.5,
+          "后端工程": 2.5
+        },
+        "standard": {
+          "MySQL": 4.0,
+          "Redis": 3.0,
+          "Spring": 4.0,
+          "JVM": 3.5,
+          "并发": 3.5,
+          "消息队列": 2.5,
+          "分布式": 2.5
+        },
+        "deep": {
+          "MySQL": 5.0,
+          "Redis": 4.0,
+          "Spring": 4.5,
+          "JVM": 4.5,
+          "并发": 4.5,
+          "分布式": 4.0,
+          "消息队列": 3.5,
+          "系统设计": 3.0
+        }
+      }
+    },
+    "backend-python": {
+      "aliases": ["backend-python", "python-backend", "python后端", "后端-python", "后端python"],
+      "base_roles": ["backend", "python"],
+      "layer_priority_terms": {
+        "basic": {
+          "后端工程": 3.0,
+          "计算机网络": 2.0,
+          "Redis": 2.0,
+          "Python": 3.0
+        },
+        "standard": {
+          "Redis": 3.5,
+          "计算机网络": 3.0,
+          "操作系统": 3.0,
+          "后端工程": 3.5,
+          "系统设计": 2.5,
+          "接口设计": 2.5,
+          "认证 / 授权": 2.0
+        },
+        "deep": {
+          "Redis": 4.5,
+          "计算机网络": 3.5,
+          "操作系统": 3.5,
+          "系统设计": 4.0,
+          "高可用": 3.5,
+          "消息队列": 3.0,
+          "分布式": 3.0,
+          "模型服务化": 2.5
+        }
+      }
+    },
+    "backend-go": {
+      "aliases": ["backend-go", "go-backend", "go后端", "后端-go", "后端go", "golang-backend", "golang后端"],
+      "base_roles": ["backend"],
+      "layer_priority_terms": {
+        "basic": {
+          "后端工程": 3.0,
+          "计算机网络": 2.5,
+          "Redis": 2.0,
+          "分布式": 1.5
+        },
+        "standard": {
+          "Redis": 3.0,
+          "计算机网络": 3.5,
+          "操作系统": 3.0,
+          "并发": 3.5,
+          "消息队列": 2.5,
+          "系统设计": 2.5,
+          "高可用": 2.0
+        },
+        "deep": {
+          "Redis": 4.0,
+          "计算机网络": 4.0,
+          "操作系统": 3.5,
+          "并发": 4.5,
+          "分布式": 4.0,
+          "消息队列": 3.5,
+          "系统设计": 3.5,
+          "高可用": 3.0,
+          "RPC": 2.5
+        }
+      }
+    },
+    "ai": {
+      "aliases": ["ai", "llm", "ai-general", "ai-app"],
+      "base_roles": ["ai"],
+      "layer_priority_terms": {
+        "basic": {
+          "AI Agent": 3.5,
+          "RAG": 3.5,
+          "AI / LLM": 2.5,
+          "AI / ML": 2.0,
+          "模型服务化": 2.0
+        },
+        "standard": {
+          "AI Agent": 4.0,
+          "RAG": 4.0,
+          "AI / LLM": 3.0,
+          "AI / ML": 3.0,
+          "GraphRAG": 3.5,
+          "向量检索": 2.5,
+          "重排": 2.0,
+          "模型服务化": 3.0,
+          "上下文工程": 2.5
+        },
+        "deep": {
+          "AI Agent": 5.0,
+          "RAG": 5.0,
+          "GraphRAG": 5.0,
+          "向量检索": 4.0,
+          "重排": 4.0,
+          "知识更新": 4.0,
+          "模型服务化": 4.0,
+          "上下文工程": 4.0,
+          "工具调用": 4.0,
+          "记忆": 3.0
+        }
+      }
+    },
+    "ai-eval": {
+      "aliases": ["ai-eval", "eval", "evaluation", "模型评测", "AI评测", "rag-eval", "agent-eval"],
+      "base_roles": ["ai", "backend", "data"],
+      "layer_priority_terms": {
+        "basic": {
+          "AI / LLM": 3.0,
+          "RAG": 2.5,
+          "AI / ML": 2.5
+        },
+        "standard": {
+          "RAG 评估": 5.0,
+          "AI / LLM": 3.5,
+          "RAG": 3.5,
+          "模型服务化": 2.5,
+          "检索 / 重排": 3.0,
+          "知识更新": 2.0
+        },
+        "deep": {
+          "RAG 评估": 5.5,
+          "检索 / 重排": 4.5,
+          "知识更新": 4.0,
+          "GraphRAG": 4.0,
+          "AI Agent": 3.0,
+          "模型服务化": 3.0,
+          "RAG": 4.0
+        }
+      }
+    },
+    "ai-agent": {
+      "aliases": ["ai-agent", "agent", "agent开发", "agent工程", "智能体", "ai智能体"],
+      "base_roles": ["ai", "backend"],
+      "layer_priority_terms": {
+        "basic": {
+          "AI Agent": 4.0,
+          "AI / LLM": 2.5,
+          "模型服务化": 2.0
+        },
+        "standard": {
+          "AI Agent": 5.0,
+          "上下文工程": 4.0,
+          "工具调用": 4.0,
+          "记忆": 3.5,
+          "模型服务化": 3.0,
+          "AI / LLM": 3.0
+        },
+        "deep": {
+          "AI Agent": 5.5,
+          "上下文工程": 5.0,
+          "工具调用": 5.0,
+          "记忆": 4.5,
+          "模型服务化": 4.0,
+          "RAG": 2.5,
+          "GraphRAG": 2.0
+        }
+      }
+    },
+    "ai-rag": {
+      "aliases": ["ai-rag", "rag", "graphrag", "rag工程", "知识库问答"],
+      "base_roles": ["ai", "backend", "data"],
+      "layer_priority_terms": {
+        "basic": {
+          "RAG": 4.0,
+          "AI / LLM": 2.5,
+          "AI / ML": 2.0
+        },
+        "standard": {
+          "RAG": 5.0,
+          "GraphRAG": 4.5,
+          "检索 / 重排": 4.0,
+          "RAG 评估": 4.0,
+          "模型服务化": 2.5,
+          "知识更新": 3.5
+        },
+        "deep": {
+          "RAG": 5.5,
+          "GraphRAG": 5.5,
+          "检索 / 重排": 5.0,
+          "RAG 评估": 4.5,
+          "知识更新": 5.0,
+          "模型服务化": 3.5,
+          "AI Agent": 2.0
+        }
+      }
+    },
+    "java": {
+      "aliases": ["java"],
+      "base_roles": ["java", "backend"],
+      "layer_priority_terms": {
+        "basic": {
+          "Java": 2.5,
+          "Spring": 2.0,
+          "JVM": 1.5
+        },
+        "standard": {
+          "Java": 3.0,
+          "Spring": 3.0,
+          "JVM": 2.5,
+          "并发": 2.5,
+          "数据库": 2.0
+        },
+        "deep": {
+          "JVM": 4.0,
+          "并发": 4.0,
+          "Spring": 3.5,
+          "MySQL": 2.5,
+          "消息队列": 2.0
+        }
+      }
+    },
+    "data": {
+      "aliases": ["data", "数据", "数仓", "data-engineering"],
+      "base_roles": ["data", "backend"],
+      "layer_priority_terms": {
+        "basic": {
+          "数据库": 3.0,
+          "SQL": 2.5,
+          "Redis": 1.5
+        },
+        "standard": {
+          "MySQL": 3.5,
+          "数据库": 3.0,
+          "Redis": 2.0,
+          "分布式 ID": 1.5
+        },
+        "deep": {
+          "MySQL": 4.0,
+          "分库分表": 4.0,
+          "执行计划": 3.0,
+          "日志系统": 2.5,
+          "分布式": 2.0
+        }
+      }
+    },
+    "sre": {
+      "aliases": ["sre", "运维", "devops"],
+      "base_roles": ["sre"],
+      "layer_priority_terms": {
+        "basic": {
+          "计算机网络": 2.5,
+          "操作系统": 2.5,
+          "高可用": 2.0
+        },
+        "standard": {
+          "操作系统": 3.0,
+          "计算机网络": 3.0,
+          "Redis": 2.0,
+          "高可用": 3.0,
+          "监控": 2.0
+        },
+        "deep": {
+          "高可用": 4.0,
+          "系统设计": 3.0,
+          "分布式": 3.0,
+          "消息队列": 2.0,
+          "网关": 2.0
+        }
+      }
+    },
+    "sre-platform": {
+      "aliases": ["sre-platform", "platform-sre", "平台sre", "平台运维", "platform", "infra-platform"],
+      "base_roles": ["sre", "backend"],
+      "layer_priority_terms": {
+        "basic": {
+          "操作系统": 3.0,
+          "计算机网络": 2.5,
+          "高可用": 2.5
+        },
+        "standard": {
+          "操作系统": 3.5,
+          "计算机网络": 3.5,
+          "高可用": 4.0,
+          "系统设计": 3.0,
+          "网关": 2.5,
+          "Redis": 2.0,
+          "消息队列": 2.0
+        },
+        "deep": {
+          "高可用": 5.0,
+          "系统设计": 4.0,
+          "分布式": 4.0,
+          "网关": 3.5,
+          "消息队列": 3.0,
+          "操作系统": 3.5,
+          "计算机网络": 3.5,
+          "幂等性": 2.5
+        }
+      }
+    }
+  }
+}

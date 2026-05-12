@@ -1,0 +1,321 @@
+{
+  "schema_version": "1.0",
+  "kind": "interview_mode_profiles",
+  "source_of_truth_note": "This file is the source of truth for V1.0 multi-mode interview behavior. Maintain mode-specific stage sequence, default question counts, selection policy, scoring policy, report emphasis, and auto-judge bias here instead of scattering those decisions across scripts or docs.",
+  "profiles": {
+    "完整模拟": {
+      "aliases": ["完整模拟", "full-mock"],
+      "stage_sequence": ["SELF_INTRO", "PROJECT_DEEP_DIVE", "CS_FUNDAMENTALS", "CODING_INTERVIEW", "CANDIDATE_QUESTIONS"],
+      "default_question_counts": {
+        "PROJECT_DEEP_DIVE": {
+          "basic": 2,
+          "standard": 3,
+          "deep": 5
+        },
+        "CS_FUNDAMENTALS": {
+          "basic": 2,
+          "standard": 3,
+          "deep": 5
+        },
+        "CODING_INTERVIEW": {
+          "default": 2,
+          "minimum": 1
+        },
+        "CANDIDATE_QUESTIONS": {
+          "basic": 1,
+          "standard": 1,
+          "deep": 2
+        }
+      },
+      "selection_policy": {
+        "include_self_intro": true,
+        "project_policy": "resume_risks_plus_templates",
+        "fundamentals_policy": "balanced",
+        "algorithm_policy": "balanced",
+        "algorithm_required": true
+      },
+      "scoring_policy": {
+        "weights": {
+          "self_introduction": 10,
+          "project_depth": 30,
+          "cs_fundamentals": 20,
+          "algorithm_ability": 25,
+          "communication": 10,
+          "candidate_questions": 5
+        },
+        "module_focus": ["self_introduction", "project_depth", "cs_fundamentals", "algorithm_ability", "communication", "candidate_questions"]
+      },
+      "report_sections": [
+        "overall_conclusion",
+        "module_scores",
+        "stage_scores",
+        "highlights",
+        "issues",
+        "weakness_tracking",
+        "resume_risk_map",
+        "resume_rewrite",
+        "review_priorities",
+        "next_round"
+      ],
+      "candidate_output_style": "full_problem_statement",
+      "auto_judge_bias": {
+        "project_detail_weight": "balanced",
+        "fundamental_accuracy_weight": "balanced",
+        "algorithm_rigor_weight": "balanced",
+        "communication_weight": "balanced"
+      }
+    },
+    "项目深挖": {
+      "aliases": ["项目深挖", "project-deep-dive"],
+      "stage_sequence": ["PROJECT_DEEP_DIVE"],
+      "default_question_counts": {
+        "PROJECT_DEEP_DIVE": {
+          "basic": 4,
+          "standard": 6,
+          "deep": 8
+        }
+      },
+      "selection_policy": {
+        "include_self_intro": false,
+        "project_policy": "resume_risks_heavy",
+        "fundamentals_policy": "disabled",
+        "algorithm_policy": "disabled",
+        "algorithm_required": false
+      },
+      "scoring_policy": {
+        "weights": {
+          "self_introduction": 0,
+          "project_depth": 75,
+          "cs_fundamentals": 0,
+          "algorithm_ability": 0,
+          "communication": 15,
+          "candidate_questions": 10
+        },
+        "module_focus": ["project_depth", "communication", "candidate_questions"]
+      },
+      "report_sections": [
+        "overall_conclusion",
+        "project_depth_summary",
+        "project_risk_map",
+        "ownership_gaps",
+        "metrics_and_engineering_gaps",
+        "resume_rewrite",
+        "review_priorities",
+        "next_round"
+      ],
+      "candidate_output_style": "structured_followups",
+      "auto_judge_bias": {
+        "project_detail_weight": "strict",
+        "fundamental_accuracy_weight": "light",
+        "algorithm_rigor_weight": "disabled",
+        "communication_weight": "medium"
+      }
+    },
+    "八股快问快答": {
+      "aliases": ["八股快问快答", "fundamentals"],
+      "stage_sequence": ["CS_FUNDAMENTALS"],
+      "default_question_counts": {
+        "CS_FUNDAMENTALS": {
+          "basic": 6,
+          "standard": 8,
+          "deep": 10
+        }
+      },
+      "selection_policy": {
+        "include_self_intro": false,
+        "project_policy": "disabled",
+        "fundamentals_policy": "topic_dense",
+        "algorithm_policy": "disabled",
+        "algorithm_required": false
+      },
+      "scoring_policy": {
+        "weights": {
+          "self_introduction": 0,
+          "project_depth": 0,
+          "cs_fundamentals": 80,
+          "algorithm_ability": 0,
+          "communication": 20,
+          "candidate_questions": 0
+        },
+        "module_focus": ["cs_fundamentals", "communication"]
+      },
+      "report_sections": [
+        "overall_conclusion",
+        "fundamentals_gap_list",
+        "review_priorities",
+        "next_round"
+      ],
+      "candidate_output_style": "compact_question",
+      "auto_judge_bias": {
+        "project_detail_weight": "disabled",
+        "fundamental_accuracy_weight": "strict",
+        "algorithm_rigor_weight": "disabled",
+        "communication_weight": "light"
+      }
+    },
+    "算法陪练": {
+      "aliases": ["算法陪练", "algorithm", "coding"],
+      "stage_sequence": ["CODING_INTERVIEW"],
+      "default_question_counts": {
+        "CODING_INTERVIEW": {
+          "default": 3,
+          "minimum": 2
+        }
+      },
+      "selection_policy": {
+        "include_self_intro": false,
+        "project_policy": "disabled",
+        "fundamentals_policy": "disabled",
+        "algorithm_policy": "dense",
+        "algorithm_required": true
+      },
+      "scoring_policy": {
+        "weights": {
+          "self_introduction": 0,
+          "project_depth": 0,
+          "cs_fundamentals": 0,
+          "algorithm_ability": 85,
+          "communication": 15,
+          "candidate_questions": 0
+        },
+        "module_focus": ["algorithm_ability", "communication"]
+      },
+      "report_sections": [
+        "overall_conclusion",
+        "algorithm_breakdown",
+        "edge_case_gaps",
+        "complexity_gaps",
+        "recommended_next_questions",
+        "review_priorities",
+        "next_round"
+      ],
+      "candidate_output_style": "full_problem_statement",
+      "auto_judge_bias": {
+        "project_detail_weight": "disabled",
+        "fundamental_accuracy_weight": "disabled",
+        "algorithm_rigor_weight": "strict",
+        "communication_weight": "medium"
+      }
+    },
+    "JD 定向面": {
+      "aliases": ["JD 定向面", "jd"],
+      "stage_sequence": ["SELF_INTRO", "PROJECT_DEEP_DIVE", "CS_FUNDAMENTALS", "CANDIDATE_QUESTIONS"],
+      "default_question_counts": {
+        "PROJECT_DEEP_DIVE": {
+          "basic": 2,
+          "standard": 3,
+          "deep": 4
+        },
+        "CS_FUNDAMENTALS": {
+          "basic": 4,
+          "standard": 5,
+          "deep": 6
+        },
+        "CANDIDATE_QUESTIONS": {
+          "basic": 1,
+          "standard": 1,
+          "deep": 2
+        }
+      },
+      "selection_policy": {
+        "include_self_intro": true,
+        "project_policy": "jd_match_bias",
+        "fundamentals_policy": "jd_keyword_bias",
+        "algorithm_policy": "light",
+        "algorithm_required": false
+      },
+      "scoring_policy": {
+        "weights": {
+          "self_introduction": 10,
+          "project_depth": 35,
+          "cs_fundamentals": 35,
+          "algorithm_ability": 0,
+          "communication": 15,
+          "candidate_questions": 5
+        },
+        "module_focus": ["self_introduction", "project_depth", "cs_fundamentals", "communication", "candidate_questions"]
+      },
+      "report_sections": ["overall_conclusion", "jd_fit_gaps", "project_depth_summary", "fundamentals_gap_list", "resume_rewrite", "review_priorities", "next_round"],
+      "candidate_output_style": "structured_followups",
+      "auto_judge_bias": {
+        "project_detail_weight": "strict",
+        "fundamental_accuracy_weight": "strict",
+        "algorithm_rigor_weight": "light",
+        "communication_weight": "medium"
+      }
+    },
+    "简历拷打": {
+      "aliases": ["简历拷打", "resume-attack"],
+      "stage_sequence": ["PROJECT_DEEP_DIVE", "CS_FUNDAMENTALS"],
+      "default_question_counts": {
+        "PROJECT_DEEP_DIVE": {
+          "basic": 4,
+          "standard": 5,
+          "deep": 6
+        },
+        "CS_FUNDAMENTALS": {
+          "basic": 2,
+          "standard": 3,
+          "deep": 4
+        }
+      },
+      "selection_policy": {
+        "include_self_intro": false,
+        "project_policy": "resume_risks_heavy",
+        "fundamentals_policy": "resume_claim_bias",
+        "algorithm_policy": "disabled",
+        "algorithm_required": false
+      },
+      "scoring_policy": {
+        "weights": {
+          "self_introduction": 0,
+          "project_depth": 60,
+          "cs_fundamentals": 20,
+          "algorithm_ability": 0,
+          "communication": 20,
+          "candidate_questions": 0
+        },
+        "module_focus": ["project_depth", "cs_fundamentals", "communication"]
+      },
+      "report_sections": ["overall_conclusion", "resume_risk_map", "ownership_gaps", "resume_rewrite", "review_priorities", "next_round"],
+      "candidate_output_style": "structured_followups",
+      "auto_judge_bias": {
+        "project_detail_weight": "strict",
+        "fundamental_accuracy_weight": "medium",
+        "algorithm_rigor_weight": "disabled",
+        "communication_weight": "medium"
+      }
+    },
+    "复盘教练": {
+      "aliases": ["复盘教练", "review-coach"],
+      "stage_sequence": [],
+      "default_question_counts": {},
+      "selection_policy": {
+        "include_self_intro": false,
+        "project_policy": "disabled",
+        "fundamentals_policy": "disabled",
+        "algorithm_policy": "disabled",
+        "algorithm_required": false
+      },
+      "scoring_policy": {
+        "weights": {
+          "self_introduction": 10,
+          "project_depth": 30,
+          "cs_fundamentals": 20,
+          "algorithm_ability": 25,
+          "communication": 10,
+          "candidate_questions": 5
+        },
+        "module_focus": ["self_introduction", "project_depth", "cs_fundamentals", "algorithm_ability", "communication", "candidate_questions"]
+      },
+      "report_sections": ["overall_conclusion", "module_scores", "stage_scores", "weakness_tracking", "review_priorities", "next_round"],
+      "candidate_output_style": "transcript_only",
+      "auto_judge_bias": {
+        "project_detail_weight": "balanced",
+        "fundamental_accuracy_weight": "balanced",
+        "algorithm_rigor_weight": "balanced",
+        "communication_weight": "balanced"
+      }
+    }
+  }
+}

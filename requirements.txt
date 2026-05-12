@@ -1,0 +1,6 @@
+# Core runtime dependency imported by scripts/*.py
+python-docx>=1.2.0
+
+# Optional local PDF resume parsing via MinerU CLI
+# Install separately if you want the local PDF -> Markdown path:
+# pip install -U "mineru[pipeline]"

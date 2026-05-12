@@ -1,0 +1,5295 @@
+{
+  "schema_version": "0.4-public",
+  "kind": "algorithm_question_bank",
+  "questions": [
+    {
+      "id": "lc_1_two_sum",
+      "title": "两数之和",
+      "title_en": "Two Sum",
+      "difficulty": "easy",
+      "tags": [
+        "数组",
+        "哈希表"
+      ],
+      "expected_approaches": [
+        "暴力枚举 O(n^2)",
+        "哈希表记录已访问元素 O(n)"
+      ],
+      "hints": [
+        "需要快速判断 target - nums[i] 是否出现过。",
+        "遍历时维护值到下标的 map。"
+      ],
+      "edge_cases": [
+        "重复元素",
+        "负数",
+        "只有一个解"
+      ],
+      "related_keywords": [
+        "数组",
+        "哈希表",
+        "map",
+        "字典"
+      ],
+      "role_tags": [
+        "backend",
+        "frontend",
+        "algorithm",
+        "ai"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出和为目标值 target 的那两个整数，并返回它们的数组下标。\n\n你可以假设每种输入只会对应一个答案，并且同一个元素不能重复使用。\n\n你可以按任意顺序返回答案。"
+    },
+    {
+      "id": "lc_49_group_anagrams",
+      "title": "字母异位词分组",
+      "title_en": "Group Anagrams",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "哈希表",
+        "字符串",
+        "排序"
+      ],
+      "expected_approaches": [
+        "对每个字符串排序作为 key",
+        "统计字符频次作为 key"
+      ],
+      "hints": [
+        "异位词排序后结果相同。",
+        "如果字符集固定，也可以用 26 维计数作为 key。"
+      ],
+      "edge_cases": [
+        "空字符串",
+        "重复字符串",
+        "单个字符串"
+      ],
+      "related_keywords": [
+        "字符串",
+        "哈希表",
+        "排序",
+        "分组"
+      ],
+      "role_tags": [
+        "backend",
+        "frontend",
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "给你一个字符串数组，请你将字母异位词组合在一起，并返回结果。\n\n字母异位词指由相同字母重新排列形成的字符串。"
+    },
+    {
+      "id": "lc_128_longest_consecutive_sequence",
+      "title": "最长连续序列",
+      "title_en": "Longest Consecutive Sequence",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "哈希表",
+        "并查集"
+      ],
+      "expected_approaches": [
+        "哈希集合去重",
+        "只从没有前驱的数字开始扩展序列"
+      ],
+      "hints": [
+        "排序会变成 O(n log n)，题目要求 O(n)。",
+        "如果 x - 1 不存在，x 才可能是序列起点。"
+      ],
+      "edge_cases": [
+        "空数组",
+        "重复数字",
+        "负数"
+      ],
+      "related_keywords": [
+        "数组",
+        "哈希表",
+        "集合",
+        "复杂度"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《最长连续序列》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_283_move_zeroes",
+      "title": "移动零",
+      "title_en": "Move Zeroes",
+      "difficulty": "easy",
+      "tags": [
+        "数组",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "双指针将非零元素前移",
+        "剩余位置补零"
+      ],
+      "hints": [
+        "维护下一个非零元素应该写入的位置。",
+        "保持相对顺序意味着不能随意交换到末尾。"
+      ],
+      "edge_cases": [
+        "全 0",
+        "没有 0",
+        "只有一个元素"
+      ],
+      "related_keywords": [
+        "数组",
+        "双指针",
+        "原地"
+      ],
+      "role_tags": [
+        "frontend",
+        "backend",
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《移动零》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_11_container_with_most_water",
+      "title": "盛最多水的容器",
+      "title_en": "Container With Most Water",
+      "difficulty": "medium",
+      "tags": [
+        "贪心",
+        "数组",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "左右双指针",
+        "每次移动较短边，因为面积受短板限制"
+      ],
+      "hints": [
+        "面积由宽度和较短高度决定。",
+        "移动较高边不会改善当前短板。"
+      ],
+      "edge_cases": [
+        "长度为 2",
+        "单调递增",
+        "高度相等"
+      ],
+      "related_keywords": [
+        "数组",
+        "双指针",
+        "贪心"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "给定一个长度为 n 的整数数组 height。数组中的每个元素表示一条竖线的高度，第 i 条线的两个端点分别是 (i, 0) 和 (i, height[i])。\n\n请你找出其中的两条线，使它们与 x 轴共同构成的容器可以容纳最多的水，并返回这个最大值。\n\n你不能倾斜容器。"
+    },
+    {
+      "id": "lc_15_three_sum",
+      "title": "三数之和",
+      "title_en": "3Sum",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "双指针",
+        "排序"
+      ],
+      "expected_approaches": [
+        "先排序",
+        "枚举第一个数后用双指针找两数之和",
+        "跳过重复元素去重"
+      ],
+      "hints": [
+        "排序可以帮助去重和双指针收缩。",
+        "固定一个数后，问题变成有序数组的两数之和。"
+      ],
+      "edge_cases": [
+        "重复元素",
+        "全 0",
+        "没有解"
+      ],
+      "related_keywords": [
+        "数组",
+        "双指针",
+        "排序",
+        "去重"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "给你一个整数数组 nums，请你判断是否存在三个元素 a、b、c，使得 a + b + c = 0。\n\n请你找出所有和为 0 且不重复的三元组，并返回结果。\n\n注意：答案中不可以包含重复的三元组。"
+    },
+    {
+      "id": "lc_42_trapping_rain_water",
+      "title": "接雨水",
+      "title_en": "Trapping Rain Water",
+      "difficulty": "hard",
+      "tags": [
+        "栈",
+        "数组",
+        "双指针",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "预处理左右最大值",
+        "双指针维护左右最高墙",
+        "单调栈计算凹槽"
+      ],
+      "hints": [
+        "某个位置能接的水取决于左右两侧最高柱子的较小值。",
+        "可以边移动较低一侧边确定当前位置水量。"
+      ],
+      "edge_cases": [
+        "空数组",
+        "单调数组",
+        "多个相同高度"
+      ],
+      "related_keywords": [
+        "数组",
+        "双指针",
+        "单调栈",
+        "动态规划"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。"
+    },
+    {
+      "id": "lc_3_longest_substring_without_repeating",
+      "title": "无重复字符的最长子串",
+      "title_en": "Longest Substring Without Repeating Characters",
+      "difficulty": "medium",
+      "tags": [
+        "哈希表",
+        "字符串",
+        "滑动窗口"
+      ],
+      "expected_approaches": [
+        "滑动窗口维护无重复区间",
+        "哈希表记录字符最近出现位置"
+      ],
+      "hints": [
+        "右指针遇到重复字符时，左边界应该向右移动。",
+        "左边界不能回退。"
+      ],
+      "edge_cases": [
+        "空字符串",
+        "全部字符相同",
+        "重复字符在窗口左侧之外"
+      ],
+      "related_keywords": [
+        "字符串",
+        "滑动窗口",
+        "哈希表"
+      ],
+      "role_tags": [
+        "frontend",
+        "backend",
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《无重复字符的最长子串》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_438_find_all_anagrams",
+      "title": "找到字符串中所有字母异位词",
+      "title_en": "Find All Anagrams in a String",
+      "difficulty": "medium",
+      "tags": [
+        "哈希表",
+        "字符串",
+        "滑动窗口"
+      ],
+      "expected_approaches": [
+        "固定长度滑动窗口",
+        "维护字符计数差异"
+      ],
+      "hints": [
+        "窗口长度固定为 len(p)。",
+        "比较两个窗口字符频次是否一致。"
+      ],
+      "edge_cases": [
+        "p 比 s 长",
+        "重复字符",
+        "空匹配"
+      ],
+      "related_keywords": [
+        "字符串",
+        "滑动窗口",
+        "哈希表",
+        "计数"
+      ],
+      "role_tags": [
+        "algorithm",
+        "frontend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《找到字符串中所有字母异位词》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_560_subarray_sum_equals_k",
+      "title": "和为 K 的子数组",
+      "title_en": "Subarray Sum Equals K",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "哈希表",
+        "前缀和"
+      ],
+      "expected_approaches": [
+        "前缀和",
+        "哈希表统计 prefix_sum 出现次数"
+      ],
+      "hints": [
+        "子数组和可以表示为两个前缀和之差。",
+        "遍历到当前位置时，需要知道之前有多少 prefix = current - k。"
+      ],
+      "edge_cases": [
+        "负数",
+        "k 为 0",
+        "多个重叠子数组"
+      ],
+      "related_keywords": [
+        "数组",
+        "前缀和",
+        "哈希表"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《和为 K 的子数组》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_239_sliding_window_maximum",
+      "title": "滑动窗口最大值",
+      "title_en": "Sliding Window Maximum",
+      "difficulty": "hard",
+      "tags": [
+        "队列",
+        "数组",
+        "滑动窗口",
+        "单调队列",
+        "堆"
+      ],
+      "expected_approaches": [
+        "单调队列维护候选最大值下标",
+        "队首过期弹出，队尾保持递减"
+      ],
+      "hints": [
+        "窗口移动时，过期元素需要移除。",
+        "比新元素小的旧元素之后不可能成为最大值。"
+      ],
+      "edge_cases": [
+        "k 为 1",
+        "k 等于数组长度",
+        "重复最大值"
+      ],
+      "related_keywords": [
+        "滑动窗口",
+        "单调队列",
+        "队列",
+        "数组"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "给你一个整数数组 nums 和一个大小为 k 的滑动窗口。滑动窗口每次只向右移动一位。\n\n请你返回滑动窗口中的最大值。"
+    },
+    {
+      "id": "lc_76_minimum_window_substring",
+      "title": "最小覆盖子串",
+      "title_en": "Minimum Window Substring",
+      "difficulty": "hard",
+      "tags": [
+        "哈希表",
+        "字符串",
+        "滑动窗口"
+      ],
+      "expected_approaches": [
+        "滑动窗口",
+        "维护 need/window 计数和满足字符数量"
+      ],
+      "hints": [
+        "右指针扩张直到覆盖，左指针收缩尝试变短。",
+        "需要处理 t 中重复字符。"
+      ],
+      "edge_cases": [
+        "无解",
+        "t 有重复字符",
+        "s 与 t 相同"
+      ],
+      "related_keywords": [
+        "字符串",
+        "滑动窗口",
+        "哈希表"
+      ],
+      "role_tags": [
+        "algorithm",
+        "frontend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《最小覆盖子串》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_53_maximum_subarray",
+      "title": "最大子数组和",
+      "title_en": "Maximum Subarray",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "动态规划",
+        "分治"
+      ],
+      "expected_approaches": [
+        "动态规划：dp[i] 表示以 i 结尾的最大子数组和",
+        "滚动变量优化空间"
+      ],
+      "hints": [
+        "如果之前的连续和为负，还要继续接上吗？",
+        "只需要知道以当前位置结尾的最优值。"
+      ],
+      "edge_cases": [
+        "全负数",
+        "单个元素",
+        "包含 0"
+      ],
+      "related_keywords": [
+        "数组",
+        "动态规划",
+        "Kadane"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《最大子数组和》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_56_merge_intervals",
+      "title": "合并区间",
+      "title_en": "Merge Intervals",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "排序"
+      ],
+      "expected_approaches": [
+        "按左端点排序",
+        "维护当前合并区间并逐个扩展"
+      ],
+      "hints": [
+        "区间无序时，先排序可以让重叠关系局部化。",
+        "比较下一个区间左端点和当前右端点。"
+      ],
+      "edge_cases": [
+        "空数组",
+        "单个区间",
+        "相邻但不重叠"
+      ],
+      "related_keywords": [
+        "数组",
+        "排序",
+        "区间"
+      ],
+      "role_tags": [
+        "backend",
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [start_i, end_i]。\n\n请你合并所有重叠的区间，并返回一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。"
+    },
+    {
+      "id": "lc_189_rotate_array",
+      "title": "轮转数组",
+      "title_en": "Rotate Array",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "数学",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "使用额外数组",
+        "三次翻转实现原地轮转",
+        "环状替换"
+      ],
+      "hints": [
+        "k 可能大于数组长度。",
+        "整体翻转再分别翻转两段可以完成轮转。"
+      ],
+      "edge_cases": [
+        "k 为 0",
+        "k 大于 n",
+        "数组长度为 1"
+      ],
+      "related_keywords": [
+        "数组",
+        "双指针",
+        "原地"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《轮转数组》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_238_product_except_self",
+      "title": "除自身以外数组的乘积",
+      "title_en": "Product of Array Except Self",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "前缀积"
+      ],
+      "expected_approaches": [
+        "前缀乘积和后缀乘积",
+        "输出数组复用前缀，再用一个变量维护后缀"
+      ],
+      "hints": [
+        "每个位置答案等于左侧乘积乘以右侧乘积。",
+        "可以两次遍历。"
+      ],
+      "edge_cases": [
+        "包含 0",
+        "多个 0",
+        "负数"
+      ],
+      "related_keywords": [
+        "数组",
+        "前缀",
+        "后缀"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《除自身以外数组的乘积》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_41_first_missing_positive",
+      "title": "缺失的第一个正数",
+      "title_en": "First Missing Positive",
+      "difficulty": "hard",
+      "tags": [
+        "数组",
+        "哈希表"
+      ],
+      "expected_approaches": [
+        "将数字 x 放到下标 x - 1 的位置",
+        "原地哈希"
+      ],
+      "hints": [
+        "答案只可能在 1 到 n + 1 之间。",
+        "尝试让 nums[i] = i + 1。"
+      ],
+      "edge_cases": [
+        "负数",
+        "大于 n 的数",
+        "重复数"
+      ],
+      "related_keywords": [
+        "数组",
+        "原地哈希",
+        "哈希表"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《缺失的第一个正数》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_73_set_matrix_zeroes",
+      "title": "矩阵置零",
+      "title_en": "Set Matrix Zeroes",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "哈希表",
+        "矩阵"
+      ],
+      "expected_approaches": [
+        "额外集合记录行列",
+        "使用第一行第一列作为标记"
+      ],
+      "hints": [
+        "直接置零会污染后续判断。",
+        "可以先记录哪些行列需要置零。"
+      ],
+      "edge_cases": [
+        "第一行或第一列有 0",
+        "全 0",
+        "没有 0"
+      ],
+      "related_keywords": [
+        "矩阵",
+        "数组",
+        "原地"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《矩阵置零》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_54_spiral_matrix",
+      "title": "螺旋矩阵",
+      "title_en": "Spiral Matrix",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "矩阵",
+        "模拟"
+      ],
+      "expected_approaches": [
+        "维护上下左右边界",
+        "每走完一条边后收缩边界"
+      ],
+      "hints": [
+        "核心是边界更新和循环终止条件。",
+        "处理单行或单列时要避免重复。"
+      ],
+      "edge_cases": [
+        "单行",
+        "单列",
+        "空矩阵"
+      ],
+      "related_keywords": [
+        "矩阵",
+        "模拟",
+        "数组"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《螺旋矩阵》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_48_rotate_image",
+      "title": "旋转图像",
+      "title_en": "Rotate Image",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "数学",
+        "矩阵"
+      ],
+      "expected_approaches": [
+        "先水平翻转再沿主对角线翻转",
+        "按层四元组轮换"
+      ],
+      "hints": [
+        "旋转可以拆成两次简单变换。",
+        "注意下标映射关系。"
+      ],
+      "edge_cases": [
+        "n 为 1",
+        "偶数阶",
+        "奇数阶"
+      ],
+      "related_keywords": [
+        "矩阵",
+        "原地",
+        "图像",
+        "几何"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《旋转图像》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_240_search_2d_matrix_ii",
+      "title": "搜索二维矩阵 II",
+      "title_en": "Search a 2D Matrix II",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "二分查找",
+        "分治",
+        "矩阵"
+      ],
+      "expected_approaches": [
+        "从右上角或左下角开始排除一行或一列",
+        "对每行二分"
+      ],
+      "hints": [
+        "选择一个位置，使得比较后能排除一整行或一整列。",
+        "右上角比它小的在左边，比它大的在下边。"
+      ],
+      "edge_cases": [
+        "空矩阵",
+        "target 小于最小值",
+        "target 大于最大值"
+      ],
+      "related_keywords": [
+        "矩阵",
+        "二分查找",
+        "搜索"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《搜索二维矩阵 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_160_intersection_linked_lists",
+      "title": "相交链表",
+      "title_en": "Intersection of Two Linked Lists",
+      "difficulty": "easy",
+      "tags": [
+        "哈希表",
+        "链表",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "哈希集合记录节点",
+        "双指针走 A+B 和 B+A 对齐长度差"
+      ],
+      "hints": [
+        "相交比较的是节点引用，不是节点值。",
+        "两个指针都走完 A+B 后会同时到达交点或 null。"
+      ],
+      "edge_cases": [
+        "不相交",
+        "头节点即相交",
+        "长度差很大"
+      ],
+      "related_keywords": [
+        "链表",
+        "双指针",
+        "哈希表"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《相交链表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_206_reverse_linked_list",
+      "title": "反转链表",
+      "title_en": "Reverse Linked List",
+      "difficulty": "easy",
+      "tags": [
+        "递归",
+        "链表"
+      ],
+      "expected_approaches": [
+        "迭代维护 prev/current/next",
+        "递归反转后处理指针"
+      ],
+      "hints": [
+        "改变 current.next 前需要保存下一个节点。",
+        "反转后原头节点会变成尾节点。"
+      ],
+      "edge_cases": [
+        "空链表",
+        "单节点",
+        "两个节点"
+      ],
+      "related_keywords": [
+        "链表",
+        "递归",
+        "指针"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《反转链表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_234_palindrome_linked_list",
+      "title": "回文链表",
+      "title_en": "Palindrome Linked List",
+      "difficulty": "easy",
+      "tags": [
+        "栈",
+        "递归",
+        "链表",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "快慢指针找中点",
+        "反转后半部分后逐个比较"
+      ],
+      "hints": [
+        "数组或栈可以做，但空间不是最优。",
+        "找到中点后可以把后半段反转。"
+      ],
+      "edge_cases": [
+        "空链表",
+        "奇数长度",
+        "偶数长度"
+      ],
+      "related_keywords": [
+        "链表",
+        "双指针",
+        "反转"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《回文链表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_141_linked_list_cycle",
+      "title": "环形链表",
+      "title_en": "Linked List Cycle",
+      "difficulty": "easy",
+      "tags": [
+        "哈希表",
+        "链表",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "哈希集合记录访问过的节点",
+        "快慢指针相遇判断有环"
+      ],
+      "hints": [
+        "如果存在环，快指针最终会追上慢指针。",
+        "注意空链表和单节点无环。"
+      ],
+      "edge_cases": [
+        "空链表",
+        "单节点自环",
+        "无环"
+      ],
+      "related_keywords": [
+        "链表",
+        "快慢指针",
+        "双指针"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《环形链表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_142_linked_list_cycle_ii",
+      "title": "环形链表 II",
+      "title_en": "Linked List Cycle II",
+      "difficulty": "medium",
+      "tags": [
+        "哈希表",
+        "链表",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "哈希集合",
+        "快慢指针相遇后，一个指针回到头节点同步前进"
+      ],
+      "hints": [
+        "先判断是否有环。",
+        "相遇后从头和相遇点同步走，会在入环点相遇。"
+      ],
+      "edge_cases": [
+        "无环",
+        "头节点入环",
+        "长尾后入环"
+      ],
+      "related_keywords": [
+        "链表",
+        "快慢指针",
+        "数学"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《环形链表 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_21_merge_two_sorted_lists",
+      "title": "合并两个有序链表",
+      "title_en": "Merge Two Sorted Lists",
+      "difficulty": "easy",
+      "tags": [
+        "递归",
+        "链表"
+      ],
+      "expected_approaches": [
+        "哑节点迭代合并",
+        "递归选择较小头节点"
+      ],
+      "hints": [
+        "使用 dummy 节点能简化头节点处理。",
+        "每次选择当前较小节点接到结果链表。"
+      ],
+      "edge_cases": [
+        "一个链表为空",
+        "两个都为空",
+        "重复值"
+      ],
+      "related_keywords": [
+        "链表",
+        "递归",
+        "排序"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《合并两个有序链表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_2_add_two_numbers",
+      "title": "两数相加",
+      "title_en": "Add Two Numbers",
+      "difficulty": "medium",
+      "tags": [
+        "递归",
+        "链表",
+        "数学"
+      ],
+      "expected_approaches": [
+        "同步遍历两个链表",
+        "维护进位 carry",
+        "处理长度不同和最终进位"
+      ],
+      "hints": [
+        "模拟竖式加法。",
+        "遍历结束后 carry 可能还需要新节点。"
+      ],
+      "edge_cases": [
+        "长度不同",
+        "最后有进位",
+        "包含 0"
+      ],
+      "related_keywords": [
+        "链表",
+        "数学",
+        "模拟"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《两数相加》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_19_remove_nth_node",
+      "title": "删除链表的倒数第 N 个结点",
+      "title_en": "Remove Nth Node From End of List",
+      "difficulty": "medium",
+      "tags": [
+        "链表",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "快慢指针保持 n 个节点间距",
+        "哑节点处理删除头节点"
+      ],
+      "hints": [
+        "要删除节点，需要找到它的前一个节点。",
+        "dummy 节点能统一处理删除头节点。"
+      ],
+      "edge_cases": [
+        "删除头节点",
+        "删除尾节点",
+        "链表长度为 1"
+      ],
+      "related_keywords": [
+        "链表",
+        "双指针",
+        "删除"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《删除链表的倒数第 N 个结点》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_24_swap_nodes_in_pairs",
+      "title": "两两交换链表中的节点",
+      "title_en": "Swap Nodes in Pairs",
+      "difficulty": "medium",
+      "tags": [
+        "递归",
+        "链表"
+      ],
+      "expected_approaches": [
+        "递归交换当前两节点",
+        "迭代使用 dummy 和三指针调整"
+      ],
+      "hints": [
+        "不能只交换节点值。",
+        "每次需要保存下一组的起点。"
+      ],
+      "edge_cases": [
+        "空链表",
+        "单节点",
+        "奇数长度"
+      ],
+      "related_keywords": [
+        "链表",
+        "递归",
+        "指针"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《两两交换链表中的节点》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_25_reverse_nodes_k_group",
+      "title": "K 个一组翻转链表",
+      "title_en": "Reverse Nodes in k-Group",
+      "difficulty": "hard",
+      "tags": [
+        "递归",
+        "链表"
+      ],
+      "expected_approaches": [
+        "检查当前组是否有 k 个节点",
+        "局部反转后连接前后链表"
+      ],
+      "hints": [
+        "先找到一组的边界，再反转这段。",
+        "需要维护上一组尾节点和下一组头节点。"
+      ],
+      "edge_cases": [
+        "不足 k 个",
+        "k 为 1",
+        "链表长度正好为 k 的倍数"
+      ],
+      "related_keywords": [
+        "链表",
+        "反转",
+        "递归"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《K 个一组翻转链表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_138_copy_list_random_pointer",
+      "title": "随机链表的复制",
+      "title_en": "Copy List with Random Pointer",
+      "difficulty": "medium",
+      "tags": [
+        "哈希表",
+        "链表"
+      ],
+      "expected_approaches": [
+        "哈希表映射原节点到新节点",
+        "原地穿插复制节点再拆分"
+      ],
+      "hints": [
+        "random 指针可能指向任意节点或 null。",
+        "先创建所有节点，再连接指针会更简单。"
+      ],
+      "edge_cases": [
+        "random 为 null",
+        "random 指向自己",
+        "空链表"
+      ],
+      "related_keywords": [
+        "链表",
+        "哈希表",
+        "深拷贝"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《随机链表的复制》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_148_sort_list",
+      "title": "排序链表",
+      "title_en": "Sort List",
+      "difficulty": "medium",
+      "tags": [
+        "链表",
+        "双指针",
+        "分治",
+        "排序",
+        "归并排序"
+      ],
+      "expected_approaches": [
+        "归并排序",
+        "快慢指针找中点，递归排序后合并"
+      ],
+      "hints": [
+        "链表不适合随机访问，归并排序更自然。",
+        "找到中点后需要断开链表。"
+      ],
+      "edge_cases": [
+        "空链表",
+        "单节点",
+        "重复值"
+      ],
+      "related_keywords": [
+        "链表",
+        "排序",
+        "归并",
+        "分治"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《排序链表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_23_merge_k_sorted_lists",
+      "title": "合并 K 个升序链表",
+      "title_en": "Merge k Sorted Lists",
+      "difficulty": "hard",
+      "tags": [
+        "链表",
+        "分治",
+        "堆",
+        "归并排序"
+      ],
+      "expected_approaches": [
+        "小根堆维护每个链表当前最小节点",
+        "分治两两合并"
+      ],
+      "hints": [
+        "每次从 k 个候选头节点里取最小值。",
+        "也可以把合并两个链表扩展成分治。"
+      ],
+      "edge_cases": [
+        "空数组",
+        "存在空链表",
+        "k 很大"
+      ],
+      "related_keywords": [
+        "链表",
+        "堆",
+        "分治",
+        "排序"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《合并 K 个升序链表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_146_lru_cache",
+      "title": "LRU 缓存",
+      "title_en": "LRU Cache",
+      "difficulty": "medium",
+      "tags": [
+        "设计",
+        "哈希表",
+        "链表",
+        "双向链表"
+      ],
+      "expected_approaches": [
+        "哈希表定位节点",
+        "双向链表维护最近使用顺序",
+        "容量满时淘汰链表尾部节点"
+      ],
+      "hints": [
+        "O(1) 查找需要哈希表。",
+        "O(1) 删除和移动节点需要双向链表。"
+      ],
+      "edge_cases": [
+        "更新已有 key",
+        "容量为 1",
+        "频繁淘汰"
+      ],
+      "related_keywords": [
+        "缓存",
+        "Redis",
+        "设计",
+        "哈希表",
+        "双向链表",
+        "LRU"
+      ],
+      "role_tags": [
+        "backend",
+        "algorithm",
+        "java"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请你设计并实现一个满足 LRU（最近最少使用）缓存约束的数据结构。\n\n实现 LRUCache 类：\n- LRUCache(int capacity) 以正整数 capacity 作为容量初始化缓存。\n- int get(int key) 如果关键字 key 存在于缓存中，则返回关键字的值，否则返回 -1。\n- void put(int key, int value) 如果关键字 key 已存在，则变更其数据值；如果不存在，则插入该组 key-value。当缓存容量达到上限时，应当逐出最近最少使用的关键字。\n\n要求 get 和 put 都在平均 O(1) 时间复杂度内完成。"
+    },
+    {
+      "id": "lc_94_binary_tree_inorder",
+      "title": "二叉树的中序遍历",
+      "title_en": "Binary Tree Inorder Traversal",
+      "difficulty": "easy",
+      "tags": [
+        "栈",
+        "树",
+        "深度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "递归 DFS",
+        "显式栈模拟递归"
+      ],
+      "hints": [
+        "中序遍历顺序是左、根、右。",
+        "迭代法需要一路压入左孩子。"
+      ],
+      "edge_cases": [
+        "空树",
+        "单节点",
+        "只有左子树或右子树"
+      ],
+      "related_keywords": [
+        "树",
+        "DFS",
+        "栈",
+        "递归"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《二叉树的中序遍历》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_104_max_depth_binary_tree",
+      "title": "二叉树的最大深度",
+      "title_en": "Maximum Depth of Binary Tree",
+      "difficulty": "easy",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "广度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "递归返回左右子树最大深度 + 1",
+        "BFS 层序遍历统计层数"
+      ],
+      "hints": [
+        "树的深度可以由子树深度递推。",
+        "层序遍历每处理一层深度加一。"
+      ],
+      "edge_cases": [
+        "空树",
+        "单节点",
+        "极度不平衡树"
+      ],
+      "related_keywords": [
+        "树",
+        "DFS",
+        "BFS",
+        "递归"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《二叉树的最大深度》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_226_invert_binary_tree",
+      "title": "翻转二叉树",
+      "title_en": "Invert Binary Tree",
+      "difficulty": "easy",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "广度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "递归交换左右子树",
+        "BFS/DFS 遍历每个节点交换左右孩子"
+      ],
+      "hints": [
+        "每个节点都需要交换左右孩子。",
+        "交换后继续处理子树。"
+      ],
+      "edge_cases": [
+        "空树",
+        "单节点",
+        "不平衡树"
+      ],
+      "related_keywords": [
+        "树",
+        "递归",
+        "DFS",
+        "BFS"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《翻转二叉树》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_101_symmetric_tree",
+      "title": "对称二叉树",
+      "title_en": "Symmetric Tree",
+      "difficulty": "easy",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "广度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "递归比较左子树和右子树是否镜像",
+        "队列迭代成对比较"
+      ],
+      "hints": [
+        "比较的不是同一方向，而是外侧和内侧成对相等。",
+        "左.left 对右.right，左.right 对右.left。"
+      ],
+      "edge_cases": [
+        "空树",
+        "结构不同但值相同",
+        "值不同但结构相同"
+      ],
+      "related_keywords": [
+        "树",
+        "递归",
+        "镜像"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《对称二叉树》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_543_diameter_binary_tree",
+      "title": "二叉树的直径",
+      "title_en": "Diameter of Binary Tree",
+      "difficulty": "easy",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "DFS 计算每个节点左右子树深度",
+        "用左右深度之和更新答案"
+      ],
+      "hints": [
+        "最长路径可能经过某个节点，也可能完全在子树里。",
+        "求深度时顺便更新全局最大直径。"
+      ],
+      "edge_cases": [
+        "空树",
+        "单节点",
+        "链状树"
+      ],
+      "related_keywords": [
+        "树",
+        "DFS",
+        "递归",
+        "深度"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《二叉树的直径》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_102_binary_tree_level_order",
+      "title": "二叉树的层序遍历",
+      "title_en": "Binary Tree Level Order Traversal",
+      "difficulty": "medium",
+      "tags": [
+        "树",
+        "广度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "队列 BFS",
+        "每轮处理当前队列长度对应的一层"
+      ],
+      "hints": [
+        "队列先进先出天然适合层序遍历。",
+        "需要区分每一层，可以记录当前层节点数。"
+      ],
+      "edge_cases": [
+        "空树",
+        "单节点",
+        "不完全二叉树"
+      ],
+      "related_keywords": [
+        "树",
+        "BFS",
+        "队列"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "给你二叉树的根节点 root，返回其节点值的层序遍历结果。\n\n也就是说，按从左到右的顺序逐层访问所有节点，并将同一层的节点值放在同一个数组中返回。"
+    },
+    {
+      "id": "lc_108_sorted_array_to_bst",
+      "title": "将有序数组转换为二叉搜索树",
+      "title_en": "Convert Sorted Array to Binary Search Tree",
+      "difficulty": "easy",
+      "tags": [
+        "树",
+        "二叉搜索树",
+        "数组",
+        "分治",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "选择中点作为根",
+        "递归构建左右子树"
+      ],
+      "hints": [
+        "高度平衡要求左右子树规模接近。",
+        "有序数组中点适合作为 BST 根。"
+      ],
+      "edge_cases": [
+        "空数组",
+        "单元素",
+        "偶数长度"
+      ],
+      "related_keywords": [
+        "树",
+        "BST",
+        "分治",
+        "数组"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《将有序数组转换为二叉搜索树》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_98_validate_bst",
+      "title": "验证二叉搜索树",
+      "title_en": "Validate Binary Search Tree",
+      "difficulty": "medium",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "二叉搜索树",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "递归维护每个节点允许的上下界",
+        "中序遍历检查严格递增"
+      ],
+      "hints": [
+        "不能只比较节点和直接左右孩子。",
+        "左子树所有节点都要小于根，右子树所有节点都要大于根。"
+      ],
+      "edge_cases": [
+        "重复值",
+        "右子树里有小于根的深层节点",
+        "极值边界"
+      ],
+      "related_keywords": [
+        "树",
+        "BST",
+        "递归",
+        "中序遍历"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《验证二叉搜索树》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_230_kth_smallest_bst",
+      "title": "二叉搜索树中第 K 小的元素",
+      "title_en": "Kth Smallest Element in a BST",
+      "difficulty": "medium",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "二叉搜索树",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "中序遍历得到升序序列",
+        "迭代中序遍历到第 k 个停止"
+      ],
+      "hints": [
+        "BST 的中序遍历是升序。",
+        "不需要遍历完整棵树。"
+      ],
+      "edge_cases": [
+        "k 为 1",
+        "k 为节点数",
+        "树不平衡"
+      ],
+      "related_keywords": [
+        "树",
+        "BST",
+        "中序遍历"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《二叉搜索树中第 K 小的元素》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_199_binary_tree_right_side_view",
+      "title": "二叉树的右视图",
+      "title_en": "Binary Tree Right Side View",
+      "difficulty": "medium",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "广度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "BFS 每层取最后一个节点",
+        "DFS 先右后左，每层第一次访问即右视图"
+      ],
+      "hints": [
+        "右视图每一层只需要一个节点。",
+        "层序遍历时记录当前层最后一个节点。"
+      ],
+      "edge_cases": [
+        "空树",
+        "只有左子树",
+        "只有右子树"
+      ],
+      "related_keywords": [
+        "树",
+        "BFS",
+        "DFS"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《二叉树的右视图》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_114_flatten_binary_tree",
+      "title": "二叉树展开为链表",
+      "title_en": "Flatten Binary Tree to Linked List",
+      "difficulty": "medium",
+      "tags": [
+        "栈",
+        "树",
+        "深度优先搜索",
+        "链表",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "先序遍历保存节点后重连",
+        "递归后序调整左右子树",
+        "寻找左子树最右节点拼接右子树"
+      ],
+      "hints": [
+        "展开顺序是根、左、右。",
+        "左子树展开后要接在根的右边，原右子树接到左子树末尾。"
+      ],
+      "edge_cases": [
+        "空树",
+        "只有左子树",
+        "只有右子树"
+      ],
+      "related_keywords": [
+        "树",
+        "链表",
+        "DFS",
+        "原地"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《二叉树展开为链表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_105_construct_tree_preorder_inorder",
+      "title": "从前序与中序遍历序列构造二叉树",
+      "title_en": "Construct Binary Tree from Preorder and Inorder Traversal",
+      "difficulty": "medium",
+      "tags": [
+        "树",
+        "数组",
+        "哈希表",
+        "分治",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "前序首元素为根",
+        "在中序中定位根并划分左右子树",
+        "哈希表加速中序下标查询"
+      ],
+      "hints": [
+        "前序确定根，中序确定左右子树范围。",
+        "递归时维护数组边界而不是频繁切片。"
+      ],
+      "edge_cases": [
+        "单节点",
+        "只有左子树",
+        "只有右子树"
+      ],
+      "related_keywords": [
+        "树",
+        "递归",
+        "分治",
+        "哈希表"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《从前序与中序遍历序列构造二叉树》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_437_path_sum_iii",
+      "title": "路径总和 III",
+      "title_en": "Path Sum III",
+      "difficulty": "medium",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "双重 DFS 枚举每个起点",
+        "前缀和 + 哈希表统计路径数"
+      ],
+      "hints": [
+        "树上的向下路径和也能用前缀和思想。",
+        "当前前缀和减 target 的历史次数就是新增路径数。"
+      ],
+      "edge_cases": [
+        "负数节点",
+        "target 为 0",
+        "多条重叠路径"
+      ],
+      "related_keywords": [
+        "树",
+        "前缀和",
+        "DFS",
+        "哈希表"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《路径总和 III》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_236_lowest_common_ancestor",
+      "title": "二叉树的最近公共祖先",
+      "title_en": "Lowest Common Ancestor of a Binary Tree",
+      "difficulty": "medium",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "递归在左右子树查找 p/q",
+        "若左右都找到则当前节点为 LCA"
+      ],
+      "hints": [
+        "如果当前节点就是 p 或 q，可以向上返回当前节点。",
+        "左右子树分别找到目标时，当前节点就是答案。"
+      ],
+      "edge_cases": [
+        "一个节点是另一个祖先",
+        "p/q 分别在左右子树",
+        "根节点为 LCA"
+      ],
+      "related_keywords": [
+        "树",
+        "DFS",
+        "递归"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《二叉树的最近公共祖先》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_124_binary_tree_maximum_path_sum",
+      "title": "二叉树中的最大路径和",
+      "title_en": "Binary Tree Maximum Path Sum",
+      "difficulty": "hard",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "动态规划",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "DFS 返回单边最大贡献",
+        "用左右最大贡献加当前值更新全局答案"
+      ],
+      "hints": [
+        "向父节点返回时只能选择一条向下路径。",
+        "更新答案时可以同时使用左右两侧贡献。"
+      ],
+      "edge_cases": [
+        "全负数",
+        "单节点",
+        "左右贡献为负"
+      ],
+      "related_keywords": [
+        "树",
+        "DFS",
+        "动态规划"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《二叉树中的最大路径和》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_200_number_of_islands",
+      "title": "岛屿数量",
+      "title_en": "Number of Islands",
+      "difficulty": "medium",
+      "tags": [
+        "深度优先搜索",
+        "广度优先搜索",
+        "并查集",
+        "数组",
+        "矩阵"
+      ],
+      "expected_approaches": [
+        "遍历网格，遇到陆地后 DFS/BFS 淹没整座岛",
+        "并查集合并相邻陆地"
+      ],
+      "hints": [
+        "一次搜索可以访问同一连通块里的所有陆地。",
+        "访问过的陆地要标记，避免重复计数。"
+      ],
+      "edge_cases": [
+        "空网格",
+        "全水",
+        "全陆地"
+      ],
+      "related_keywords": [
+        "图",
+        "DFS",
+        "BFS",
+        "矩阵",
+        "并查集"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "给你一个由字符 '1'（陆地）和 '0'（水）组成的二维网格 grid，请你计算网格中岛屿的数量。\n\n岛屿总是被水包围，并且每座岛屿只能由水平方向或竖直方向上相邻的陆地连接形成。\n\n你可以假设网格的四条边均被水包围。"
+    },
+    {
+      "id": "lc_994_rotting_oranges",
+      "title": "腐烂的橘子",
+      "title_en": "Rotting Oranges",
+      "difficulty": "medium",
+      "tags": [
+        "广度优先搜索",
+        "数组",
+        "矩阵"
+      ],
+      "expected_approaches": [
+        "多源 BFS",
+        "初始所有腐烂橘子入队，按层扩散"
+      ],
+      "hints": [
+        "所有腐烂橘子同时开始扩散。",
+        "BFS 的层数对应分钟数。"
+      ],
+      "edge_cases": [
+        "没有新鲜橘子",
+        "新鲜橘子永远无法腐烂",
+        "没有腐烂橘子"
+      ],
+      "related_keywords": [
+        "BFS",
+        "矩阵",
+        "图",
+        "多源"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《腐烂的橘子》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_207_course_schedule",
+      "title": "课程表",
+      "title_en": "Course Schedule",
+      "difficulty": "medium",
+      "tags": [
+        "深度优先搜索",
+        "广度优先搜索",
+        "图",
+        "拓扑排序"
+      ],
+      "expected_approaches": [
+        "拓扑排序统计入度",
+        "DFS 检测有向图环"
+      ],
+      "hints": [
+        "先修关系构成有向图。",
+        "如果存在环，就无法完成所有课程。"
+      ],
+      "edge_cases": [
+        "没有依赖",
+        "自环",
+        "多个独立子图"
+      ],
+      "related_keywords": [
+        "图",
+        "拓扑排序",
+        "BFS",
+        "DFS"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《课程表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_208_implement_trie",
+      "title": "实现 Trie 前缀树",
+      "title_en": "Implement Trie",
+      "difficulty": "medium",
+      "tags": [
+        "设计",
+        "字典树",
+        "哈希表",
+        "字符串"
+      ],
+      "expected_approaches": [
+        "每个节点维护子节点映射和 is_end 标记",
+        "插入和查询按字符逐层走"
+      ],
+      "hints": [
+        "前缀共享是 Trie 的核心。",
+        "搜索单词和搜索前缀的区别在于结尾标记。"
+      ],
+      "edge_cases": [
+        "空字符串",
+        "重复插入",
+        "前缀存在但完整单词不存在"
+      ],
+      "related_keywords": [
+        "Trie",
+        "字符串",
+        "设计",
+        "前缀"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend",
+        "ai"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《实现 Trie 前缀树》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_46_permutations",
+      "title": "全排列",
+      "title_en": "Permutations",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "回溯"
+      ],
+      "expected_approaches": [
+        "回溯构造路径",
+        "使用 visited 或原地交换标记已选择元素"
+      ],
+      "hints": [
+        "每一层选择一个还没使用的数字。",
+        "递归返回时要撤销选择。"
+      ],
+      "edge_cases": [
+        "空数组",
+        "单元素",
+        "结果数量阶乘级"
+      ],
+      "related_keywords": [
+        "回溯",
+        "数组",
+        "排列"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《全排列》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_78_subsets",
+      "title": "子集",
+      "title_en": "Subsets",
+      "difficulty": "medium",
+      "tags": [
+        "位运算",
+        "数组",
+        "回溯"
+      ],
+      "expected_approaches": [
+        "回溯每个元素选或不选",
+        "二进制枚举"
+      ],
+      "hints": [
+        "每个元素都有选和不选两种状态。",
+        "递归时从当前位置向后选择，避免重复。"
+      ],
+      "edge_cases": [
+        "空数组",
+        "单元素",
+        "结果包含空集"
+      ],
+      "related_keywords": [
+        "回溯",
+        "位运算",
+        "子集"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《子集》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_17_letter_combinations",
+      "title": "电话号码的字母组合",
+      "title_en": "Letter Combinations of a Phone Number",
+      "difficulty": "medium",
+      "tags": [
+        "哈希表",
+        "字符串",
+        "回溯"
+      ],
+      "expected_approaches": [
+        "数字到字符集合映射",
+        "回溯按位枚举字符"
+      ],
+      "hints": [
+        "每个数字对应多个候选字符。",
+        "递归深度等于 digits 长度。"
+      ],
+      "edge_cases": [
+        "空字符串",
+        "单个数字",
+        "多个数字组合爆炸"
+      ],
+      "related_keywords": [
+        "回溯",
+        "字符串",
+        "哈希表"
+      ],
+      "role_tags": [
+        "algorithm",
+        "frontend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《电话号码的字母组合》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_39_combination_sum",
+      "title": "组合总和",
+      "title_en": "Combination Sum",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "回溯"
+      ],
+      "expected_approaches": [
+        "回溯枚举选择",
+        "用 start 控制组合顺序避免排列重复",
+        "剪枝当前和超过 target"
+      ],
+      "hints": [
+        "组合问题通常需要固定选择顺序。",
+        "同一个数字可以重复使用，递归下一层仍可从当前下标开始。"
+      ],
+      "edge_cases": [
+        "无解",
+        "target 较小",
+        "单个候选数"
+      ],
+      "related_keywords": [
+        "回溯",
+        "组合",
+        "剪枝"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《组合总和》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_22_generate_parentheses",
+      "title": "括号生成",
+      "title_en": "Generate Parentheses",
+      "difficulty": "medium",
+      "tags": [
+        "字符串",
+        "动态规划",
+        "回溯"
+      ],
+      "expected_approaches": [
+        "回溯维护左右括号数量",
+        "右括号数量不能超过左括号"
+      ],
+      "hints": [
+        "任何前缀里右括号数量不能大于左括号。",
+        "左括号数量不能超过 n。"
+      ],
+      "edge_cases": [
+        "n 为 1",
+        "n 为 0",
+        "结果数量 Catalan 增长"
+      ],
+      "related_keywords": [
+        "回溯",
+        "字符串",
+        "括号"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《括号生成》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_79_word_search",
+      "title": "单词搜索",
+      "title_en": "Word Search",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "回溯",
+        "矩阵"
+      ],
+      "expected_approaches": [
+        "从每个匹配首字符的位置开始 DFS",
+        "访问标记和回溯恢复"
+      ],
+      "hints": [
+        "路径搜索需要避免重复使用同一格。",
+        "匹配失败时要恢复现场。"
+      ],
+      "edge_cases": [
+        "word 长于格子数",
+        "重复字符",
+        "路径需要转弯"
+      ],
+      "related_keywords": [
+        "回溯",
+        "矩阵",
+        "DFS",
+        "字符串"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《单词搜索》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_131_palindrome_partitioning",
+      "title": "分割回文串",
+      "title_en": "Palindrome Partitioning",
+      "difficulty": "medium",
+      "tags": [
+        "字符串",
+        "动态规划",
+        "回溯"
+      ],
+      "expected_approaches": [
+        "回溯枚举切割点",
+        "预处理回文判断减少重复计算"
+      ],
+      "hints": [
+        "每一层选择从当前位置开始的一个回文前缀。",
+        "不是回文的切法可以直接剪枝。"
+      ],
+      "edge_cases": [
+        "空字符串",
+        "全相同字符",
+        "没有长回文"
+      ],
+      "related_keywords": [
+        "回溯",
+        "动态规划",
+        "字符串",
+        "回文"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《分割回文串》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_35_search_insert_position",
+      "title": "搜索插入位置",
+      "title_en": "Search Insert Position",
+      "difficulty": "easy",
+      "tags": [
+        "数组",
+        "二分查找"
+      ],
+      "expected_approaches": [
+        "二分查找 lower_bound",
+        "寻找第一个大于等于 target 的位置"
+      ],
+      "hints": [
+        "插入位置就是第一个不小于 target 的下标。",
+        "注意左右边界的闭开写法。"
+      ],
+      "edge_cases": [
+        "target 小于所有数",
+        "target 大于所有数",
+        "空数组"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "数组"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《搜索插入位置》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_74_search_2d_matrix",
+      "title": "搜索二维矩阵",
+      "title_en": "Search a 2D Matrix",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "二分查找",
+        "矩阵"
+      ],
+      "expected_approaches": [
+        "把矩阵视为一维有序数组二分",
+        "或先二分行再二分列"
+      ],
+      "hints": [
+        "矩阵整体可以映射成长度 m*n 的有序数组。",
+        "一维下标 idx 对应 matrix[idx / n][idx % n]。"
+      ],
+      "edge_cases": [
+        "空矩阵",
+        "单行",
+        "单列"
+      ],
+      "related_keywords": [
+        "矩阵",
+        "二分查找",
+        "数组"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《搜索二维矩阵》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_34_find_first_last_position",
+      "title": "在排序数组中查找元素的第一个和最后一个位置",
+      "title_en": "Find First and Last Position of Element in Sorted Array",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "二分查找"
+      ],
+      "expected_approaches": [
+        "两次二分分别找 lower_bound(target) 和 lower_bound(target + 1)",
+        "或分别找左右边界"
+      ],
+      "hints": [
+        "重复元素边界适合用二分模板。",
+        "找到第一个 >= target 的位置后，再找第一个 > target 的位置。"
+      ],
+      "edge_cases": [
+        "不存在",
+        "全是 target",
+        "单元素"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "数组",
+        "边界"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《在排序数组中查找元素的第一个和最后一个位置》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_33_search_rotated_sorted_array",
+      "title": "搜索旋转排序数组",
+      "title_en": "Search in Rotated Sorted Array",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "二分查找"
+      ],
+      "expected_approaches": [
+        "二分判断哪一半有序",
+        "根据 target 是否落在有序半边决定收缩方向"
+      ],
+      "hints": [
+        "旋转数组至少有一半是有序的。",
+        "先判断 nums[left] <= nums[mid] 还是右半边有序。"
+      ],
+      "edge_cases": [
+        "未旋转",
+        "长度为 1",
+        "target 不存在"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "数组",
+        "旋转"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "整数数组 nums 按升序排列，数组中的值互不相同。\n\n在传递给函数之前，nums 在预先未知的某个下标 k 上进行了旋转，使得数组变为 [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]。\n\n给你旋转后的数组 nums 和一个整数 target，如果 nums 中存在这个目标值，则返回它的下标，否则返回 -1。\n\n要求时间复杂度为 O(log n)。"
+    },
+    {
+      "id": "lc_153_find_min_rotated_sorted_array",
+      "title": "寻找旋转排序数组中的最小值",
+      "title_en": "Find Minimum in Rotated Sorted Array",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "二分查找"
+      ],
+      "expected_approaches": [
+        "二分比较 mid 和 right",
+        "最小值在无序半边"
+      ],
+      "hints": [
+        "如果 nums[mid] > nums[right]，最小值在右侧。",
+        "否则最小值在 mid 或左侧。"
+      ],
+      "edge_cases": [
+        "未旋转",
+        "长度为 1",
+        "旋转点在末尾附近"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "数组",
+        "旋转"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "已知一个长度为 n 的数组按升序排列后，在预先未知的某个下标处发生旋转，例如数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2]。\n\n给你旋转后的数组 nums，其中所有元素互不相同。请你找出并返回其中的最小元素。\n\n要求时间复杂度为 O(log n)。"
+    },
+    {
+      "id": "lc_4_median_two_sorted_arrays",
+      "title": "寻找两个正序数组的中位数",
+      "title_en": "Median of Two Sorted Arrays",
+      "difficulty": "hard",
+      "tags": [
+        "数组",
+        "二分查找",
+        "分治"
+      ],
+      "expected_approaches": [
+        "二分划分两个数组，使左半部分数量和最大值满足条件",
+        "递归查找第 k 小元素"
+      ],
+      "hints": [
+        "中位数可以转化为找第 k 小元素。",
+        "也可以找一个切分点，让左半区所有数 <= 右半区所有数。"
+      ],
+      "edge_cases": [
+        "一个数组为空",
+        "总长度奇偶不同",
+        "重复元素"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "数组",
+        "分治"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《寻找两个正序数组的中位数》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_20_valid_parentheses",
+      "title": "有效的括号",
+      "title_en": "Valid Parentheses",
+      "difficulty": "easy",
+      "tags": [
+        "栈",
+        "字符串"
+      ],
+      "expected_approaches": [
+        "栈保存待匹配左括号",
+        "遇到右括号时检查栈顶是否匹配"
+      ],
+      "hints": [
+        "后出现的左括号需要先闭合。",
+        "这符合栈的后进先出特性。"
+      ],
+      "edge_cases": [
+        "空字符串",
+        "只有左括号",
+        "顺序错误"
+      ],
+      "related_keywords": [
+        "栈",
+        "字符串",
+        "括号"
+      ],
+      "role_tags": [
+        "frontend",
+        "backend",
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《有效的括号》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_155_min_stack",
+      "title": "最小栈",
+      "title_en": "Min Stack",
+      "difficulty": "medium",
+      "tags": [
+        "栈",
+        "设计"
+      ],
+      "expected_approaches": [
+        "辅助栈同步记录当前最小值",
+        "每个栈元素保存值和当前最小值"
+      ],
+      "hints": [
+        "只用一个变量保存最小值，pop 后可能无法恢复。",
+        "辅助栈栈顶表示当前所有元素的最小值。"
+      ],
+      "edge_cases": [
+        "重复最小值",
+        "弹出最小值",
+        "空栈操作约定"
+      ],
+      "related_keywords": [
+        "栈",
+        "设计",
+        "最小值"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "设计一个支持 push、pop、top 操作，并能在常数时间内检索到最小元素的栈。\n\n实现 MinStack 类：\n- MinStack() 初始化堆栈对象。\n- void push(int val) 将元素 val 推入堆栈。\n- void pop() 删除堆栈顶部的元素。\n- int top() 获取堆栈顶部的元素。\n- int getMin() 获取堆栈中的最小元素。"
+    },
+    {
+      "id": "lc_394_decode_string",
+      "title": "字符串解码",
+      "title_en": "Decode String",
+      "difficulty": "medium",
+      "tags": [
+        "栈",
+        "递归",
+        "字符串"
+      ],
+      "expected_approaches": [
+        "栈保存之前的字符串和重复次数",
+        "递归解析括号结构"
+      ],
+      "hints": [
+        "遇到 '[' 时保存当前状态并开始解析内部。",
+        "遇到 ']' 时将内部字符串重复并拼回上一层。"
+      ],
+      "edge_cases": [
+        "多位数字",
+        "嵌套括号",
+        "普通字符混合"
+      ],
+      "related_keywords": [
+        "栈",
+        "字符串",
+        "递归",
+        "解析"
+      ],
+      "role_tags": [
+        "algorithm",
+        "frontend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《字符串解码》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_739_daily_temperatures",
+      "title": "每日温度",
+      "title_en": "Daily Temperatures",
+      "difficulty": "medium",
+      "tags": [
+        "栈",
+        "数组",
+        "单调栈"
+      ],
+      "expected_approaches": [
+        "单调递减栈保存下标",
+        "当前温度更高时弹出并计算距离"
+      ],
+      "hints": [
+        "每个下标都在等待右侧第一个更大元素。",
+        "单调栈适合找 next greater element。"
+      ],
+      "edge_cases": [
+        "单调递减",
+        "单调递增",
+        "重复温度"
+      ],
+      "related_keywords": [
+        "单调栈",
+        "数组",
+        "栈"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《每日温度》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_84_largest_rectangle_histogram",
+      "title": "柱状图中最大的矩形",
+      "title_en": "Largest Rectangle in Histogram",
+      "difficulty": "hard",
+      "tags": [
+        "栈",
+        "数组",
+        "单调栈"
+      ],
+      "expected_approaches": [
+        "单调递增栈",
+        "每根柱子出栈时确定左右第一个更矮边界"
+      ],
+      "hints": [
+        "以某根柱子为高时，需要找到左右第一个比它矮的位置。",
+        "单调栈可以一次遍历确定边界。"
+      ],
+      "edge_cases": [
+        "单调递增",
+        "单调递减",
+        "相同高度"
+      ],
+      "related_keywords": [
+        "单调栈",
+        "数组",
+        "面积"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《柱状图中最大的矩形》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_215_kth_largest",
+      "title": "数组中的第 K 个最大元素",
+      "title_en": "Kth Largest Element in an Array",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "分治",
+        "快速选择",
+        "排序",
+        "堆"
+      ],
+      "expected_approaches": [
+        "小根堆维护 k 个最大元素",
+        "快速选择平均 O(n)",
+        "排序 O(n log n)"
+      ],
+      "hints": [
+        "不一定需要完整排序。",
+        "快速选择类似快速排序的 partition。"
+      ],
+      "edge_cases": [
+        "重复元素",
+        "k 为 1",
+        "k 等于数组长度"
+      ],
+      "related_keywords": [
+        "堆",
+        "快速选择",
+        "排序",
+        "数组"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《数组中的第 K 个最大元素》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_347_top_k_frequent",
+      "title": "前 K 个高频元素",
+      "title_en": "Top K Frequent Elements",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "哈希表",
+        "分治",
+        "桶排序",
+        "计数",
+        "快速选择",
+        "排序",
+        "堆"
+      ],
+      "expected_approaches": [
+        "哈希表计数 + 小根堆",
+        "桶排序按频次分桶",
+        "快速选择"
+      ],
+      "hints": [
+        "先统计每个元素出现次数。",
+        "只需要 top k，不需要完整排序。"
+      ],
+      "edge_cases": [
+        "k 等于不同元素数",
+        "频次相同",
+        "负数"
+      ],
+      "related_keywords": [
+        "哈希表",
+        "堆",
+        "TopK",
+        "计数"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend",
+        "data"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《前 K 个高频元素》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_295_find_median_data_stream",
+      "title": "数据流的中位数",
+      "title_en": "Find Median from Data Stream",
+      "difficulty": "hard",
+      "tags": [
+        "设计",
+        "双指针",
+        "数据流",
+        "排序",
+        "堆"
+      ],
+      "expected_approaches": [
+        "大根堆保存较小一半，小根堆保存较大一半",
+        "保持两个堆大小平衡"
+      ],
+      "hints": [
+        "中位数由较小一半最大值和较大一半最小值决定。",
+        "两个堆可以动态维护这两个边界。"
+      ],
+      "edge_cases": [
+        "奇数个元素",
+        "偶数个元素",
+        "重复元素"
+      ],
+      "related_keywords": [
+        "堆",
+        "数据流",
+        "设计",
+        "中位数"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend",
+        "data"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "中位数是有序整数列表中的中间值。如果列表的大小是偶数，则中位数是中间两个数的平均值。\n\n例如，arr = [2,3,4] 的中位数是 3。\n例如，arr = [2,3] 的中位数是 (2 + 3) / 2 = 2.5。\n\n请实现 MedianFinder 类：\n- MedianFinder() 初始化对象。\n- void addNum(int num) 将数据流中的整数 num 添加到数据结构中。\n- double findMedian() 返回目前为止所有元素的中位数。"
+    },
+    {
+      "id": "lc_121_best_time_stock",
+      "title": "买卖股票的最佳时机",
+      "title_en": "Best Time to Buy and Sell Stock",
+      "difficulty": "easy",
+      "tags": [
+        "数组",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "遍历维护历史最低价",
+        "当前价格减历史最低价更新最大利润"
+      ],
+      "hints": [
+        "卖出日必须在买入日之后。",
+        "每一天都可以假设今天卖出，找之前最低买入价。"
+      ],
+      "edge_cases": [
+        "价格单调下降",
+        "单日价格",
+        "最大利润为 0"
+      ],
+      "related_keywords": [
+        "数组",
+        "动态规划",
+        "贪心"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《买卖股票的最佳时机》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_55_jump_game",
+      "title": "跳跃游戏",
+      "title_en": "Jump Game",
+      "difficulty": "medium",
+      "tags": [
+        "贪心",
+        "数组",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "贪心维护当前能到达的最远位置",
+        "若当前位置超过最远可达则失败"
+      ],
+      "hints": [
+        "只关心目前能到达的最远下标。",
+        "遍历过程中不断扩展可达范围。"
+      ],
+      "edge_cases": [
+        "第一个元素为 0",
+        "单元素",
+        "中间出现无法跨越的 0"
+      ],
+      "related_keywords": [
+        "贪心",
+        "动态规划",
+        "数组"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《跳跃游戏》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_45_jump_game_ii",
+      "title": "跳跃游戏 II",
+      "title_en": "Jump Game II",
+      "difficulty": "medium",
+      "tags": [
+        "贪心",
+        "数组",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "贪心按层扩展当前跳跃范围",
+        "到达当前范围边界时增加一步并更新下一范围"
+      ],
+      "hints": [
+        "可以把当前一步能到达的范围看成 BFS 的一层。",
+        "在当前范围内选择能让下一范围最远的位置。"
+      ],
+      "edge_cases": [
+        "单元素",
+        "每次只能跳 1",
+        "大步跨越终点"
+      ],
+      "related_keywords": [
+        "贪心",
+        "数组",
+        "BFS思想"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《跳跃游戏 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_763_partition_labels",
+      "title": "划分字母区间",
+      "title_en": "Partition Labels",
+      "difficulty": "medium",
+      "tags": [
+        "贪心",
+        "哈希表",
+        "双指针",
+        "字符串"
+      ],
+      "expected_approaches": [
+        "预处理每个字符最后出现位置",
+        "遍历维护当前片段必须覆盖的最远右边界"
+      ],
+      "hints": [
+        "一个片段必须包含其中所有字符的最后出现位置。",
+        "当当前位置到达当前片段最远边界时可以切分。"
+      ],
+      "edge_cases": [
+        "所有字符相同",
+        "所有字符不同",
+        "多个片段"
+      ],
+      "related_keywords": [
+        "贪心",
+        "字符串",
+        "哈希表"
+      ],
+      "role_tags": [
+        "algorithm",
+        "frontend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《划分字母区间》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_70_climbing_stairs",
+      "title": "爬楼梯",
+      "title_en": "Climbing Stairs",
+      "difficulty": "easy",
+      "tags": [
+        "记忆化搜索",
+        "数学",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "动态规划 f[n] = f[n-1] + f[n-2]",
+        "滚动变量优化空间"
+      ],
+      "hints": [
+        "到达第 n 阶的最后一步来自 n-1 或 n-2。",
+        "这是斐波那契型递推。"
+      ],
+      "edge_cases": [
+        "n 为 1",
+        "n 为 2",
+        "较大 n"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "递推",
+        "数学"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《爬楼梯》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_118_pascals_triangle",
+      "title": "杨辉三角",
+      "title_en": "Pascal's Triangle",
+      "difficulty": "easy",
+      "tags": [
+        "数组",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "每行首尾为 1",
+        "中间元素由上一行相邻两个元素相加得到"
+      ],
+      "hints": [
+        "每一行只依赖上一行。",
+        "注意行下标和列下标边界。"
+      ],
+      "edge_cases": [
+        "numRows 为 1",
+        "numRows 为 0",
+        "较大行数"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "数组",
+        "递推"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《杨辉三角》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_198_house_robber",
+      "title": "打家劫舍",
+      "title_en": "House Robber",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "dp[i] = max(dp[i-1], dp[i-2] + nums[i])",
+        "滚动变量优化"
+      ],
+      "hints": [
+        "对每个房屋只有偷或不偷两种决策。",
+        "偷当前房屋就不能偷前一个。"
+      ],
+      "edge_cases": [
+        "空数组",
+        "单个房屋",
+        "两个房屋"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "数组",
+        "状态转移"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《打家劫舍》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_279_perfect_squares",
+      "title": "完全平方数",
+      "title_en": "Perfect Squares",
+      "difficulty": "medium",
+      "tags": [
+        "广度优先搜索",
+        "数学",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "完全背包动态规划",
+        "BFS 把剩余值作为状态"
+      ],
+      "hints": [
+        "可选物品是所有小于等于 n 的平方数。",
+        "求最少数量适合 dp 最小值转移。"
+      ],
+      "edge_cases": [
+        "n 本身是平方数",
+        "n 很小",
+        "需要多个平方数"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "BFS",
+        "数学",
+        "背包"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《完全平方数》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_322_coin_change",
+      "title": "零钱兑换",
+      "title_en": "Coin Change",
+      "difficulty": "medium",
+      "tags": [
+        "广度优先搜索",
+        "数组",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "完全背包动态规划",
+        "dp[x] 表示凑出金额 x 的最少硬币数"
+      ],
+      "hints": [
+        "每种硬币可以使用无限次。",
+        "dp[x] 可以从 dp[x - coin] + 1 转移。"
+      ],
+      "edge_cases": [
+        "amount 为 0",
+        "无法凑出",
+        "硬币面额大于 amount"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "背包",
+        "BFS"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《零钱兑换》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_139_word_break",
+      "title": "单词拆分",
+      "title_en": "Word Break",
+      "difficulty": "medium",
+      "tags": [
+        "字典树",
+        "记忆化搜索",
+        "数组",
+        "哈希表",
+        "字符串",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "动态规划 dp[i] 表示前 i 个字符能否拆分",
+        "哈希集合快速判断子串是否在字典中"
+      ],
+      "hints": [
+        "如果前 j 个字符可拆分且 s[j:i] 在字典中，则前 i 个字符可拆分。",
+        "字典查询需要高效。"
+      ],
+      "edge_cases": [
+        "空字符串",
+        "重复使用单词",
+        "长字符串超时"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "字符串",
+        "哈希表",
+        "Trie"
+      ],
+      "role_tags": [
+        "algorithm",
+        "ai",
+        "frontend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《单词拆分》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_300_longest_increasing_subsequence",
+      "title": "最长递增子序列",
+      "title_en": "Longest Increasing Subsequence",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "二分查找",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "O(n^2) 动态规划",
+        "贪心 + 二分维护每个长度的最小结尾"
+      ],
+      "hints": [
+        "dp[i] 可以表示以 i 结尾的 LIS 长度。",
+        "tails 数组中 tails[len] 表示长度为 len+1 的递增子序列最小结尾。"
+      ],
+      "edge_cases": [
+        "严格递减",
+        "严格递增",
+        "重复元素"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "二分查找",
+        "数组"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《最长递增子序列》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_152_maximum_product_subarray",
+      "title": "乘积最大子数组",
+      "title_en": "Maximum Product Subarray",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "动态规划同时维护当前位置最大乘积和最小乘积",
+        "遇到负数时最大最小可能交换"
+      ],
+      "hints": [
+        "负数乘以最小负数可能变成最大正数。",
+        "需要同时保存最大和最小状态。"
+      ],
+      "edge_cases": [
+        "包含 0",
+        "全负数",
+        "单元素"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "数组",
+        "乘积"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《乘积最大子数组》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_416_partition_equal_subset_sum",
+      "title": "分割等和子集",
+      "title_en": "Partition Equal Subset Sum",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "转化为 0/1 背包，是否能凑出 sum/2",
+        "一维 dp 逆序遍历"
+      ],
+      "hints": [
+        "两个子集和相等意味着目标是总和的一半。",
+        "每个数字只能使用一次。"
+      ],
+      "edge_cases": [
+        "总和为奇数",
+        "单元素",
+        "存在大于 sum/2 的元素"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "背包",
+        "数组"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《分割等和子集》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_32_longest_valid_parentheses",
+      "title": "最长有效括号",
+      "title_en": "Longest Valid Parentheses",
+      "difficulty": "hard",
+      "tags": [
+        "栈",
+        "字符串",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "栈保存下标和最近无效位置",
+        "动态规划记录以 i 结尾的最长有效长度"
+      ],
+      "hints": [
+        "需要知道有效子串的起始边界。",
+        "栈里可以保存未匹配括号的下标。"
+      ],
+      "edge_cases": [
+        "全左括号",
+        "全右括号",
+        "多个有效片段"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "栈",
+        "字符串"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《最长有效括号》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_62_unique_paths",
+      "title": "不同路径",
+      "title_en": "Unique Paths",
+      "difficulty": "medium",
+      "tags": [
+        "数学",
+        "动态规划",
+        "组合数学"
+      ],
+      "expected_approaches": [
+        "二维动态规划",
+        "组合数学 C(m+n-2, m-1)",
+        "滚动数组优化"
+      ],
+      "hints": [
+        "到达某格只能来自上方或左方。",
+        "边界第一行和第一列路径数为 1。"
+      ],
+      "edge_cases": [
+        "一行",
+        "一列",
+        "较大 m/n"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "矩阵",
+        "组合数学"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《不同路径》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_64_minimum_path_sum",
+      "title": "最小路径和",
+      "title_en": "Minimum Path Sum",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "动态规划",
+        "矩阵"
+      ],
+      "expected_approaches": [
+        "二维 DP：当前最小路径和来自上方或左方较小者",
+        "可原地修改 grid 或滚动数组"
+      ],
+      "hints": [
+        "当前位置只依赖上方和左方。",
+        "第一行和第一列只有一种走法。"
+      ],
+      "edge_cases": [
+        "一行",
+        "一列",
+        "空矩阵"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "矩阵",
+        "路径"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《最小路径和》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_5_longest_palindromic_substring",
+      "title": "最长回文子串",
+      "title_en": "Longest Palindromic Substring",
+      "difficulty": "medium",
+      "tags": [
+        "双指针",
+        "字符串",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "中心扩展",
+        "动态规划判断 s[i:j] 是否回文"
+      ],
+      "hints": [
+        "回文串可以从中心向两侧扩展。",
+        "中心可能是一个字符，也可能是两个字符之间。"
+      ],
+      "edge_cases": [
+        "空字符串",
+        "偶数长度回文",
+        "全相同字符"
+      ],
+      "related_keywords": [
+        "字符串",
+        "动态规划",
+        "双指针",
+        "回文"
+      ],
+      "role_tags": [
+        "algorithm",
+        "frontend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《最长回文子串》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_1143_longest_common_subsequence",
+      "title": "最长公共子序列",
+      "title_en": "Longest Common Subsequence",
+      "difficulty": "medium",
+      "tags": [
+        "字符串",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "二维 DP",
+        "字符相等时来自左上 + 1，否则取上方和左方最大值"
+      ],
+      "hints": [
+        "子序列不要求连续，但相对顺序不能变。",
+        "dp[i][j] 表示两个前缀的 LCS 长度。"
+      ],
+      "edge_cases": [
+        "无公共字符",
+        "一个字符串为空",
+        "完全相同"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "字符串",
+        "LCS"
+      ],
+      "role_tags": [
+        "algorithm",
+        "ai"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《最长公共子序列》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_72_edit_distance",
+      "title": "编辑距离",
+      "title_en": "Edit Distance",
+      "difficulty": "medium",
+      "tags": [
+        "字符串",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "二维 DP",
+        "字符相同继承左上，否则取插入、删除、替换三者最小 + 1"
+      ],
+      "hints": [
+        "dp[i][j] 表示 word1 前 i 个字符变成 word2 前 j 个字符的最小操作数。",
+        "三种操作分别对应不同前置状态。"
+      ],
+      "edge_cases": [
+        "一个字符串为空",
+        "完全相同",
+        "长度差很大"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "字符串",
+        "编辑距离"
+      ],
+      "role_tags": [
+        "algorithm",
+        "ai"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《编辑距离》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_136_single_number",
+      "title": "只出现一次的数字",
+      "title_en": "Single Number",
+      "difficulty": "easy",
+      "tags": [
+        "位运算",
+        "数组"
+      ],
+      "expected_approaches": [
+        "异或运算",
+        "a ^ a = 0，a ^ 0 = a"
+      ],
+      "hints": [
+        "相同数字异或会抵消。",
+        "异或满足交换律和结合律。"
+      ],
+      "edge_cases": [
+        "单元素",
+        "负数",
+        "只出现一次的数在任意位置"
+      ],
+      "related_keywords": [
+        "位运算",
+        "数组",
+        "异或"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《只出现一次的数字》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_169_majority_element",
+      "title": "多数元素",
+      "title_en": "Majority Element",
+      "difficulty": "easy",
+      "tags": [
+        "数组",
+        "哈希表",
+        "分治",
+        "计数",
+        "排序"
+      ],
+      "expected_approaches": [
+        "哈希计数",
+        "排序取中位数",
+        "Boyer-Moore 投票算法"
+      ],
+      "hints": [
+        "多数元素数量超过其他所有元素总和。",
+        "投票算法可以抵消不同元素。"
+      ],
+      "edge_cases": [
+        "单元素",
+        "多数元素在前/后",
+        "负数"
+      ],
+      "related_keywords": [
+        "数组",
+        "计数",
+        "投票算法"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《多数元素》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_75_sort_colors",
+      "title": "颜色分类",
+      "title_en": "Sort Colors",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "双指针",
+        "排序"
+      ],
+      "expected_approaches": [
+        "计数排序",
+        "三指针 Dutch National Flag"
+      ],
+      "hints": [
+        "只有三种取值。",
+        "维护 0 区、1 区、2 区的边界。"
+      ],
+      "edge_cases": [
+        "全 0",
+        "全 1",
+        "全 2",
+        "乱序混合"
+      ],
+      "related_keywords": [
+        "数组",
+        "双指针",
+        "排序"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《颜色分类》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_31_next_permutation",
+      "title": "下一个排列",
+      "title_en": "Next Permutation",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "从右向左找到第一个下降位置",
+        "从右侧找比它大的最小元素交换",
+        "反转后缀"
+      ],
+      "hints": [
+        "尽量让变化发生在靠右位置。",
+        "后缀原本是降序，交换后反转可得到最小后缀。"
+      ],
+      "edge_cases": [
+        "完全降序",
+        "完全升序",
+        "重复元素"
+      ],
+      "related_keywords": [
+        "数组",
+        "排列",
+        "双指针"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《下一个排列》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_287_find_duplicate",
+      "title": "寻找重复数",
+      "title_en": "Find the Duplicate Number",
+      "difficulty": "medium",
+      "tags": [
+        "位运算",
+        "数组",
+        "双指针",
+        "二分查找"
+      ],
+      "expected_approaches": [
+        "快慢指针把数组看成链表找环入口",
+        "二分答案统计小于等于 mid 的数量"
+      ],
+      "hints": [
+        "nums[i] 可以看作从 i 指向 nums[i] 的边。",
+        "重复数会形成环。"
+      ],
+      "edge_cases": [
+        "重复多次",
+        "重复数为 1",
+        "重复数为 n"
+      ],
+      "related_keywords": [
+        "数组",
+        "快慢指针",
+        "二分查找",
+        "环"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《寻找重复数》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_61_rotate_list",
+      "title": "旋转链表",
+      "title_en": "Rotate List",
+      "difficulty": "medium",
+      "tags": [
+        "链表",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "先统计链表长度",
+        "将链表连成环后在合适位置断开"
+      ],
+      "hints": [
+        "k 可能远大于链表长度。",
+        "新头节点的位置和链表长度有关。"
+      ],
+      "edge_cases": [
+        "空链表",
+        "单节点",
+        "k 为 0 或为链表长度的倍数"
+      ],
+      "related_keywords": [
+        "链表",
+        "轮转",
+        "环",
+        "双指针"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《旋转链表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_82_remove_duplicates_sorted_list_ii",
+      "title": "删除排序链表中的重复元素 II",
+      "title_en": "Remove Duplicates from Sorted List II",
+      "difficulty": "medium",
+      "tags": [
+        "链表"
+      ],
+      "expected_approaches": [
+        "哑节点 + 指针扫描重复段",
+        "遇到重复值时整体跳过"
+      ],
+      "hints": [
+        "和只保留一个重复值的题不同，这里重复值需要全部删除。",
+        "哑节点可以统一处理删除头节点的情况。"
+      ],
+      "edge_cases": [
+        "重复元素出现在头部",
+        "重复元素出现在尾部",
+        "所有节点都重复"
+      ],
+      "related_keywords": [
+        "链表",
+        "去重",
+        "哑节点"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《删除排序链表中的重复元素 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_86_partition_list",
+      "title": "分隔链表",
+      "title_en": "Partition List",
+      "difficulty": "medium",
+      "tags": [
+        "链表",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "维护两个链表分别保存小于 x 和大于等于 x 的节点",
+        "最后将两个链表拼接"
+      ],
+      "hints": [
+        "要求保留相对顺序，因此不能简单交换节点值。",
+        "注意处理第二个链表尾部的 next。"
+      ],
+      "edge_cases": [
+        "所有节点都小于 x",
+        "所有节点都大于等于 x",
+        "空链表"
+      ],
+      "related_keywords": [
+        "链表",
+        "分区",
+        "相对顺序"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《分隔链表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_92_reverse_linked_list_ii",
+      "title": "反转链表 II",
+      "title_en": "Reverse Linked List II",
+      "difficulty": "medium",
+      "tags": [
+        "链表"
+      ],
+      "expected_approaches": [
+        "找到待反转区间前驱节点",
+        "局部头插法或常规反转后重新连接"
+      ],
+      "hints": [
+        "只需要反转一段，而不是整条链表。",
+        "可以先定位到 left 前一个节点。"
+      ],
+      "edge_cases": [
+        "left 等于 right",
+        "从头节点开始反转",
+        "反转到尾节点"
+      ],
+      "related_keywords": [
+        "链表",
+        "局部反转",
+        "头插法"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《反转链表 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_143_reorder_list",
+      "title": "重排链表",
+      "title_en": "Reorder List",
+      "difficulty": "medium",
+      "tags": [
+        "链表",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "快慢指针找中点",
+        "反转后半段",
+        "交替合并两条链表"
+      ],
+      "hints": [
+        "这是找中点、反转链表、合并链表三步组合题。",
+        "注意奇偶长度链表的处理中点位置。"
+      ],
+      "edge_cases": [
+        "空链表",
+        "长度为 1 或 2",
+        "奇数长度链表"
+      ],
+      "related_keywords": [
+        "链表",
+        "中点",
+        "反转",
+        "合并"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《重排链表》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_445_add_two_numbers_ii",
+      "title": "两数相加 II",
+      "title_en": "Add Two Numbers II",
+      "difficulty": "medium",
+      "tags": [
+        "链表",
+        "栈",
+        "数学"
+      ],
+      "expected_approaches": [
+        "使用栈从低位开始相加",
+        "也可以先反转链表再复用加法逻辑"
+      ],
+      "hints": [
+        "当前最低位在链表尾部，不方便直接相加。",
+        "栈可以帮助从后往前处理。"
+      ],
+      "edge_cases": [
+        "两个链表长度不同",
+        "最高位产生新的进位",
+        "某个链表只有一个节点"
+      ],
+      "related_keywords": [
+        "链表",
+        "栈",
+        "加法",
+        "进位"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《两数相加 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_876_middle_of_linked_list",
+      "title": "链表的中间结点",
+      "title_en": "Middle of the Linked List",
+      "difficulty": "easy",
+      "tags": [
+        "链表",
+        "双指针"
+      ],
+      "expected_approaches": [
+        "快慢指针",
+        "一次遍历完成定位"
+      ],
+      "hints": [
+        "慢指针每次走一步，快指针每次走两步。",
+        "当快指针到达末尾时，慢指针刚好在中间。"
+      ],
+      "edge_cases": [
+        "链表长度为 1",
+        "链表长度为偶数",
+        "链表长度为奇数"
+      ],
+      "related_keywords": [
+        "链表",
+        "中间节点",
+        "快慢指针"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《链表的中间结点》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_103_binary_tree_zigzag_level_order",
+      "title": "二叉树的锯齿形层序遍历",
+      "title_en": "Binary Tree Zigzag Level Order Traversal",
+      "difficulty": "medium",
+      "tags": [
+        "树",
+        "广度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "BFS 按层遍历",
+        "根据层号决定当前层的插入方向"
+      ],
+      "hints": [
+        "锯齿形遍历的本质仍然是按层访问。",
+        "可以在收集每层结果时决定顺序，而不是改变遍历顺序。"
+      ],
+      "edge_cases": [
+        "空树",
+        "单节点",
+        "不平衡树"
+      ],
+      "related_keywords": [
+        "树",
+        "BFS",
+        "层序遍历",
+        "锯齿形"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《二叉树的锯齿形层序遍历》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_112_path_sum",
+      "title": "路径总和",
+      "title_en": "Path Sum",
+      "difficulty": "easy",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "DFS 递归减去当前节点值",
+        "到叶子节点时判断剩余目标值是否为 0"
+      ],
+      "hints": [
+        "题目要求的是从根到叶子的完整路径。",
+        "不是任意路径，也不是任意起点。"
+      ],
+      "edge_cases": [
+        "空树",
+        "目标和为负数",
+        "只有根节点"
+      ],
+      "related_keywords": [
+        "树",
+        "DFS",
+        "路径和",
+        "根到叶子"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《路径总和》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_113_path_sum_ii",
+      "title": "路径总和 II",
+      "title_en": "Path Sum II",
+      "difficulty": "medium",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "回溯",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "DFS + 回溯记录当前路径",
+        "到叶子节点且路径和满足条件时收集结果"
+      ],
+      "hints": [
+        "相比路径总和 I，这里要返回完整路径而不是布尔值。",
+        "注意回溯时撤销当前节点。"
+      ],
+      "edge_cases": [
+        "空树",
+        "存在多条答案路径",
+        "路径中包含负数节点"
+      ],
+      "related_keywords": [
+        "树",
+        "DFS",
+        "回溯",
+        "路径和"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《路径总和 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_257_binary_tree_paths",
+      "title": "二叉树的所有路径",
+      "title_en": "Binary Tree Paths",
+      "difficulty": "easy",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "字符串",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "DFS 遍历所有根到叶子的路径",
+        "路径可以用字符串拼接或列表回溯后再 join"
+      ],
+      "hints": [
+        "只有到叶子节点时才能形成一条完整路径。",
+        "可以边遍历边构造路径。"
+      ],
+      "edge_cases": [
+        "空树",
+        "单节点",
+        "多层不平衡树"
+      ],
+      "related_keywords": [
+        "树",
+        "DFS",
+        "路径",
+        "字符串"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《二叉树的所有路径》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_297_serialize_deserialize_binary_tree",
+      "title": "二叉树的序列化与反序列化",
+      "title_en": "Serialize and Deserialize Binary Tree",
+      "difficulty": "hard",
+      "tags": [
+        "树",
+        "设计",
+        "深度优先搜索",
+        "广度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "前序遍历 + 空节点标记",
+        "层序遍历 + 空节点占位"
+      ],
+      "hints": [
+        "只要编码和解码规则一一对应即可。",
+        "空节点信息不能丢，否则无法唯一恢复树。"
+      ],
+      "edge_cases": [
+        "空树",
+        "只有左子树或右子树",
+        "值包含负数"
+      ],
+      "related_keywords": [
+        "树",
+        "序列化",
+        "反序列化",
+        "设计"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "序列化是将一个数据结构或者对象转换为连续的比特位，以便将转换后的数据存储在文件或内存中，同时也可以通过网络传输到另一个计算机环境，并在之后恢复为原始结构。\n\n请设计一个算法来实现二叉树的序列化与反序列化。\n\n这里不限定你的序列化与反序列化方案，只需要保证一个二叉树可以被序列化为一个字符串，并且能够将这个字符串反序列化为原始的树结构。"
+    },
+    {
+      "id": "lc_617_merge_two_binary_trees",
+      "title": "合并二叉树",
+      "title_en": "Merge Two Binary Trees",
+      "difficulty": "easy",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "广度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "递归同时遍历两棵树",
+        "也可以用队列迭代合并"
+      ],
+      "hints": [
+        "合并操作天然适合同时遍历对应节点。",
+        "空节点可以直接返回另一棵树的节点。"
+      ],
+      "edge_cases": [
+        "其中一棵树为空",
+        "两棵树结构完全不同",
+        "只有根节点重叠"
+      ],
+      "related_keywords": [
+        "树",
+        "合并",
+        "DFS",
+        "BFS"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《合并二叉树》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_572_subtree_of_another_tree",
+      "title": "另一棵树的子树",
+      "title_en": "Subtree of Another Tree",
+      "difficulty": "easy",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "遍历 root 的每个节点尝试匹配",
+        "用递归判断两棵树是否完全相同"
+      ],
+      "hints": [
+        "需要区分值相同但结构不同的情况。",
+        "问题可以拆成“找起点”加“比较两棵树”。"
+      ],
+      "edge_cases": [
+        "subRoot 只有一个节点",
+        "root 为空",
+        "存在多个值相同的候选节点"
+      ],
+      "related_keywords": [
+        "树",
+        "子树",
+        "递归",
+        "匹配"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《另一棵树的子树》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_235_lowest_common_ancestor_bst",
+      "title": "二叉搜索树的最近公共祖先",
+      "title_en": "Lowest Common Ancestor of a Binary Search Tree",
+      "difficulty": "medium",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "二叉搜索树",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "利用 BST 性质向左或向右收缩搜索范围",
+        "当 p 和 q 分居当前节点两侧时当前节点即答案"
+      ],
+      "hints": [
+        "BST 的有序性可以减少遍历范围。",
+        "如果当前节点值介于 p 和 q 之间，它通常就是答案。"
+      ],
+      "edge_cases": [
+        "其中一个节点就是另一个节点的祖先",
+        "p 和 q 在同一侧",
+        "根节点即答案"
+      ],
+      "related_keywords": [
+        "树",
+        "BST",
+        "最近公共祖先"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《二叉搜索树的最近公共祖先》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_91_decode_ways",
+      "title": "解码方法",
+      "title_en": "Decode Ways",
+      "difficulty": "medium",
+      "tags": [
+        "字符串",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "动态规划",
+        "分别考虑最后一位单独解码和最后两位一起解码"
+      ],
+      "hints": [
+        "字符 '0' 不能单独解码。",
+        "只有 10 到 26 之间的两位数才可以作为一个字母。"
+      ],
+      "edge_cases": [
+        "字符串以 0 开头",
+        "连续出现 0",
+        "长度为 1"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "字符串",
+        "计数",
+        "解码"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《解码方法》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_309_best_time_stock_cooldown",
+      "title": "最佳买卖股票时机含冷冻期",
+      "title_en": "Best Time to Buy and Sell Stock with Cooldown",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "状态机动态规划",
+        "区分持有、刚卖出、冷冻结束可买入三种状态"
+      ],
+      "hints": [
+        "这题和不限次数交易的区别在于卖出后要休息一天。",
+        "状态之间的转移关系比普通股票题更多。"
+      ],
+      "edge_cases": [
+        "价格单调递增",
+        "价格单调递减",
+        "数组长度很小"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "股票",
+        "状态机",
+        "冷冻期"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《最佳买卖股票时机含冷冻期》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_337_house_robber_iii",
+      "title": "打家劫舍 III",
+      "title_en": "House Robber III",
+      "difficulty": "medium",
+      "tags": [
+        "树",
+        "深度优先搜索",
+        "动态规划",
+        "二叉树"
+      ],
+      "expected_approaches": [
+        "树形动态规划",
+        "对每个节点计算偷和不偷两种状态的最优值"
+      ],
+      "hints": [
+        "父子节点不能同时被选中。",
+        "树上 DP 常见做法是递归返回多个状态。"
+      ],
+      "edge_cases": [
+        "空树",
+        "只有一个节点",
+        "左右子树规模差异很大"
+      ],
+      "related_keywords": [
+        "树",
+        "动态规划",
+        "打家劫舍",
+        "状态"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《打家劫舍 III》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_494_target_sum",
+      "title": "目标和",
+      "title_en": "Target Sum",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "动态规划",
+        "回溯"
+      ],
+      "expected_approaches": [
+        "回溯枚举符号",
+        "转换为 0/1 背包计数问题做动态规划"
+      ],
+      "hints": [
+        "如果把一部分数看成正数集合，另一部分看成负数集合，可以推导为子集和问题。",
+        "最终是求方案数而不是判断是否可达。"
+      ],
+      "edge_cases": [
+        "数组中包含 0",
+        "target 为负数",
+        "无解"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "回溯",
+        "背包",
+        "方案数"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《目标和》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_518_coin_change_ii",
+      "title": "零钱兑换 II",
+      "title_en": "Coin Change II",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "完全背包动态规划",
+        "外层遍历硬币、内层遍历金额以避免组合重复计算"
+      ],
+      "hints": [
+        "和零钱兑换 I 的区别是这里求组合数，不是最少硬币数。",
+        "组合问题需要注意遍历顺序。"
+      ],
+      "edge_cases": [
+        "amount 为 0",
+        "没有任何硬币",
+        "只有一种面额"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "完全背包",
+        "组合数"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《零钱兑换 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_221_maximal_square",
+      "title": "最大正方形",
+      "title_en": "Maximal Square",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "动态规划",
+        "矩阵"
+      ],
+      "expected_approaches": [
+        "动态规划",
+        "dp[i][j] 表示以当前位置为右下角的最大正方形边长"
+      ],
+      "hints": [
+        "当前位置能形成多大的正方形，取决于左、上、左上三个位置。",
+        "如果当前值是 0，则无法作为正方形右下角。"
+      ],
+      "edge_cases": [
+        "空矩阵",
+        "全 0",
+        "全 1"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "矩阵",
+        "正方形"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《最大正方形》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_516_longest_palindromic_subsequence",
+      "title": "最长回文子序列",
+      "title_en": "Longest Palindromic Subsequence",
+      "difficulty": "medium",
+      "tags": [
+        "字符串",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "区间动态规划",
+        "若两端字符相等则长度来自内层区间加 2，否则取左右去掉一个端点后的较大值"
+      ],
+      "hints": [
+        "子串和子序列是不同概念。",
+        "这类题常用区间 DP，从短区间推到长区间。"
+      ],
+      "edge_cases": [
+        "空字符串",
+        "所有字符相同",
+        "没有长度大于 1 的回文子序列"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "字符串",
+        "回文",
+        "区间 DP"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《最长回文子序列》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_115_distinct_subsequences",
+      "title": "不同的子序列",
+      "title_en": "Distinct Subsequences",
+      "difficulty": "hard",
+      "tags": [
+        "字符串",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "动态规划",
+        "当字符相等时可以选择匹配或跳过，不相等时只能跳过 s 当前字符"
+      ],
+      "hints": [
+        "这是计数型 DP，不是求最长长度。",
+        "dp[i][j] 可以表示 s 前 i 个字符组成 t 前 j 个字符的方案数。"
+      ],
+      "edge_cases": [
+        "t 为空字符串",
+        "s 比 t 短",
+        "重复字符较多导致方案数变大"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "字符串",
+        "子序列",
+        "计数"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《不同的子序列》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_63_unique_paths_ii",
+      "title": "不同路径 II",
+      "title_en": "Unique Paths II",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "动态规划",
+        "矩阵"
+      ],
+      "expected_approaches": [
+        "动态规划",
+        "遇到障碍物的位置路径数为 0，其他位置由上方和左方路径数相加得到"
+      ],
+      "hints": [
+        "相比不同路径 I，多了障碍物条件。",
+        "起点或终点可能本身就是障碍物。"
+      ],
+      "edge_cases": [
+        "起点被阻塞",
+        "终点被阻塞",
+        "单行或单列网格"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "矩阵",
+        "路径",
+        "障碍物"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《不同路径 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_714_best_time_stock_fee",
+      "title": "买卖股票的最佳时机含手续费",
+      "title_en": "Best Time to Buy and Sell Stock with Transaction Fee",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "贪心",
+        "动态规划"
+      ],
+      "expected_approaches": [
+        "动态规划维护持有与未持有状态",
+        "也可以用贪心理解买入成本"
+      ],
+      "hints": [
+        "手续费只在一次完整交易中计算一次。",
+        "问题本质仍然是状态转移。"
+      ],
+      "edge_cases": [
+        "手续费为 0",
+        "价格单调递增",
+        "价格单调递减"
+      ],
+      "related_keywords": [
+        "动态规划",
+        "股票",
+        "手续费"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《买卖股票的最佳时机含手续费》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_133_clone_graph",
+      "title": "克隆图",
+      "title_en": "Clone Graph",
+      "difficulty": "medium",
+      "tags": [
+        "图",
+        "深度优先搜索",
+        "广度优先搜索",
+        "哈希表"
+      ],
+      "expected_approaches": [
+        "DFS + 哈希表映射原节点与克隆节点",
+        "BFS + 哈希表"
+      ],
+      "hints": [
+        "图可能有环，因此不能简单递归复制而不做去重。",
+        "深拷贝要求新图中的节点与原图节点完全独立。"
+      ],
+      "edge_cases": [
+        "单节点图",
+        "图中存在环",
+        "输入为空"
+      ],
+      "related_keywords": [
+        "图",
+        "深拷贝",
+        "DFS",
+        "BFS",
+        "哈希表"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《克隆图》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_210_course_schedule_ii",
+      "title": "课程表 II",
+      "title_en": "Course Schedule II",
+      "difficulty": "medium",
+      "tags": [
+        "图",
+        "广度优先搜索",
+        "深度优先搜索",
+        "拓扑排序"
+      ],
+      "expected_approaches": [
+        "拓扑排序 + 入度统计",
+        "DFS 检测环并构造逆后序结果"
+      ],
+      "hints": [
+        "相比课程表 I，这里不仅要判断能否完成，还要返回顺序。",
+        "如果图中有环，就不存在合法顺序。"
+      ],
+      "edge_cases": [
+        "没有任何先修关系",
+        "存在环",
+        "多个合法答案"
+      ],
+      "related_keywords": [
+        "图",
+        "拓扑排序",
+        "入度",
+        "课程表"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《课程表 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_127_word_ladder",
+      "title": "单词接龙",
+      "title_en": "Word Ladder",
+      "difficulty": "hard",
+      "tags": [
+        "图",
+        "广度优先搜索",
+        "哈希表",
+        "字符串"
+      ],
+      "expected_approaches": [
+        "BFS 按层搜索最短路径",
+        "预处理通配中间态或双向 BFS 优化"
+      ],
+      "hints": [
+        "要求最短步数，优先考虑 BFS。",
+        "两个单词是否相邻取决于是否只相差一个字符。"
+      ],
+      "edge_cases": [
+        "endWord 不在字典中",
+        "beginWord 与 endWord 相同",
+        "存在多条最短路径"
+      ],
+      "related_keywords": [
+        "图",
+        "BFS",
+        "最短路径",
+        "字符串"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《单词接龙》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_399_evaluate_division",
+      "title": "除法求值",
+      "title_en": "Evaluate Division",
+      "difficulty": "medium",
+      "tags": [
+        "图",
+        "深度优先搜索",
+        "广度优先搜索",
+        "并查集"
+      ],
+      "expected_approaches": [
+        "建图后 DFS/BFS 查找路径乘积",
+        "带权并查集"
+      ],
+      "hints": [
+        "等式关系天然可以抽象成带权图。",
+        "一条路径上的边权相乘就是查询结果。"
+      ],
+      "edge_cases": [
+        "查询变量不存在",
+        "查询起点和终点相同",
+        "图中存在多个连通分量"
+      ],
+      "related_keywords": [
+        "图",
+        "带权图",
+        "DFS",
+        "并查集",
+        "乘积"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《除法求值》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_547_number_of_provinces",
+      "title": "省份数量",
+      "title_en": "Number of Provinces",
+      "difficulty": "medium",
+      "tags": [
+        "图",
+        "深度优先搜索",
+        "广度优先搜索",
+        "并查集"
+      ],
+      "expected_approaches": [
+        "DFS/BFS 统计连通块",
+        "并查集"
+      ],
+      "hints": [
+        "题目本质是求无向图的连通分量个数。",
+        "访问过的城市不需要重复遍历。"
+      ],
+      "edge_cases": [
+        "所有城市互不相连",
+        "所有城市都相连",
+        "只有一个城市"
+      ],
+      "related_keywords": [
+        "图",
+        "连通分量",
+        "DFS",
+        "并查集"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《省份数量》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_684_redundant_connection",
+      "title": "冗余连接",
+      "title_en": "Redundant Connection",
+      "difficulty": "medium",
+      "tags": [
+        "图",
+        "并查集",
+        "深度优先搜索"
+      ],
+      "expected_approaches": [
+        "并查集判断加边时是否形成环",
+        "也可以 DFS 检测连通性但效率较低"
+      ],
+      "hints": [
+        "在一棵树上再加一条边，一定只会多出一个环。",
+        "并查集非常适合动态判断两个点是否已连通。"
+      ],
+      "edge_cases": [
+        "冗余边出现在末尾",
+        "节点编号不连续但在范围内",
+        "只有一个环"
+      ],
+      "related_keywords": [
+        "图",
+        "并查集",
+        "环",
+        "树"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《冗余连接》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_695_max_area_of_island",
+      "title": "岛屿的最大面积",
+      "title_en": "Max Area of Island",
+      "difficulty": "medium",
+      "tags": [
+        "图",
+        "深度优先搜索",
+        "广度优先搜索",
+        "矩阵"
+      ],
+      "expected_approaches": [
+        "DFS/BFS 遍历每个岛屿并统计面积",
+        "访问过的陆地要及时标记"
+      ],
+      "hints": [
+        "和岛屿数量题很像，只是统计目标从数量变成面积。",
+        "每次从一个陆地出发遍历完整个连通块。"
+      ],
+      "edge_cases": [
+        "全 0",
+        "全 1",
+        "存在多个岛屿面积相同"
+      ],
+      "related_keywords": [
+        "图",
+        "DFS",
+        "BFS",
+        "岛屿",
+        "面积"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《岛屿的最大面积》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_785_is_graph_bipartite",
+      "title": "判断二分图",
+      "title_en": "Is Graph Bipartite?",
+      "difficulty": "medium",
+      "tags": [
+        "图",
+        "深度优先搜索",
+        "广度优先搜索",
+        "并查集"
+      ],
+      "expected_approaches": [
+        "DFS/BFS 染色法",
+        "并查集也可以辅助判断"
+      ],
+      "hints": [
+        "二分图判定常见思路是相邻节点颜色必须不同。",
+        "图可能不是连通图，因此需要从多个起点开始。"
+      ],
+      "edge_cases": [
+        "图不连通",
+        "存在奇数环",
+        "单节点图"
+      ],
+      "related_keywords": [
+        "图",
+        "二分图",
+        "染色",
+        "BFS",
+        "DFS"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《判断二分图》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_743_network_delay_time",
+      "title": "网络延迟时间",
+      "title_en": "Network Delay Time",
+      "difficulty": "medium",
+      "tags": [
+        "图",
+        "最短路径",
+        "堆",
+        "广度优先搜索"
+      ],
+      "expected_approaches": [
+        "Dijkstra + 小根堆",
+        "也可用 Bellman-Ford 但效率较低"
+      ],
+      "hints": [
+        "边权非负，适合 Dijkstra。",
+        "答案是从起点到所有节点最短路中的最大值。"
+      ],
+      "edge_cases": [
+        "存在无法到达的节点",
+        "只有一个节点",
+        "多条路径到达同一节点"
+      ],
+      "related_keywords": [
+        "图",
+        "最短路径",
+        "Dijkstra",
+        "堆"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《网络延迟时间》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_77_combinations",
+      "title": "组合",
+      "title_en": "Combinations",
+      "difficulty": "medium",
+      "tags": [
+        "回溯"
+      ],
+      "expected_approaches": [
+        "回溯",
+        "利用剩余可选数量做剪枝"
+      ],
+      "hints": [
+        "组合不关心顺序，因此需要控制搜索起点避免重复。",
+        "可以根据还需要选几个数来提前剪枝。"
+      ],
+      "edge_cases": [
+        "k 为 0",
+        "k 等于 n",
+        "n 很小"
+      ],
+      "related_keywords": [
+        "回溯",
+        "组合",
+        "剪枝"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《组合》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_90_subsets_ii",
+      "title": "子集 II",
+      "title_en": "Subsets II",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "回溯"
+      ],
+      "expected_approaches": [
+        "先排序后回溯",
+        "在同一层搜索中跳过相同元素避免重复"
+      ],
+      "hints": [
+        "和普通子集题的区别在于输入可能有重复值。",
+        "排序后更容易识别重复元素。"
+      ],
+      "edge_cases": [
+        "数组为空",
+        "所有元素都相同",
+        "存在多个不同的重复元素"
+      ],
+      "related_keywords": [
+        "回溯",
+        "子集",
+        "去重",
+        "排序"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《子集 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_40_combination_sum_ii",
+      "title": "组合总和 II",
+      "title_en": "Combination Sum II",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "回溯"
+      ],
+      "expected_approaches": [
+        "排序 + 回溯",
+        "同层去重并在和超过目标值时剪枝"
+      ],
+      "hints": [
+        "和组合总和 I 的区别是每个数字只能用一次。",
+        "排序后既方便剪枝也方便去重。"
+      ],
+      "edge_cases": [
+        "存在重复候选数",
+        "无解",
+        "target 很小"
+      ],
+      "related_keywords": [
+        "回溯",
+        "组合",
+        "去重",
+        "剪枝"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《组合总和 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_51_n_queens",
+      "title": "N 皇后",
+      "title_en": "N-Queens",
+      "difficulty": "hard",
+      "tags": [
+        "数组",
+        "回溯"
+      ],
+      "expected_approaches": [
+        "回溯逐行放置皇后",
+        "使用列、主对角线、副对角线集合快速判断冲突"
+      ],
+      "hints": [
+        "每一行只能放一个皇后。",
+        "剪枝关键是快速判断某个位置是否合法。"
+      ],
+      "edge_cases": [
+        "n 为 1",
+        "n 为 2 或 3 无解",
+        "n 较大时搜索空间爆炸"
+      ],
+      "related_keywords": [
+        "回溯",
+        "N 皇后",
+        "剪枝",
+        "棋盘"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《N 皇后》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_93_restore_ip_addresses",
+      "title": "复原 IP 地址",
+      "title_en": "Restore IP Addresses",
+      "difficulty": "medium",
+      "tags": [
+        "字符串",
+        "回溯"
+      ],
+      "expected_approaches": [
+        "回溯枚举每段长度",
+        "按段数和剩余字符串长度进行剪枝"
+      ],
+      "hints": [
+        "一共只能切成四段。",
+        "前导零和数值范围是两个关键合法性条件。"
+      ],
+      "edge_cases": [
+        "字符串长度小于 4 或大于 12",
+        "包含前导零",
+        "恰好只有一个合法答案"
+      ],
+      "related_keywords": [
+        "回溯",
+        "字符串",
+        "IP 地址",
+        "剪枝"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《复原 IP 地址》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_216_combination_sum_iii",
+      "title": "组合总和 III",
+      "title_en": "Combination Sum III",
+      "difficulty": "medium",
+      "tags": [
+        "回溯"
+      ],
+      "expected_approaches": [
+        "回溯从 1 到 9 中选数",
+        "根据剩余可选数字和当前和做剪枝"
+      ],
+      "hints": [
+        "每个数字最多使用一次。",
+        "这是限定候选范围的组合问题。"
+      ],
+      "edge_cases": [
+        "无解",
+        "k 为 1",
+        "n 很小或很大"
+      ],
+      "related_keywords": [
+        "回溯",
+        "组合",
+        "剪枝",
+        "1到9"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《组合总和 III》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_703_kth_largest_stream",
+      "title": "数据流中的第 K 大元素",
+      "title_en": "Kth Largest Element in a Stream",
+      "difficulty": "easy",
+      "tags": [
+        "设计",
+        "树",
+        "二叉搜索树",
+        "堆",
+        "数据流"
+      ],
+      "expected_approaches": [
+        "维护大小为 k 的小根堆",
+        "堆顶始终是当前第 k 大元素"
+      ],
+      "hints": [
+        "不需要保存所有元素的有序结果。",
+        "如果堆大小超过 k，就弹出最小元素。"
+      ],
+      "edge_cases": [
+        "初始数组为空",
+        "重复元素很多",
+        "k 等于 1"
+      ],
+      "related_keywords": [
+        "堆",
+        "数据流",
+        "TopK",
+        "设计"
+      ],
+      "role_tags": [
+        "algorithm",
+        "backend"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "设计一个找到数据流中第 k 大元素的类。注意是排序后的第 k 大元素，不是第 k 个不同的元素。\n\n请实现 KthLargest 类：\n- KthLargest(int k, int[] nums) 使用整数 k 和整数流 nums 初始化对象。\n- int add(int val) 将 val 插入数据流 nums 后，返回当前数据流中第 k 大的元素。"
+    },
+    {
+      "id": "lc_973_k_closest_points",
+      "title": "最接近原点的 K 个点",
+      "title_en": "K Closest Points to Origin",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "数学",
+        "分治",
+        "快速选择",
+        "排序",
+        "堆"
+      ],
+      "expected_approaches": [
+        "小根堆或大根堆",
+        "快速选择"
+      ],
+      "hints": [
+        "比较距离时不需要真的开平方。",
+        "只需要前 k 个最近点，不要求整体排序。"
+      ],
+      "edge_cases": [
+        "k 等于 1",
+        "k 等于点的总数",
+        "多个点距离相同"
+      ],
+      "related_keywords": [
+        "堆",
+        "快速选择",
+        "二维点",
+        "距离"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《最接近原点的 K 个点》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_378_kth_smallest_sorted_matrix",
+      "title": "有序矩阵中第 K 小的元素",
+      "title_en": "Kth Smallest Element in a Sorted Matrix",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "二分查找",
+        "矩阵",
+        "堆"
+      ],
+      "expected_approaches": [
+        "值域二分 + 统计不大于 mid 的元素个数",
+        "小根堆按行合并"
+      ],
+      "hints": [
+        "矩阵整体不一定按一维数组方式严格有序，但行列都有序。",
+        "统计不大于某个值的元素个数是这题的关键。"
+      ],
+      "edge_cases": [
+        "k 为 1",
+        "k 为 n*n",
+        "存在重复元素"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "矩阵",
+        "堆",
+        "第K小"
+      ],
+      "role_tags": [
+        "algorithm",
+        "graphics"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《有序矩阵中第 K 小的元素》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_373_find_k_pairs_smallest_sums",
+      "title": "查找和最小的 K 对数字",
+      "title_en": "Find K Pairs with Smallest Sums",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "堆"
+      ],
+      "expected_approaches": [
+        "小根堆按候选数对和进行多路归并",
+        "控制入堆状态避免枚举全部数对"
+      ],
+      "hints": [
+        "所有数对总数可能非常大，不能暴力生成后排序。",
+        "有序数组常提示可以利用单调性缩小搜索空间。"
+      ],
+      "edge_cases": [
+        "某个数组为空",
+        "k 大于数对总数",
+        "存在多个数对和相同"
+      ],
+      "related_keywords": [
+        "堆",
+        "TopK",
+        "数对",
+        "有序数组"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《查找和最小的 K 对数字》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_704_binary_search",
+      "title": "二分查找",
+      "title_en": "Binary Search",
+      "difficulty": "easy",
+      "tags": [
+        "数组",
+        "二分查找"
+      ],
+      "expected_approaches": [
+        "标准二分查找",
+        "维护左右边界直到收缩完成"
+      ],
+      "hints": [
+        "有序数组是二分查找的前提。",
+        "注意区间边界是左闭右闭还是左闭右开。"
+      ],
+      "edge_cases": [
+        "空数组",
+        "只有一个元素",
+        "target 在两端或不存在"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "有序数组",
+        "边界"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《二分查找》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_69_sqrtx",
+      "title": "x 的平方根",
+      "title_en": "Sqrt(x)",
+      "difficulty": "easy",
+      "tags": [
+        "数学",
+        "二分查找"
+      ],
+      "expected_approaches": [
+        "二分查找整数答案",
+        "也可用牛顿迭代法"
+      ],
+      "hints": [
+        "答案一定在 0 到 x 之间。",
+        "比较 mid*mid 和 x 时要注意溢出问题。"
+      ],
+      "edge_cases": [
+        "x 为 0",
+        "x 为 1",
+        "x 不是完全平方数"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "数学",
+        "平方根"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《x 的平方根》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_162_find_peak_element",
+      "title": "寻找峰值",
+      "title_en": "Find Peak Element",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "二分查找"
+      ],
+      "expected_approaches": [
+        "二分查找比较 mid 与 mid+1 的趋势",
+        "向更高的一侧收缩区间"
+      ],
+      "hints": [
+        "题目保证至少存在一个峰值。",
+        "如果 nums[mid] < nums[mid+1]，右侧一定存在峰值。"
+      ],
+      "edge_cases": [
+        "数组长度为 1",
+        "单调递增",
+        "单调递减"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "峰值",
+        "数组"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《寻找峰值》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_81_search_rotated_sorted_array_ii",
+      "title": "搜索旋转排序数组 II",
+      "title_en": "Search in Rotated Sorted Array II",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "二分查找"
+      ],
+      "expected_approaches": [
+        "二分查找",
+        "当左右端点和中点相等时适当收缩边界去掉重复值"
+      ],
+      "hints": [
+        "和无重复版本相比，重复元素会破坏一半有序的判断。",
+        "遇到无法判断哪边有序时，可以先缩小边界。"
+      ],
+      "edge_cases": [
+        "全是相同元素",
+        "target 不存在",
+        "旋转点附近有大量重复值"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "旋转数组",
+        "重复元素"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《搜索旋转排序数组 II》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_875_koko_eating_bananas",
+      "title": "爱吃香蕉的珂珂",
+      "title_en": "Koko Eating Bananas",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "二分查找"
+      ],
+      "expected_approaches": [
+        "答案二分",
+        "判断某个速度下总耗时是否不超过 h"
+      ],
+      "hints": [
+        "速度越快，总耗时越短，满足单调性。",
+        "每堆耗时等于向上取整(piles[i] / k)。"
+      ],
+      "edge_cases": [
+        "只有一堆香蕉",
+        "h 等于堆数",
+        "香蕉数量差异很大"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "答案二分",
+        "单调性"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《爱吃香蕉的珂珂》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_1011_capacity_to_ship_packages",
+      "title": "在 D 天内送达包裹的能力",
+      "title_en": "Capacity To Ship Packages Within D Days",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "二分查找"
+      ],
+      "expected_approaches": [
+        "答案二分",
+        "模拟给定容量下需要多少天才能运完"
+      ],
+      "hints": [
+        "容量越大，所需天数越少，满足单调性。",
+        "最小容量不会小于最大单个包裹重量。"
+      ],
+      "edge_cases": [
+        "days 等于 1",
+        "days 等于包裹数量",
+        "包裹重量差异很大"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "答案二分",
+        "单调性",
+        "运输"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《在 D 天内送达包裹的能力》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    },
+    {
+      "id": "lc_540_single_element_sorted_array",
+      "title": "有序数组中的单一元素",
+      "title_en": "Single Element in a Sorted Array",
+      "difficulty": "medium",
+      "tags": [
+        "数组",
+        "二分查找"
+      ],
+      "expected_approaches": [
+        "二分查找根据成对元素下标规律缩小区间"
+      ],
+      "hints": [
+        "在单一元素出现之前，成对元素的第一个下标通常是偶数；之后会发生错位。",
+        "比较 mid 与相邻元素时要注意边界。"
+      ],
+      "edge_cases": [
+        "单一元素在开头",
+        "单一元素在结尾",
+        "数组长度为 1"
+      ],
+      "related_keywords": [
+        "二分查找",
+        "有序数组",
+        "成对规律"
+      ],
+      "role_tags": [
+        "algorithm"
+      ],
+      "public_release_mode": "local_prompt_only",
+      "prompt": "请完成算法题《有序数组中的单一元素》。\n\n请根据题意写出可运行实现，并在完成后补充时间复杂度和空间复杂度分析。"
+    }
+  ],
+  "public_release_mode": "local_prompt_only",
+  "public_release_notes": {
+    "generated_at": "2026-05-12T19:43:33",
+    "removed_fields": [
+      "constraints",
+      "examples",
+      "images",
+      "problem_statement_html",
+      "problem_statement_text",
+      "problem_url",
+      "solution_url",
+      "source",
+      "source_reference"
+    ],
+    "note": "This repository version keeps local rewritten prompts and local metadata, but does not persist upstream source labels, official HTML bodies, images, examples, constraints, or direct source links."
+  }
+}

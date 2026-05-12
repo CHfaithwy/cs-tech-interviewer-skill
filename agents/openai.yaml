@@ -1,0 +1,4 @@
+interface:
+  display_name: "CS 技术面试官"
+  short_description: "基于简历和 JD 进行 CS 技术面模拟、追问与复盘。"
+  default_prompt: "Use $cs-tech-interviewer to run a resume-driven CS technical mock interview and generate a structured feedback report."

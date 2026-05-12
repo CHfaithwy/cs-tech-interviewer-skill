@@ -1,0 +1,1977 @@
+{
+  "schema_version": "0.4",
+  "kind": "cs_fundamental_question_bank",
+  "questions": [
+    {
+      "id": "db_index_bplus_001",
+      "topic": "数据库",
+      "subtopic": "索引",
+      "difficulty": "medium",
+      "question": "为什么 MySQL InnoDB 常用 B+ 树作为索引结构？",
+      "expected_points": [
+        "树高低，查询时磁盘 IO 次数少",
+        "非叶子节点主要存 key，扇出更大",
+        "叶子节点按 key 有序并便于范围扫描",
+        "相比哈希索引，更适合范围查询和排序场景"
+      ],
+      "followups": [
+        "B 树和 B+ 树的核心区别是什么？",
+        "联合索引的最左前缀原则是什么？",
+        "哪些写法会导致索引失效？"
+      ],
+      "related_keywords": [
+        "MySQL",
+        "数据库",
+        "索引",
+        "查询优化",
+        "InnoDB",
+        "SQL"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "data"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "db_transaction_mvcc_001",
+      "topic": "数据库",
+      "subtopic": "事务 / MVCC",
+      "difficulty": "medium",
+      "question": "MySQL 的事务隔离级别分别解决了哪些并发读写问题？",
+      "expected_points": [
+        "说明脏读、不可重复读、幻读的区别",
+        "说明读未提交、读已提交、可重复读、串行化的语义",
+        "能解释 InnoDB 在可重复读下通过 MVCC 和锁处理多数幻读场景",
+        "能结合业务说明一致性和性能取舍"
+      ],
+      "followups": [
+        "MVCC 里的 undo log 和 read view 大致如何配合？",
+        "当前读和快照读有什么区别？",
+        "为什么不是所有场景都直接用最高隔离级别？"
+      ],
+      "related_keywords": [
+        "MySQL",
+        "事务",
+        "MVCC",
+        "隔离级别",
+        "数据库",
+        "并发"
+      ],
+      "role_tags": [
+        "backend",
+        "java"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "db_slow_query_001",
+      "topic": "数据库",
+      "subtopic": "慢查询优化",
+      "difficulty": "hard",
+      "question": "线上接口突然变慢，你怀疑是 SQL 问题，会如何定位和优化？",
+      "expected_points": [
+        "先用日志、监控、慢查询日志确认问题范围",
+        "使用 EXPLAIN 分析扫描行数、索引、join 顺序和回表情况",
+        "根据访问模式调整索引、SQL 写法或表结构",
+        "验证优化前后指标，并评估写入、存储和锁竞争成本"
+      ],
+      "followups": [
+        "EXPLAIN 里 type、key、rows、Extra 分别重点看什么？",
+        "添加索引一定会让系统更快吗？",
+        "如何避免一次优化引入线上风险？"
+      ],
+      "related_keywords": [
+        "MySQL",
+        "SQL",
+        "慢查询",
+        "EXPLAIN",
+        "查询优化",
+        "接口性能"
+      ],
+      "role_tags": [
+        "backend",
+        "data"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "redis_cache_consistency_001",
+      "topic": "Redis",
+      "subtopic": "缓存一致性",
+      "difficulty": "medium",
+      "question": "如果 Redis 缓存和数据库出现不一致，你会如何设计更新策略？",
+      "expected_points": [
+        "说明更新数据库后删除缓存的常见策略",
+        "讨论延迟双删、消息队列、binlog 订阅等补偿方案",
+        "说明最终一致性和业务容忍度",
+        "考虑失败重试、监控告警和降级"
+      ],
+      "followups": [
+        "为什么很多场景选择删除缓存而不是更新缓存？",
+        "删除缓存失败怎么办？",
+        "读多写少和写多读少场景策略会不同吗？"
+      ],
+      "related_keywords": [
+        "Redis",
+        "缓存",
+        "一致性",
+        "性能优化",
+        "高并发"
+      ],
+      "role_tags": [
+        "backend",
+        "java"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "redis_hotkey_001",
+      "topic": "Redis",
+      "subtopic": "缓存击穿 / 穿透 / 雪崩",
+      "difficulty": "medium",
+      "question": "缓存穿透、缓存击穿和缓存雪崩分别是什么？如何处理？",
+      "expected_points": [
+        "能区分不存在 key、高热点 key 失效、大量 key 同时失效",
+        "穿透可用空值缓存、布隆过滤器、参数校验",
+        "击穿可用互斥锁、逻辑过期、热点预热",
+        "雪崩可用过期时间随机化、多级缓存、限流降级"
+      ],
+      "followups": [
+        "热点 key 过期瞬间大量请求打到数据库怎么办？",
+        "布隆过滤器有什么误判问题？",
+        "你如何发现线上热点 key？"
+      ],
+      "related_keywords": [
+        "Redis",
+        "缓存",
+        "热点 key",
+        "缓存穿透",
+        "缓存击穿",
+        "缓存雪崩"
+      ],
+      "role_tags": [
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "redis_lock_001",
+      "topic": "Redis",
+      "subtopic": "分布式锁",
+      "difficulty": "hard",
+      "question": "如何用 Redis 实现相对可靠的分布式锁？有哪些坑？",
+      "expected_points": [
+        "使用 SET key value NX EX 保证加锁原子性和过期",
+        "value 使用唯一标识，释放锁时先校验再删除",
+        "释放锁可用 Lua 脚本保证校验删除原子性",
+        "讨论锁续期、业务超时、主从切换和 RedLock 争议"
+      ],
+      "followups": [
+        "为什么不能简单 setnx 后再 expire？",
+        "业务执行时间超过锁过期时间怎么办？",
+        "Redis 分布式锁适合强一致场景吗？"
+      ],
+      "related_keywords": [
+        "Redis",
+        "分布式锁",
+        "并发",
+        "Lua",
+        "高并发"
+      ],
+      "role_tags": [
+        "backend",
+        "java"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "net_tcp_handshake_001",
+      "topic": "计算机网络",
+      "subtopic": "TCP",
+      "difficulty": "easy",
+      "question": "TCP 三次握手的目的是什么？为什么不是两次？",
+      "expected_points": [
+        "确认双方发送和接收能力",
+        "同步初始序列号",
+        "避免历史连接请求造成混乱",
+        "能说明两次握手无法让服务端确认客户端接收能力"
+      ],
+      "followups": [
+        "四次挥手为什么通常需要 TIME_WAIT？",
+        "SYN Flood 是什么，如何缓解？",
+        "TCP 和 UDP 的典型使用场景有什么不同？"
+      ],
+      "related_keywords": [
+        "TCP",
+        "网络",
+        "HTTP",
+        "HTTPS",
+        "Socket",
+        "接口"
+      ],
+      "role_tags": [
+        "backend",
+        "sre"
+      ],
+      "layer": "basic"
+    },
+    {
+      "id": "net_http_https_001",
+      "topic": "计算机网络",
+      "subtopic": "HTTP / HTTPS",
+      "difficulty": "medium",
+      "question": "从浏览器输入一个 HTTPS URL 到页面返回，中间大致发生了什么？",
+      "expected_points": [
+        "DNS 解析、TCP 连接、TLS 握手、HTTP 请求响应",
+        "说明证书校验、密钥协商和加密通道",
+        "能提到缓存、负载均衡、网关或反向代理",
+        "能结合后端接口说明鉴权、日志和错误处理"
+      ],
+      "followups": [
+        "TLS 握手主要解决什么问题？",
+        "HTTP 状态码 301、302、401、403、500 分别常见含义是什么？",
+        "长连接和连接池为什么能优化性能？"
+      ],
+      "related_keywords": [
+        "HTTP",
+        "HTTPS",
+        "REST",
+        "接口",
+        "FastAPI",
+        "Django",
+        "Spring",
+        "Nginx"
+      ],
+      "role_tags": [
+        "backend",
+        "frontend",
+        "sre"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "os_process_thread_001",
+      "topic": "操作系统",
+      "subtopic": "进程 / 线程",
+      "difficulty": "easy",
+      "question": "进程和线程的区别是什么？",
+      "expected_points": [
+        "进程是资源分配单位，线程是调度执行单位",
+        "进程地址空间隔离，线程共享进程资源",
+        "线程切换成本通常低于进程",
+        "通信方式和崩溃影响范围不同"
+      ],
+      "followups": [
+        "线程安全问题如何产生？",
+        "什么时候适合多进程，什么时候适合多线程？",
+        "协程和线程有什么区别？"
+      ],
+      "related_keywords": [
+        "Linux",
+        "并发",
+        "多线程",
+        "进程",
+        "线程",
+        "Python",
+        "C++",
+        "Java"
+      ],
+      "role_tags": [
+        "backend",
+        "algorithm",
+        "sre"
+      ],
+      "layer": "basic"
+    },
+    {
+      "id": "os_io_model_001",
+      "topic": "操作系统",
+      "subtopic": "IO 模型",
+      "difficulty": "medium",
+      "question": "阻塞 IO、非阻塞 IO、IO 多路复用和异步 IO 有什么区别？",
+      "expected_points": [
+        "区分等待数据就绪和数据拷贝两个阶段",
+        "说明 select/poll/epoll 的基本用途",
+        "能解释事件循环和高并发连接场景",
+        "能结合 Web 服务或网络服务说明使用场景"
+      ],
+      "followups": [
+        "epoll 相比 select 的优势是什么？",
+        "Python async/await 和 IO 多路复用有什么关系？",
+        "CPU 密集型任务适合异步 IO 吗？"
+      ],
+      "related_keywords": [
+        "Linux",
+        "IO",
+        "epoll",
+        "异步",
+        "FastAPI",
+        "高并发",
+        "网络"
+      ],
+      "role_tags": [
+        "backend",
+        "sre",
+        "python"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "java_jvm_gc_001",
+      "topic": "Java",
+      "subtopic": "JVM / GC",
+      "difficulty": "medium",
+      "question": "JVM 垃圾回收主要解决什么问题？你如何判断一次 GC 问题？",
+      "expected_points": [
+        "说明堆内存、对象存活判断和垃圾回收目标",
+        "了解可达性分析、分代回收和常见 GC 指标",
+        "能通过 GC 日志、停顿时间、吞吐量、内存曲线定位",
+        "能结合业务说明内存泄漏、对象创建过多等原因"
+      ],
+      "followups": [
+        "Minor GC 和 Full GC 的区别是什么？",
+        "什么对象会进入老年代？",
+        "如何排查 Java 内存泄漏？"
+      ],
+      "related_keywords": [
+        "Java",
+        "JVM",
+        "GC",
+        "内存",
+        "Spring",
+        "Spring Boot"
+      ],
+      "role_tags": [
+        "java",
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "java_concurrent_threadpool_001",
+      "topic": "Java",
+      "subtopic": "并发 / 线程池",
+      "difficulty": "hard",
+      "question": "Java 线程池的核心参数有哪些？线上如何设置和排查问题？",
+      "expected_points": [
+        "说明 corePoolSize、maximumPoolSize、queue、keepAliveTime、拒绝策略",
+        "区分 CPU 密集和 IO 密集任务的配置思路",
+        "关注队列堆积、拒绝、超时、上下文切换和资源耗尽",
+        "能通过监控指标和压测验证参数"
+      ],
+      "followups": [
+        "为什么不推荐直接使用 Executors 的某些工厂方法？",
+        "无界队列有什么风险？",
+        "线程池打满时你会怎么降级？"
+      ],
+      "related_keywords": [
+        "Java",
+        "线程池",
+        "并发",
+        "Spring",
+        "高并发",
+        "异步"
+      ],
+      "role_tags": [
+        "java",
+        "backend"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "python_gil_001",
+      "topic": "Python",
+      "subtopic": "GIL / 并发",
+      "difficulty": "medium",
+      "question": "Python 的 GIL 是什么？它对多线程程序有什么影响？",
+      "expected_points": [
+        "GIL 限制同一进程内多个线程同时执行 Python 字节码",
+        "IO 密集场景仍可通过多线程或异步提升吞吐",
+        "CPU 密集场景可考虑多进程、C 扩展或向量化",
+        "能结合 FastAPI、任务队列或模型推理说明取舍"
+      ],
+      "followups": [
+        "多进程的代价是什么？",
+        "asyncio 适合什么场景？",
+        "Python 服务里如何避免阻塞事件循环？"
+      ],
+      "related_keywords": [
+        "Python",
+        "GIL",
+        "FastAPI",
+        "异步",
+        "多线程",
+        "多进程"
+      ],
+      "role_tags": [
+        "python",
+        "backend",
+        "ai"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "cpp_memory_raii_001",
+      "topic": "C++",
+      "subtopic": "内存管理 / RAII",
+      "difficulty": "medium",
+      "question": "C++ 的 RAII 思想是什么？智能指针分别适合什么场景？",
+      "expected_points": [
+        "资源获取即初始化，通过对象生命周期自动释放资源",
+        "unique_ptr 表示独占所有权，shared_ptr 表示共享所有权",
+        "weak_ptr 用来打破循环引用或观察对象",
+        "能说明拷贝、移动和析构语义"
+      ],
+      "followups": [
+        "shared_ptr 循环引用如何产生？",
+        "什么时候不应该使用 shared_ptr？",
+        "右值引用和移动语义解决什么问题？"
+      ],
+      "related_keywords": [
+        "C++",
+        "RAII",
+        "智能指针",
+        "内存",
+        "STL",
+        "算法"
+      ],
+      "role_tags": [
+        "cpp",
+        "algorithm",
+        "graphics"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "backend_api_design_001",
+      "topic": "后端工程",
+      "subtopic": "接口设计",
+      "difficulty": "medium",
+      "question": "设计一个对外接口时，你会从哪些方面保证它可维护、可观测和安全？",
+      "expected_points": [
+        "明确请求参数、响应结构、错误码和幂等性",
+        "处理鉴权、权限、限流、参数校验和异常",
+        "记录日志、trace id、指标和告警",
+        "考虑版本兼容、测试、文档和灰度发布"
+      ],
+      "followups": [
+        "GET 和 POST 的语义区别是什么？",
+        "如何设计接口错误码？",
+        "如果接口超时，你如何排查？"
+      ],
+      "related_keywords": [
+        "FastAPI",
+        "Django",
+        "Spring",
+        "REST",
+        "RESTful",
+        "接口",
+        "鉴权",
+        "监控"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "python"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "backend_auth_001",
+      "topic": "后端工程",
+      "subtopic": "认证 / 授权",
+      "difficulty": "medium",
+      "question": "认证和授权有什么区别？常见的登录态方案如何设计？",
+      "expected_points": [
+        "认证确认用户是谁，授权确认用户能做什么",
+        "说明 Session、JWT、Token 的基本差异",
+        "考虑过期、刷新、吊销、跨端和泄漏风险",
+        "能结合 RBAC 或接口权限校验说明落点"
+      ],
+      "followups": [
+        "JWT 如何失效或续期？",
+        "Session 存 Redis 有什么好处和风险？",
+        "如何防止越权访问？"
+      ],
+      "related_keywords": [
+        "认证",
+        "授权",
+        "JWT",
+        "Session",
+        "Redis",
+        "FastAPI",
+        "Django",
+        "Spring",
+        "权限"
+      ],
+      "role_tags": [
+        "backend",
+        "frontend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "ai_rag_eval_001",
+      "topic": "AI / LLM",
+      "subtopic": "RAG 评估",
+      "difficulty": "medium",
+      "question": "RAG 系统中如何分别评估召回质量和最终回答质量？",
+      "expected_points": [
+        "区分 retrieval metrics 和 answer metrics",
+        "召回可看 recall@k、MRR、命中率和人工标注集",
+        "回答可看事实性、相关性、完整性和引用依据",
+        "结合线上日志、用户反馈和 A/B 测试持续评估"
+      ],
+      "followups": [
+        "如果召回片段相关但答案仍幻觉，怎么排查？",
+        "chunk size 和 top-k 如何选择？",
+        "如何构建一个小而可靠的评测集？"
+      ],
+      "related_keywords": [
+        "RAG",
+        "GraphRAG",
+        "LLM",
+        "召回",
+        "评估",
+        "知识库",
+        "向量检索"
+      ],
+      "role_tags": [
+        "ai",
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "ai_agent_tool_call_001",
+      "topic": "AI / LLM",
+      "subtopic": "Agent / Tool Calling",
+      "difficulty": "hard",
+      "question": "一个 Agent 调用工具失败或返回脏数据时，系统应该如何处理？",
+      "expected_points": [
+        "区分工具超时、参数错误、权限错误、结果不可信等失败类型",
+        "设计重试、回退、人工确认、幂等和超时控制",
+        "对工具输入输出做 schema 校验和权限约束",
+        "记录 trace、状态转移、失败原因和恢复路径"
+      ],
+      "followups": [
+        "LangGraph 里状态图如何避免无限循环？",
+        "工具调用结果如何进入后续 prompt？",
+        "如何评估 Agent 是否真的完成任务？"
+      ],
+      "related_keywords": [
+        "Agent",
+        "Multi-Agent",
+        "LangGraph",
+        "LangChain",
+        "工具调用",
+        "状态",
+        "重试"
+      ],
+      "role_tags": [
+        "ai",
+        "backend"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "ai_graphrag_neo4j_001",
+      "topic": "AI / LLM",
+      "subtopic": "GraphRAG / Neo4j",
+      "difficulty": "hard",
+      "question": "GraphRAG 相比普通向量 RAG 解决了什么问题？引入图数据库后会带来哪些工程成本？",
+      "expected_points": [
+        "图结构适合表达实体、关系、社区和多跳推理",
+        "向量检索适合语义近邻，两者可混合互补",
+        "工程成本包括抽取质量、schema、索引、导入、查询和更新一致性",
+        "需要评估端到端回答质量，而不只看图谱规模"
+      ],
+      "followups": [
+        "Cypher 自动生成如何做权限和语法校验？",
+        "图谱增量更新如何设计？",
+        "如何发现实体关系抽取质量下降？"
+      ],
+      "related_keywords": [
+        "GraphRAG",
+        "Neo4j",
+        "Cypher",
+        "RAG",
+        "知识图谱",
+        "实体",
+        "关系"
+      ],
+      "role_tags": [
+        "ai",
+        "backend",
+        "data"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "ai_model_serving_001",
+      "topic": "AI / ML",
+      "subtopic": "模型服务化",
+      "difficulty": "medium",
+      "question": "把模型能力接入线上系统时，你会如何控制延迟、成本和可靠性？",
+      "expected_points": [
+        "明确同步/异步调用、批处理、缓存和超时策略",
+        "考虑并发限制、队列、降级和熔断",
+        "记录输入输出、耗时、错误码和质量反馈",
+        "通过压测和灰度验证容量与稳定性"
+      ],
+      "followups": [
+        "模型接口慢时如何定位瓶颈？",
+        "什么时候适合结果缓存？",
+        "如何处理模型输出不稳定？"
+      ],
+      "related_keywords": [
+        "模型",
+        "推理",
+        "LitServe",
+        "FastAPI",
+        "LLM",
+        "多模态",
+        "OCR",
+        "MinerU"
+      ],
+      "role_tags": [
+        "ai",
+        "backend",
+        "sre"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "frontend_render_state_001",
+      "topic": "前端",
+      "subtopic": "渲染 / 状态管理",
+      "difficulty": "medium",
+      "question": "前端页面卡顿或重复渲染时，你会如何定位和优化？",
+      "expected_points": [
+        "用浏览器性能工具定位长任务、重排重绘和网络瓶颈",
+        "减少不必要状态更新和组件重复渲染",
+        "按需加载、虚拟列表、资源压缩和缓存",
+        "结合接口耗时和错误处理做端到端优化"
+      ],
+      "followups": [
+        "Vue/React 组件重新渲染常见原因是什么？",
+        "前端如何处理接口错误和 loading 状态？",
+        "首屏加载慢怎么优化？"
+      ],
+      "related_keywords": [
+        "Vue",
+        "React",
+        "前端",
+        "微信小程序",
+        "渲染",
+        "性能优化"
+      ],
+      "role_tags": [
+        "frontend",
+        "fullstack"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "miniapp_lifecycle_001",
+      "topic": "前端",
+      "subtopic": "微信小程序",
+      "difficulty": "medium",
+      "question": "微信小程序开发中页面生命周期、数据更新和原生能力调用有哪些常见坑？",
+      "expected_points": [
+        "理解 app/page/component 生命周期差异",
+        "setData 频率和数据量会影响渲染性能",
+        "处理权限、地理位置、文件系统等原生 API 异常",
+        "考虑分包、缓存、兼容性和弱网体验"
+      ],
+      "followups": [
+        "地图组件大量 marker 如何优化？",
+        "保存图片到相册需要处理哪些权限问题？",
+        "小程序和普通 Web 前端最大的工程差异是什么？"
+      ],
+      "related_keywords": [
+        "微信小程序",
+        "qqmap",
+        "xr-frame",
+        "前端",
+        "地图",
+        "文件系统"
+      ],
+      "role_tags": [
+        "frontend",
+        "fullstack"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "software_testing_001",
+      "topic": "软件工程",
+      "subtopic": "测试 / 可维护性",
+      "difficulty": "easy",
+      "question": "你负责的项目如何做测试？单元测试、集成测试和端到端测试分别覆盖什么？",
+      "expected_points": [
+        "单元测试关注函数或模块逻辑",
+        "集成测试关注模块间协作和外部依赖",
+        "端到端测试关注完整用户流程",
+        "能说明 mock、测试数据、CI 和回归验证"
+      ],
+      "followups": [
+        "你如何测试数据库或缓存相关逻辑？",
+        "大模型应用怎么测试？",
+        "线上 bug 复盘后如何补测试？"
+      ],
+      "related_keywords": [
+        "测试",
+        "CI/CD",
+        "Git",
+        "FastAPI",
+        "Django",
+        "接口",
+        "Agent",
+        "RAG"
+      ],
+      "role_tags": [
+        "backend",
+        "frontend",
+        "test"
+      ],
+      "layer": "basic"
+    },
+    {
+      "id": "sre_observability_001",
+      "topic": "工程稳定性",
+      "subtopic": "可观测性",
+      "difficulty": "medium",
+      "question": "你会如何为一个线上服务设计日志、指标和链路追踪？",
+      "expected_points": [
+        "日志记录关键请求、错误、上下文和 trace id",
+        "指标覆盖 QPS、延迟、错误率、资源使用和队列长度",
+        "链路追踪定位跨服务瓶颈",
+        "设置告警阈值、仪表盘和故障复盘机制"
+      ],
+      "followups": [
+        "接口 P95 延迟升高如何排查？",
+        "日志太多影响性能怎么办？",
+        "如何区分业务错误和系统错误？"
+      ],
+      "related_keywords": [
+        "监控",
+        "日志",
+        "trace",
+        "部署",
+        "高并发",
+        "FastAPI",
+        "Nginx",
+        "Docker"
+      ],
+      "role_tags": [
+        "backend",
+        "sre"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "graphics_geometry_robustness_001",
+      "topic": "图形学 / 几何",
+      "subtopic": "几何鲁棒性",
+      "difficulty": "hard",
+      "question": "几何算法里为什么常出现数值鲁棒性问题？工程上如何缓解？",
+      "expected_points": [
+        "浮点误差会影响相交、方向、包含等谓词判断",
+        "需要关注退化情况、尺度归一化和容差策略",
+        "可使用稳健谓词、精确算术或分层判断",
+        "通过构造边界测试和真实数据回归验证"
+      ],
+      "followups": [
+        "epsilon 取太大或太小分别有什么风险？",
+        "网格布尔或路径规划里常见退化情况有哪些？",
+        "如何验证一个几何算法在批量数据上的稳定性？"
+      ],
+      "related_keywords": [
+        "图形学",
+        "几何",
+        "CAD",
+        "3D",
+        "SIGGRAPH",
+        "toolpath",
+        "mesh",
+        "O-CNN"
+      ],
+      "role_tags": [
+        "graphics",
+        "algorithm",
+        "cpp"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "ml_training_eval_001",
+      "topic": "AI / ML",
+      "subtopic": "训练与评估",
+      "difficulty": "medium",
+      "question": "模型训练时如何判断过拟合？你会如何改进？",
+      "expected_points": [
+        "比较训练集和验证集指标趋势",
+        "使用正则化、数据增强、早停、模型简化或更多数据",
+        "关注数据泄漏、划分方式和指标选择",
+        "结合业务目标选择合适评估指标"
+      ],
+      "followups": [
+        "验证集指标好但线上效果差，可能是什么原因？",
+        "如何构建可靠的数据划分？",
+        "强化学习任务的评估和监督学习有什么不同？"
+      ],
+      "related_keywords": [
+        "训练",
+        "过拟合",
+        "PyTorch",
+        "Transformer",
+        "Reinforcement Learning",
+        "O-CNN",
+        "模型"
+      ],
+      "role_tags": [
+        "ai",
+        "algorithm",
+        "graphics"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "mysql_execution_plan_001",
+      "topic": "数据库",
+      "subtopic": "执行计划 / EXPLAIN",
+      "difficulty": "medium",
+      "question": "MySQL 的 EXPLAIN 常见字段怎么看？你通常怎么用它定位 SQL 性能问题？",
+      "expected_points": [
+        "能说明 type、key、rows、filtered、Extra 等关键字段含义",
+        "知道 ALL、index、range、ref、const 等访问类型的大致优劣",
+        "能结合回表、覆盖索引、临时表、文件排序分析问题",
+        "会把 EXPLAIN 和慢查询日志、实际执行时间一起看"
+      ],
+      "followups": [
+        "出现 Using filesort 或 Using temporary 时你会先看什么？",
+        "rows 很小但查询仍然很慢可能是什么原因？",
+        "EXPLAIN 好看是否就代表线上一定快？"
+      ],
+      "related_keywords": [
+        "MySQL",
+        "EXPLAIN",
+        "执行计划",
+        "慢查询",
+        "SQL 优化",
+        "索引"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "data"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "mysql_log_system_001",
+      "topic": "数据库",
+      "subtopic": "日志系统",
+      "difficulty": "medium",
+      "question": "MySQL 里 redo log、undo log 和 binlog 分别解决什么问题？",
+      "expected_points": [
+        "redo log 主要保障崩溃恢复和持久性",
+        "undo log 主要支持回滚和 MVCC",
+        "binlog 主要用于归档、主从复制和数据恢复",
+        "能说明它们在事务提交过程中的配合关系"
+      ],
+      "followups": [
+        "两阶段提交是为了解决什么问题？",
+        "redo log 和 binlog 顺序不一致会有什么风险？",
+        "只靠 binlog 能完成事务回滚吗？"
+      ],
+      "related_keywords": [
+        "MySQL",
+        "redo log",
+        "undo log",
+        "binlog",
+        "事务",
+        "崩溃恢复"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "data"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "mysql_lock_mechanism_001",
+      "topic": "数据库",
+      "subtopic": "锁机制",
+      "difficulty": "hard",
+      "question": "MySQL InnoDB 里的行锁、间隙锁、临键锁分别是什么？为什么会有这些锁？",
+      "expected_points": [
+        "行锁锁定已有记录，间隙锁锁定区间，临键锁是记录锁加间隙锁",
+        "这些锁和隔离级别、当前读、避免幻读有关",
+        "能结合范围查询和索引说明锁定范围",
+        "知道锁等待、死锁和性能影响的基本分析思路"
+      ],
+      "followups": [
+        "什么情况下范围查询会锁住比预期更多的数据？",
+        "没有命中索引时锁范围可能怎样变化？",
+        "如何排查一类线上锁等待问题？"
+      ],
+      "related_keywords": [
+        "MySQL",
+        "行锁",
+        "间隙锁",
+        "临键锁",
+        "死锁",
+        "事务"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "data"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "mysql_sharding_001",
+      "topic": "数据库",
+      "subtopic": "分库分表",
+      "difficulty": "hard",
+      "question": "什么时候需要分库分表？做了之后最常见的代价和难点有哪些？",
+      "expected_points": [
+        "明确单表数据量、写入压力、查询瓶颈等触发场景",
+        "能说明水平拆分和垂直拆分的大致差异",
+        "知道跨库事务、全局 ID、分页、排序、聚合、扩容等难点",
+        "理解分库分表不是越早做越好，需要评估收益和复杂度"
+      ],
+      "followups": [
+        "如何设计分片键？",
+        "分片后按非分片键查询怎么办？",
+        "未来要扩容分片数量时如何尽量少迁移数据？"
+      ],
+      "related_keywords": [
+        "MySQL",
+        "分库分表",
+        "分片键",
+        "全局 ID",
+        "扩容"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "data"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "redis_data_structure_001",
+      "topic": "Redis",
+      "subtopic": "数据结构",
+      "difficulty": "easy",
+      "question": "Redis 常用数据结构有哪些？分别适合什么业务场景？",
+      "expected_points": [
+        "至少覆盖 String、Hash、List、Set、ZSet",
+        "能把数据结构和业务场景对应起来，比如计数、排行榜、去重、消息队列",
+        "知道 HyperLogLog、Bitmap、GEO 等扩展结构的典型用途",
+        "理解选错结构会影响内存占用和性能"
+      ],
+      "followups": [
+        "为什么排行榜常用 ZSet？",
+        "Hash 什么时候比 String 多 key 更合适？",
+        "List 做消息队列有什么局限？"
+      ],
+      "related_keywords": [
+        "Redis",
+        "String",
+        "Hash",
+        "List",
+        "Set",
+        "ZSet",
+        "排行榜"
+      ],
+      "role_tags": [
+        "backend",
+        "java"
+      ],
+      "layer": "basic"
+    },
+    {
+      "id": "redis_persistence_001",
+      "topic": "Redis",
+      "subtopic": "持久化",
+      "difficulty": "medium",
+      "question": "Redis 的 RDB 和 AOF 有什么区别？实际项目里怎么选？",
+      "expected_points": [
+        "RDB 是快照，恢复快但可能丢更多数据",
+        "AOF 记录写命令，数据更完整但文件更大、恢复更慢",
+        "知道 appendfsync 策略和重写机制",
+        "能结合业务容忍度、恢复时间、资源开销做取舍"
+      ],
+      "followups": [
+        "AOF rewrite 是为了解决什么问题？",
+        "RDB 和 AOF 可以同时开启吗？",
+        "Redis 崩溃恢复时优先使用哪个文件？"
+      ],
+      "related_keywords": [
+        "Redis",
+        "RDB",
+        "AOF",
+        "持久化",
+        "恢复",
+        "rewrite"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "sre"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "redis_replication_cluster_001",
+      "topic": "Redis",
+      "subtopic": "主从复制 / 集群",
+      "difficulty": "hard",
+      "question": "Redis 主从复制和 Redis Cluster 分别解决什么问题？它们的局限是什么？",
+      "expected_points": [
+        "主从复制主要提升读扩展和高可用基础能力",
+        "Cluster 通过分片解决容量和吞吐扩展问题",
+        "知道主从切换、slot、重定向、脑裂等关键概念",
+        "理解一致性和可用性的边界，不把 Redis 当强一致数据库用"
+      ],
+      "followups": [
+        "哨兵和 Cluster 的职责差异是什么？",
+        "主从复制延迟会带来什么业务问题？",
+        "为什么 Cluster 对多 key 操作有限制？"
+      ],
+      "related_keywords": [
+        "Redis",
+        "主从复制",
+        "哨兵",
+        "Cluster",
+        "slot",
+        "高可用"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "sre"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "redis_memory_eviction_001",
+      "topic": "Redis",
+      "subtopic": "过期 / 淘汰策略",
+      "difficulty": "medium",
+      "question": "Redis 的过期删除和内存淘汰策略分别是什么？",
+      "expected_points": [
+        "区分 key 过期和内存不足时的淘汰",
+        "知道惰性删除、定期删除的基本思路",
+        "了解 volatile-lru、allkeys-lru、lfu、random、ttl 等常见策略",
+        "能结合缓存业务说明策略选择"
+      ],
+      "followups": [
+        "为什么 Redis 不采用纯定时删除？",
+        "allkeys-lru 和 volatile-lru 的差别是什么？",
+        "如果缓存命中率下降，你会从哪些方向排查？"
+      ],
+      "related_keywords": [
+        "Redis",
+        "过期",
+        "淘汰策略",
+        "LRU",
+        "LFU",
+        "缓存命中率"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "sre"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "net_tcp_reliability_001",
+      "topic": "计算机网络",
+      "subtopic": "TCP 可靠性",
+      "difficulty": "medium",
+      "question": "TCP 为什么说自己是可靠传输？它主要靠哪些机制保证可靠？",
+      "expected_points": [
+        "至少提到序列号、确认应答、超时重传",
+        "还应包含滑动窗口、流量控制、拥塞控制",
+        "知道乱序重组和按序交付的基本含义",
+        "能说明可靠不是绝对不丢，而是尽量保证正确交付"
+      ],
+      "followups": [
+        "超时重传和快速重传有什么区别？",
+        "滑动窗口主要解决什么问题？",
+        "为什么 UDP 更适合某些实时场景？"
+      ],
+      "related_keywords": [
+        "TCP",
+        "可靠传输",
+        "重传",
+        "滑动窗口",
+        "拥塞控制"
+      ],
+      "role_tags": [
+        "backend",
+        "sre"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "net_dns_001",
+      "topic": "计算机网络",
+      "subtopic": "DNS",
+      "difficulty": "easy",
+      "question": "DNS 解析一个域名时大致会经历哪些步骤？",
+      "expected_points": [
+        "本地缓存、操作系统缓存、递归解析、根域名服务器、顶级域、权威域等基本链路",
+        "知道递归查询和迭代查询的区别",
+        "理解 DNS 缓存和 TTL 的作用",
+        "能把域名解析和访问网站全过程关联起来"
+      ],
+      "followups": [
+        "为什么改了域名解析记录后不一定立刻生效？",
+        "DNS 被劫持会带来什么风险？",
+        "为什么很多公司会自建本地 DNS 缓存？"
+      ],
+      "related_keywords": [
+        "DNS",
+        "域名解析",
+        "TTL",
+        "递归查询",
+        "权威 DNS"
+      ],
+      "role_tags": [
+        "backend",
+        "frontend",
+        "sre"
+      ],
+      "layer": "basic"
+    },
+    {
+      "id": "net_http_cache_001",
+      "topic": "计算机网络",
+      "subtopic": "HTTP 缓存",
+      "difficulty": "medium",
+      "question": "HTTP 强缓存和协商缓存有什么区别？常见头字段有哪些？",
+      "expected_points": [
+        "强缓存命中时不发起实际资源请求",
+        "协商缓存通过 If-Modified-Since、If-None-Match 等与服务端确认",
+        "至少知道 Cache-Control、Expires、ETag、Last-Modified",
+        "理解浏览器缓存策略对性能和一致性的影响"
+      ],
+      "followups": [
+        "Cache-Control: no-cache 和 no-store 的区别是什么？",
+        "ETag 和 Last-Modified 为什么常一起出现？",
+        "前端静态资源为什么常用带 hash 文件名？"
+      ],
+      "related_keywords": [
+        "HTTP",
+        "缓存",
+        "ETag",
+        "Last-Modified",
+        "Cache-Control"
+      ],
+      "role_tags": [
+        "backend",
+        "frontend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "os_virtual_memory_001",
+      "topic": "操作系统",
+      "subtopic": "虚拟内存",
+      "difficulty": "medium",
+      "question": "什么是虚拟内存？分页机制给系统带来了什么好处和代价？",
+      "expected_points": [
+        "虚拟地址与物理地址分离，给进程提供独立地址空间",
+        "分页支持按需加载、内存隔离和更高利用率",
+        "页表、缺页中断、TLB 是核心概念",
+        "代价包括页表开销、缺页成本和地址转换成本"
+      ],
+      "followups": [
+        "缺页异常一定是坏事吗？",
+        "TLB 的作用是什么？",
+        "为什么顺序访问通常比随机访问更友好？"
+      ],
+      "related_keywords": [
+        "操作系统",
+        "虚拟内存",
+        "分页",
+        "TLB",
+        "缺页中断"
+      ],
+      "role_tags": [
+        "backend",
+        "sre"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "os_context_switch_001",
+      "topic": "操作系统",
+      "subtopic": "上下文切换",
+      "difficulty": "medium",
+      "question": "什么是上下文切换？为什么线程切换过多会影响系统性能？",
+      "expected_points": [
+        "上下文切换包括寄存器、程序计数器、栈等执行现场的保存和恢复",
+        "线程切换虽然比进程轻，但仍有内核调度和缓存失效成本",
+        "切换过多会降低有效 CPU 时间，增加延迟",
+        "能结合锁竞争、线程池配置、阻塞等待说明实际场景"
+      ],
+      "followups": [
+        "CPU 飙高但吞吐不升时，怎样判断是否切换过多？",
+        "协程为什么能降低一部分切换开销？",
+        "线程数是不是越多越容易提高并发？"
+      ],
+      "related_keywords": [
+        "上下文切换",
+        "线程",
+        "进程",
+        "调度",
+        "性能"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "sre"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "jvm_memory_area_001",
+      "topic": "JVM",
+      "subtopic": "内存区域",
+      "difficulty": "medium",
+      "question": "JVM 运行时内存区域一般怎么划分？各区域主要存什么？",
+      "expected_points": [
+        "至少包含堆、虚拟机栈、方法区/元空间、程序计数器、本地方法栈",
+        "堆主要存对象，栈主要是栈帧和局部变量",
+        "方法区/元空间存类元数据、常量池等",
+        "能把这些区域和常见 OOM、StackOverflow 场景关联起来"
+      ],
+      "followups": [
+        "为什么 JDK8 以后永久代变成元空间？",
+        "new 一个对象大概会涉及哪些区域？",
+        "常见的内存泄漏通常更多发生在哪一块？"
+      ],
+      "related_keywords": [
+        "JVM",
+        "堆",
+        "栈",
+        "元空间",
+        "内存区域",
+        "OOM"
+      ],
+      "role_tags": [
+        "java",
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "jvm_classloader_001",
+      "topic": "JVM",
+      "subtopic": "类加载",
+      "difficulty": "medium",
+      "question": "Java 类加载过程一般分哪几个阶段？双亲委派主要解决什么问题？",
+      "expected_points": [
+        "至少包含加载、验证、准备、解析、初始化",
+        "理解双亲委派有助于避免核心类被篡改和重复加载",
+        "知道 ClassLoader 层级和启动类加载器、扩展类加载器、应用类加载器",
+        "能说明 SPI、热部署等为什么会打破或绕开双亲委派"
+      ],
+      "followups": [
+        "Class.forName 和 ClassLoader.loadClass 有什么区别？",
+        "什么时候会触发类初始化？",
+        "为什么 JDBC 驱动加载常和 SPI 联系在一起？"
+      ],
+      "related_keywords": [
+        "JVM",
+        "类加载",
+        "双亲委派",
+        "ClassLoader",
+        "SPI"
+      ],
+      "role_tags": [
+        "java",
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "concurrency_jmm_001",
+      "topic": "并发",
+      "subtopic": "JMM / 可见性",
+      "difficulty": "medium",
+      "question": "Java 内存模型（JMM）主要想解决什么问题？可见性、有序性、原子性分别指什么？",
+      "expected_points": [
+        "JMM 主要规范多线程读写共享变量的语义",
+        "可见性是一个线程修改后其他线程能否及时看到",
+        "有序性和指令重排有关，原子性和操作是否不可分割有关",
+        "知道 volatile、synchronized、happens-before 的基本作用"
+      ],
+      "followups": [
+        "volatile 为什么不能保证复合操作原子性？",
+        "happens-before 规则你能举几个吗？",
+        "双重检查单例为什么需要 volatile？"
+      ],
+      "related_keywords": [
+        "JMM",
+        "可见性",
+        "有序性",
+        "原子性",
+        "volatile",
+        "happens-before"
+      ],
+      "role_tags": [
+        "java",
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "concurrency_lock_compare_001",
+      "topic": "并发",
+      "subtopic": "锁机制",
+      "difficulty": "medium",
+      "question": "synchronized 和 ReentrantLock 有什么主要区别？什么场景下会选后者？",
+      "expected_points": [
+        "synchronized 语义简单，JVM 层支持，ReentrantLock API 更灵活",
+        "ReentrantLock 支持可中断、公平锁、Condition 等扩展能力",
+        "两者都可重入，但使用体验和可观测性不同",
+        "会结合超时获取锁、多个条件队列等说明选择场景"
+      ],
+      "followups": [
+        "公平锁一定更好吗？",
+        "Condition 和 wait/notify 的关系是什么？",
+        "锁粒度过大时常见问题有哪些？"
+      ],
+      "related_keywords": [
+        "并发",
+        "synchronized",
+        "ReentrantLock",
+        "Condition",
+        "锁"
+      ],
+      "role_tags": [
+        "java",
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "concurrency_cas_aqs_001",
+      "topic": "并发",
+      "subtopic": "CAS / AQS",
+      "difficulty": "hard",
+      "question": "CAS 和 AQS 分别是什么？它们在 Java 并发工具里扮演什么角色？",
+      "expected_points": [
+        "CAS 是一种无锁原子更新思路，依赖 compare-and-swap",
+        "AQS 是很多同步器的基础框架，维护 state 和等待队列",
+        "知道 ReentrantLock、Semaphore、CountDownLatch 等与 AQS 的关系",
+        "理解 CAS 自旋、ABA 问题和 AQS 阻塞唤醒的不同成本模型"
+      ],
+      "followups": [
+        "ABA 问题怎么解决？",
+        "为什么说 AQS 更像一个同步器骨架？",
+        "自旋一定比阻塞高效吗？"
+      ],
+      "related_keywords": [
+        "CAS",
+        "AQS",
+        "ReentrantLock",
+        "自旋",
+        "并发工具"
+      ],
+      "role_tags": [
+        "java",
+        "backend"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "spring_ioc_aop_001",
+      "topic": "Spring",
+      "subtopic": "IOC / AOP",
+      "difficulty": "medium",
+      "question": "Spring 里的 IOC 和 AOP 分别解决什么问题？",
+      "expected_points": [
+        "IOC 主要做对象创建和依赖管理，降低耦合",
+        "AOP 用于把横切逻辑如事务、日志、权限从业务代码中抽离",
+        "知道 Bean 生命周期、依赖注入和代理对象等基本概念",
+        "能把事务和 AOP 代理联系起来说明"
+      ],
+      "followups": [
+        "Spring AOP 是基于动态代理还是字节码增强？",
+        "什么情况下会用 CGLIB 而不是 JDK 动态代理？",
+        "循环依赖和 IOC 容器有什么关系？"
+      ],
+      "related_keywords": [
+        "Spring",
+        "IOC",
+        "AOP",
+        "Bean",
+        "动态代理"
+      ],
+      "role_tags": [
+        "java",
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "spring_transaction_001",
+      "topic": "Spring",
+      "subtopic": "事务管理",
+      "difficulty": "hard",
+      "question": "@Transactional 常见失效场景有哪些？为什么会失效？",
+      "expected_points": [
+        "同类自调用、方法非 public、异常被吞、异常类型不匹配等是常见场景",
+        "失效通常和 Spring AOP 代理拦截不到有关",
+        "能说明事务传播行为和回滚规则的基本影响",
+        "知道如何通过拆类、代理调用或显式配置回滚规则解决"
+      ],
+      "followups": [
+        "为什么 RuntimeException 默认回滚而 checked exception 默认不回滚？",
+        "事务传播行为里 REQUIRED 和 REQUIRES_NEW 的差别是什么？",
+        "事务方法里做远程调用为什么要小心？"
+      ],
+      "related_keywords": [
+        "Spring",
+        "@Transactional",
+        "事务",
+        "AOP",
+        "传播行为"
+      ],
+      "role_tags": [
+        "java",
+        "backend"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "springboot_autoconfiguration_001",
+      "topic": "Spring",
+      "subtopic": "自动装配",
+      "difficulty": "medium",
+      "question": "Spring Boot 的自动装配大致是怎么工作的？",
+      "expected_points": [
+        "启动类注解链路最终会导入自动配置类",
+        "条件注解决定某个配置是否生效",
+        "知道配置类、starter、spring.factories 或新版自动配置导入机制",
+        "能说明自动装配如何降低样板代码量"
+      ],
+      "followups": [
+        "如果一个自动配置没有生效，你会怎么排查？",
+        "自定义 starter 一般要做哪些事？",
+        "自动装配和普通 @Configuration 有什么关系？"
+      ],
+      "related_keywords": [
+        "Spring Boot",
+        "自动装配",
+        "starter",
+        "条件注解"
+      ],
+      "role_tags": [
+        "java",
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "distributed_cap_base_001",
+      "topic": "分布式",
+      "subtopic": "CAP / BASE",
+      "difficulty": "medium",
+      "question": "CAP 和 BASE 经常一起出现，它们分别在表达什么？",
+      "expected_points": [
+        "CAP 讨论分布式系统在一致性、可用性、分区容忍之间的权衡",
+        "分布式系统通常必须面对网络分区，所以更多是在 C 和 A 之间权衡",
+        "BASE 强调基本可用、软状态、最终一致性，是工程上的折中思路",
+        "能说明这不是绝对标签，而是具体场景下的取舍"
+      ],
+      "followups": [
+        "为什么很多互联网系统更愿意接受最终一致性？",
+        "分区容忍为什么通常不能放弃？",
+        "订单支付场景和评论点赞场景的取舍会一样吗？"
+      ],
+      "related_keywords": [
+        "分布式",
+        "CAP",
+        "BASE",
+        "最终一致性",
+        "可用性"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "sre"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "distributed_id_001",
+      "topic": "分布式",
+      "subtopic": "分布式 ID",
+      "difficulty": "medium",
+      "question": "分布式 ID 方案常见有哪些？你会怎么选？",
+      "expected_points": [
+        "至少提到数据库号段、Redis 自增、UUID、Snowflake 等",
+        "会从全局唯一、有序性、长度、可读性、时钟依赖、扩展性等维度权衡",
+        "理解不同业务对 ID 的要求不一样",
+        "知道时钟回拨等实际工程问题"
+      ],
+      "followups": [
+        "Snowflake 为什么依赖机器时钟？",
+        "为什么很多业务不喜欢直接用 UUID 做主键？",
+        "号段模式的优点和局限分别是什么？"
+      ],
+      "related_keywords": [
+        "分布式 ID",
+        "Snowflake",
+        "UUID",
+        "号段",
+        "全局唯一"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "data"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "distributed_rpc_001",
+      "topic": "分布式",
+      "subtopic": "RPC",
+      "difficulty": "medium",
+      "question": "RPC 和 HTTP 调用的差异主要体现在哪些方面？",
+      "expected_points": [
+        "协议、序列化、性能、服务治理能力是常见差异点",
+        "RPC 更强调服务间调用体验和治理能力，HTTP 更通用更开放",
+        "知道注册发现、负载均衡、超时重试、熔断等 RPC 生态能力",
+        "能结合内部微服务和对外 API 场景说明取舍"
+      ],
+      "followups": [
+        "为什么内部服务常喜欢用 RPC 而不是纯 REST？",
+        "超时和重试配置不当会有什么后果？",
+        "序列化协议选择会影响哪些指标？"
+      ],
+      "related_keywords": [
+        "RPC",
+        "HTTP",
+        "Dubbo",
+        "服务治理",
+        "序列化"
+      ],
+      "role_tags": [
+        "backend",
+        "java"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "mq_core_value_001",
+      "topic": "消息队列",
+      "subtopic": "核心价值",
+      "difficulty": "easy",
+      "question": "消息队列最常见的价值是什么？为什么很多系统都会引入它？",
+      "expected_points": [
+        "常见价值包括削峰填谷、异步解耦、最终一致性",
+        "能结合下单、通知、日志、异步任务等场景举例",
+        "理解 MQ 引入后也会带来复杂度和一致性问题",
+        "不会把 MQ 当成没有成本的万能组件"
+      ],
+      "followups": [
+        "什么场景其实不适合上 MQ？",
+        "削峰填谷和限流有什么关系？",
+        "异步化后如何保证用户体验？"
+      ],
+      "related_keywords": [
+        "消息队列",
+        "MQ",
+        "异步",
+        "削峰填谷",
+        "解耦"
+      ],
+      "role_tags": [
+        "backend",
+        "java"
+      ],
+      "layer": "basic"
+    },
+    {
+      "id": "mq_reliability_001",
+      "topic": "消息队列",
+      "subtopic": "可靠性 / 重复消费",
+      "difficulty": "hard",
+      "question": "如何理解消息不丢、不重、可消费这几件事？MQ 的可靠性通常怎么设计？",
+      "expected_points": [
+        "生产端确认、Broker 持久化、消费端确认是关键链路",
+        "至少一次投递常导致重复消费，需要幂等设计",
+        "消息积压、死信、重试、补偿链路都要考虑",
+        "理解严格不丢不重通常要付出更高复杂度和成本"
+      ],
+      "followups": [
+        "为什么说‘完全不重复’在分布式里很贵？",
+        "消费端幂等一般怎么做？",
+        "如果消息长期积压你会先看什么？"
+      ],
+      "related_keywords": [
+        "消息队列",
+        "幂等",
+        "重复消费",
+        "ACK",
+        "死信",
+        "重试"
+      ],
+      "role_tags": [
+        "backend",
+        "java"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "mq_order_transaction_001",
+      "topic": "消息队列",
+      "subtopic": "顺序消息 / 事务消息",
+      "difficulty": "hard",
+      "question": "顺序消息和事务消息分别想解决什么问题？它们的代价是什么？",
+      "expected_points": [
+        "顺序消息主要解决同一业务键下事件处理顺序问题",
+        "事务消息主要解决本地事务和消息发送的一致性问题",
+        "顺序通常会牺牲吞吐和扩展性",
+        "事务消息仍需要回查、补偿和异常处理设计"
+      ],
+      "followups": [
+        "全局顺序和局部顺序差别是什么？",
+        "为什么顺序消费更容易成为瓶颈？",
+        "事务消息和最终一致性方案是什么关系？"
+      ],
+      "related_keywords": [
+        "消息队列",
+        "顺序消息",
+        "事务消息",
+        "最终一致性"
+      ],
+      "role_tags": [
+        "backend",
+        "java"
+      ],
+      "layer": "deep"
+    },
+    {
+      "id": "sysdesign_high_availability_001",
+      "topic": "系统设计",
+      "subtopic": "高可用",
+      "difficulty": "medium",
+      "question": "你会从哪些维度设计一个高可用系统？",
+      "expected_points": [
+        "至少覆盖冗余、限流、超时、重试、熔断、降级、监控告警",
+        "能说明单点、依赖故障、流量洪峰和发布风险的应对思路",
+        "知道可用性目标和成本之间需要平衡",
+        "会把高可用设计和业务优先级联系起来"
+      ],
+      "followups": [
+        "超时和重试为什么可能把问题放大？",
+        "降级策略怎样才算对业务友好？",
+        "一个核心依赖不可用时你会怎么止血？"
+      ],
+      "related_keywords": [
+        "高可用",
+        "限流",
+        "熔断",
+        "降级",
+        "重试",
+        "监控"
+      ],
+      "role_tags": [
+        "backend",
+        "sre"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "sysdesign_gateway_001",
+      "topic": "系统设计",
+      "subtopic": "网关",
+      "difficulty": "medium",
+      "question": "API 网关通常放在系统的什么位置？最常见的职责有哪些？",
+      "expected_points": [
+        "位于客户端和后端服务之间，统一入口",
+        "常见职责包括路由转发、认证鉴权、限流熔断、日志监控、灰度发布",
+        "能说明网关不应过度侵入业务逻辑",
+        "理解网关本身也可能成为性能和可用性瓶颈"
+      ],
+      "followups": [
+        "为什么很多系统不建议把复杂业务逻辑堆到网关？",
+        "网关层如何做限流？",
+        "如果网关出故障，影响面通常有多大？"
+      ],
+      "related_keywords": [
+        "API 网关",
+        "路由",
+        "鉴权",
+        "限流",
+        "灰度发布"
+      ],
+      "role_tags": [
+        "backend",
+        "java",
+        "sre"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "sysdesign_idempotency_001",
+      "topic": "系统设计",
+      "subtopic": "幂等性",
+      "difficulty": "medium",
+      "question": "什么是接口幂等性？哪些业务场景必须重点考虑它？",
+      "expected_points": [
+        "同一请求重复执行不应产生重复副作用",
+        "支付、下单、消息消费、回调通知等场景尤其重要",
+        "常见手段包括唯一业务键、幂等表、状态机、防重 token",
+        "知道幂等和去重、事务、一致性之间的关系"
+      ],
+      "followups": [
+        "GET 一定天然幂等吗？",
+        "为什么重试机制通常和幂等设计绑定出现？",
+        "幂等表会带来什么额外成本？"
+      ],
+      "related_keywords": [
+        "幂等性",
+        "防重",
+        "支付",
+        "回调",
+        "消息消费"
+      ],
+      "role_tags": [
+        "backend",
+        "java"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "ai_agent_basis_001",
+      "topic": "AI Agent",
+      "subtopic": "Agent 基础",
+      "difficulty": "easy",
+      "question": "你怎么理解 AI Agent 和普通问答式 LLM 应用的区别？",
+      "expected_points": [
+        "Agent 不只是生成文本，还会规划、调用工具、维护状态、执行多步任务",
+        "普通问答通常更偏单轮或浅层推理",
+        "Agent 需要更强的上下文管理、错误恢复和可观测性",
+        "能把 Agent 放进业务闭环而不是只停留在概念层"
+      ],
+      "followups": [
+        "什么场景其实不需要 Agent？",
+        "Agent 为什么比纯 Chat 更容易失控？",
+        "Agent 的成功指标通常怎么定义？"
+      ],
+      "related_keywords": [
+        "Agent",
+        "LLM",
+        "工具调用",
+        "规划",
+        "状态"
+      ],
+      "role_tags": [
+        "ai",
+        "backend"
+      ],
+      "layer": "basic"
+    },
+    {
+      "id": "ai_agent_context_001",
+      "topic": "AI Agent",
+      "subtopic": "上下文工程",
+      "difficulty": "medium",
+      "question": "Agent 的上下文工程为什么重要？你会怎么控制上下文质量？",
+      "expected_points": [
+        "上下文质量直接影响工具选择、推理稳定性和输出正确性",
+        "需要控制检索结果、历史状态、系统提示、工具结果的组织方式",
+        "避免上下文过长、冲突、污染和无关信息干扰",
+        "会通过裁剪、摘要、分层记忆、结构化状态等方式治理"
+      ],
+      "followups": [
+        "上下文越多越好吗？",
+        "工具结果应该原样塞回上下文吗？",
+        "如何定位一次失败是 prompt 问题还是上下文问题？"
+      ],
+      "related_keywords": [
+        "Agent",
+        "上下文工程",
+        "记忆",
+        "状态",
+        "prompt"
+      ],
+      "role_tags": [
+        "ai",
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "ai_agent_memory_001",
+      "topic": "AI Agent",
+      "subtopic": "记忆 / 状态管理",
+      "difficulty": "medium",
+      "question": "Agent 的短期记忆和长期记忆一般分别承担什么职责？",
+      "expected_points": [
+        "短期记忆更像当前任务上下文和工作状态",
+        "长期记忆更像跨会话知识、偏好、历史经验",
+        "需要考虑更新时机、过期、冲突和隐私边界",
+        "知道不是所有信息都值得长期存储"
+      ],
+      "followups": [
+        "长期记忆错误会带来什么后果？",
+        "如何避免用户敏感信息被不当记忆？",
+        "什么时候更适合检索而不是记忆？"
+      ],
+      "related_keywords": [
+        "Agent",
+        "记忆",
+        "短期记忆",
+        "长期记忆",
+        "状态管理"
+      ],
+      "role_tags": [
+        "ai",
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "rag_basis_001",
+      "topic": "RAG",
+      "subtopic": "基础流程",
+      "difficulty": "easy",
+      "question": "一个标准 RAG 流程通常包括哪些步骤？每一步在解决什么问题？",
+      "expected_points": [
+        "至少包括文档处理、切分、向量化、检索、重排、组装上下文、生成回答",
+        "知道每一步都可能成为误差来源",
+        "理解 RAG 的目标是让模型回答更贴近外部知识",
+        "能说明它和纯 prompt 注入知识的不同"
+      ],
+      "followups": [
+        "为什么不能把整库文档直接塞给模型？",
+        "检索到了不代表回答就一定对，为什么？",
+        "RAG 和微调在很多场景下是什么关系？"
+      ],
+      "related_keywords": [
+        "RAG",
+        "切分",
+        "检索",
+        "重排",
+        "向量化",
+        "上下文"
+      ],
+      "role_tags": [
+        "ai",
+        "backend"
+      ],
+      "layer": "basic"
+    },
+    {
+      "id": "rag_chunking_001",
+      "topic": "RAG",
+      "subtopic": "切分策略",
+      "difficulty": "medium",
+      "question": "RAG 里的 chunk 为什么重要？chunk 太大或太小分别会出什么问题？",
+      "expected_points": [
+        "chunk 决定检索粒度和上下文组织质量",
+        "太大可能引入噪声，太小可能丢失语义完整性",
+        "要结合文档结构、业务问题类型和模型上下文窗口选择",
+        "知道 overlap、标题层级、语义切分等常见策略"
+      ],
+      "followups": [
+        "结构化文档和纯文本的切分策略会一样吗？",
+        "chunk overlap 为什么有时有帮助？",
+        "如何验证 chunk 策略调整后是否真的更好？"
+      ],
+      "related_keywords": [
+        "RAG",
+        "chunk",
+        "切分",
+        "overlap",
+        "检索质量"
+      ],
+      "role_tags": [
+        "ai",
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "rag_retrieval_rerank_001",
+      "topic": "RAG",
+      "subtopic": "检索 / 重排",
+      "difficulty": "medium",
+      "question": "向量检索和重排分别在 RAG 中承担什么角色？为什么很多系统两者都要有？",
+      "expected_points": [
+        "向量检索负责快速召回候选文档",
+        "重排负责在更小候选集上提高相关性排序质量",
+        "二者平衡召回率和精度",
+        "知道召回错了、排错了、上下文拼错了会分别带来不同问题"
+      ],
+      "followups": [
+        "只做向量检索不做重排通常会出现什么问题？",
+        "Top-k 取大还是取小该怎么权衡？",
+        "关键词检索和向量检索为什么常混合使用？"
+      ],
+      "related_keywords": [
+        "RAG",
+        "向量检索",
+        "重排",
+        "TopK",
+        "召回率",
+        "精度"
+      ],
+      "role_tags": [
+        "ai",
+        "backend"
+      ],
+      "layer": "standard"
+    },
+    {
+      "id": "rag_knowledge_update_001",
+      "topic": "RAG",
+      "subtopic": "知识更新",
+      "difficulty": "hard",
+      "question": "RAG 知识库更新时，为什么很多系统不能简单全量重建？常见更新策略有哪些？",
+      "expected_points": [
+        "全量重建成本高、耗时长、可能影响在线服务",
+        "常见策略包括增量更新、版本化索引、异步构建、热切换",
+        "需要考虑去重、失效、回滚、一致性和可追踪性",
+        "理解知识更新不只是写入向量库，还包括切分、元数据、重排索引等链路"
+      ],
+      "followups": [
+        "如果更新了一半失败了怎么办？",
+        "为什么旧知识失效同样重要？",
+        "在线索引切换时怎样减少对查询流量的影响？"
+      ],
+      "related_keywords": [
+        "RAG",
+        "知识更新",
+        "增量更新",
+        "版本化",
+        "回滚"
+      ],
+      "role_tags": [
+        "ai",
+        "backend"
+      ],
+      "layer": "deep"
+    }
+  ]
+}
