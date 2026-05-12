@@ -56,9 +56,6 @@ cd cs-tech-interviewer
 pip install -r requirements.txt
 ```
 
-`requirements.txt` 只包含运行时脚本中真实导入的第三方 Python 包。当前核心依赖是：
-
-- `python-docx>=1.2.0`：用于解析 `.docx` 简历
 
 如果需要解析 PDF 简历，建议额外安装 `MinerU`。它不是 skill 的硬依赖，但会影响 PDF 简历解析路径。
 
@@ -66,10 +63,6 @@ pip install -r requirements.txt
 pip install -U "mineru[pipeline]"
 ```
 
-当前运行时要求：
-
-- Python `3.10+`
-- `requirements.txt`
 
 
 <a id="quick-start"></a>

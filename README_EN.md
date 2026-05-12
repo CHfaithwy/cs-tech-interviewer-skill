@@ -56,20 +56,12 @@ cd cs-tech-interviewer
 pip install -r requirements.txt
 ```
 
-`requirements.txt` only contains third-party Python packages that are actually imported by the runtime scripts. The current core dependency is:
-
-- `python-docx>=1.2.0`: used to parse `.docx` resumes
-
 If you need to parse PDF resumes, it is recommended to install `MinerU` separately. It is not a hard dependency of the skill itself, but it affects the PDF resume parsing path.
 
 ```bash
 pip install -U "mineru[pipeline]"
 ```
 
-Current runtime requirements:
-
-- Python `3.10+`
-- `requirements.txt`
 
 
 
