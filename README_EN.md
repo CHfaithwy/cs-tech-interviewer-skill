@@ -5,7 +5,6 @@
 It turns a technical interview into a configurable, follow-up-friendly, persistable, and reviewable workflow: from resume parsing, question-bank selection, and project deep dives, to algorithm practice, stage scoring, structured review, and resume rewrite suggestions.
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://python.org)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![AgentSkills](https://img.shields.io/badge/AgentSkills-Standard-green)](https://agentskills.io)
 [![Language](https://img.shields.io/badge/Language-ZH%20%7C%20EN-lightgrey)](README.md)
 

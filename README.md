@@ -5,7 +5,6 @@
 它把一场技术面试拆成可配置、可追问、可落盘、可复盘的流程：从简历解析、题库选题、项目深挖，到算法陪练、阶段评分、结构化复盘和简历修改建议。
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://python.org)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![AgentSkills](https://img.shields.io/badge/AgentSkills-Standard-green)](https://agentskills.io)
 [![Language](https://img.shields.io/badge/Language-ZH%20%7C%20EN-lightgrey)](README_EN.md)
 
