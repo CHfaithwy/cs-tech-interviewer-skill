@@ -22,11 +22,10 @@ This skill is suitable for people who want to prepare for technical interviews s
 - people who want to turn the interview process into scoring, review, and next-round plans
 - people who want to turn problems exposed in interviews into resume rewrite suggestions
 
-It is not a random question generator. It is closer to a Chinese technical interview console: based on the resume, JD, role profile, question-bank bias, and session state machine, it organizes a mock interview that feels more like a real technical interview.
+It is closer to a Chinese technical interview console: based on the resume, JD, role profile, question-bank bias, and session state machine, it organizes a mock interview that feels more like a real technical interview.
 
 The JD is not only a question-filtering condition. The skill remembers the JD as the role context for the whole interview, and uses it to decide what the interviewer should prioritize and what standard to use when judging fit.
 
-The algorithm bank in the public-release repository keeps locally rewritten full problem statements, problem identity, tags, difficulty, selection signals, expected approaches, and hints, but does not distribute official HTML problem statements, images, or direct links.
 
 <a id="features"></a>
 
@@ -47,7 +46,7 @@ The algorithm bank in the public-release repository keeps locally rewritten full
 
 ## Installation
 
-This is a skill repository, not a standalone web service. Put it into a skill directory that Codex can load.
+This is a skill repository, Put it into a skill directory that Codex can load.
 
 ```bash
 git clone <your-repo-url> cs-tech-interviewer
@@ -55,7 +54,7 @@ cd cs-tech-interviewer
 pip install -r requirements.txt
 ```
 
-If you need to parse PDF resumes, it is recommended to install `MinerU` separately. It is not a hard dependency of the skill itself, but it affects the PDF resume parsing path.
+If you need to parse PDF resumes, it is recommended to install `MinerU` separately. 
 
 ```bash
 pip install -U "mineru[pipeline]"
@@ -68,7 +67,7 @@ pip install -U "mineru[pipeline]"
 
 ## Quick Start
 
-Invoke this skill in Codex:
+Invoke this skill in Agent:
 
 ```text
 Use $cs-tech-interviewer to conduct a computer-science mock interview based on a resume and generate a structured feedback report.
@@ -163,7 +162,7 @@ Among them:
 - `question_selection.md` is the default human-readable selection summary and explicitly shows `JD Context`
 - `score_snapshot.json / md` are mid-session scoring outputs
 - `interview_evaluation.json` is the machine-readable source of truth for the final review
-- `interview_evaluation.md` is the human-readable review report
+- `interview_evaluation.md` is the review report
 
 ## Repository Structure
 
