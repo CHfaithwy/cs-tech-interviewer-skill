@@ -66,7 +66,7 @@ description: CS technical interview simulation and coaching for computer science
 整个 skill 的主链路如下：
 
 1. 解析输入：简历、JD、目标方向、显式命令、已有 transcript
-2. 生成候选人画像：教育、技能、项目、实习、亮点、风险点
+2. 生成候选人画像：教育、技能、项目、实习、亮点；风险点必须由大模型读取解析产物后评估并写回
 3. 匹配 JD：提取要求技能、加分项、职责重点、面试偏向
 4. 展示面试前确认信息：推断岗位、核心技能、项目、简历风险、推荐配置
 5. 确认配置：`/role`、`/strength`、`/tone`、`/level`、`/mode`、`/focus`
@@ -126,6 +126,7 @@ description: CS technical interview simulation and coaching for computer science
 - `source_resume.md`
 - `candidate_profile.json`
 - `candidate_profile.md`
+- `resume_risks.llm.json`（大模型风险评估后生成）
 - `resume_risks.md`
 - `resume_rewrite_suggestions.json`
 - `resume_rewrite_suggestions.md`
@@ -133,6 +134,22 @@ description: CS technical interview simulation and coaching for computer science
 相关说明见：
 
 - `references/resume-parser.md`
+- `references/resume-risk-llm-evaluation.md`
+
+风险点生成要求：
+
+1. 先运行 `scripts/parse_resume.py`，得到解析目录。
+2. 不要把 `scripts/parse_resume.py` 中基于规则的 `analyze_project_risks` 结果当作最终风险结论；它最多是启发式草稿。
+3. 让当前大模型按 `references/resume-risk-llm-evaluation.md` 的 prompt 读取解析后的简历路径：`<parsed_dir>/source_resume.md` 与 `<parsed_dir>/candidate_profile.json`；如果有 JD，也把 JD 路径或原文一起提供给模型。
+4. 大模型从面试官视角评估解析好的简历，规则清单只作为 prompt 检查表：个人职责边界、量化指标缺失、RAG/Agent/后端接口等专项追问都要纳入考虑，但不能无证据硬套。
+5. 将模型输出的严格 JSON 保存到 `<parsed_dir>/resume_risks.llm.json`，再运行：
+
+```bash
+python cs-tech-interviewer/scripts/apply_llm_resume_risks.py <parsed_dir>/candidate_profile.json <parsed_dir>/resume_risks.llm.json
+```
+
+6. 该脚本会把风险写回 `candidate_profile.json` 的 `resume_risks` 和各项目 `possible_risks`，刷新 `resume_risks.md` 与简历修改建议。后续选题、面试、复盘都以写回后的 `candidate_profile.json` 为 source of truth。
+7. 如果当前环境无法写文件，则直接把大模型风险评估 JSON 和简短 Markdown 摘要返回给用户，并明确说明未持久化。
 
 ## Session 状态机
 

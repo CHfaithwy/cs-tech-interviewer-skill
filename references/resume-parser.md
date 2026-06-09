@@ -8,7 +8,7 @@ The parser implements V0.3 structured resume parsing:
 
 1. Convert supported resume files into normalized Markdown
 2. Extract a candidate profile: contact, education, skills, projects, research/experience, awards
-3. Generate resume risk points for interview follow-up
+3. Prepare parsed artifacts for LLM-based resume risk evaluation
 4. Emit both machine-readable JSON and human-readable Markdown reports
 
 ## Supported Inputs
@@ -37,6 +37,7 @@ Default output directory:
   source_resume.md
   candidate_profile.json
   candidate_profile.md
+  resume_risks.llm.json        # created after LLM risk evaluation
   resume_risks.md
   resume_rewrite_suggestions.json
   resume_rewrite_suggestions.md
@@ -128,6 +129,8 @@ Before a live interview starts, show the user a short checkpoint based on `candi
 
 Ask the user to confirm or correct the profile. Use user corrections as higher-priority evidence than the parser output.
 
+Before showing final resume risks or selecting questions, run the LLM risk evaluation workflow below and use the updated `candidate_profile.json` as the source of truth.
+
 ## Question Selection
 
 After `candidate_profile.json` is produced and the user confirms the profile, run the selector when a resume/JD-driven question plan is useful:
@@ -144,9 +147,17 @@ The selector writes:
   question_selection.md
 ```
 
-## Risk Generation Rules
+## LLM Risk Evaluation
 
-The parser flags risks when it sees:
+`scripts/parse_resume.py` may still emit heuristic draft risks from `analyze_project_risks`, but those rules are not the final assessment. Treat them only as a fallback hint for the current LLM.
+
+After parsing, instruct the model to read:
+
+- `<parsed_dir>/source_resume.md`
+- `<parsed_dir>/candidate_profile.json`
+- optional JD text or JD file
+
+Use `references/resume-risk-llm-evaluation.md` as the prompt and workflow reference. The previous rule list belongs inside that prompt as an interviewer checklist, including:
 
 - missing responsibility boundary
 - optimization/performance/accuracy claims without metrics
@@ -157,7 +168,15 @@ The parser flags risks when it sees:
 - FastAPI/Django/interface projects without auth, exception, test, deployment, or monitoring details
 - PDF/OCR/multimodal parsing projects without reliability and quality evaluation details
 
-Treat parser output as an interview preparation aid, not as ground truth. When parsing looks wrong, inspect `source_resume.md` and correct assumptions in the interview setup.
+Save the model output to `<parsed_dir>/resume_risks.llm.json`, then apply it:
+
+```bash
+python cs-tech-interviewer/scripts/apply_llm_resume_risks.py <parsed_dir>/candidate_profile.json <parsed_dir>/resume_risks.llm.json
+```
+
+This updates `candidate_profile.json`, `resume_risks.md`, and resume rewrite suggestions. Downstream question selection, interview sessions, and reports should use this updated profile.
+
+Treat LLM risk output as interview preparation, not as ground truth. When parsing looks wrong, inspect `source_resume.md` and correct assumptions in the interview setup.
 
 ## Resume Rewrite Suggestions
 
