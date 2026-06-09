@@ -120,7 +120,7 @@ The source of truth for mode behavior is:
 data/interview_mode_profiles.json
 ```
 
-It centrally maintains stage sequence, question count, selection policy, scoring policy, report emphasis, and auto-judge bias.
+It centrally maintains stage sequence, question count, selection policy, scoring weights, and report emphasis; free-form answer scoring is led by the current LLM with session context.
 
 <a id="session-artifacts"></a>
 

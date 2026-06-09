@@ -12,6 +12,8 @@ Mode-specific scoring and report emphasis come from:
 
 - `data/interview_mode_profiles.json`
 
+Free-form answer scoring must already be recorded in `transcript.json` from the current LLM's judgement. Do not use `session_router.py` keyword heuristics as the official score source. For each candidate answer, first use `references/semantic-judge-prompt.md`, then persist the JSON with `scripts/apply_llm_answer_judgement.py`.
+
 ## V1.0 Session-Aware Flow
 
 For a live V1.0 session, prefer using `scripts/interview_session.py`:
@@ -25,6 +27,7 @@ This writes outputs into the same session directory:
 
 ```text
 <session_dir>/
+  llm_judgements/
   score_snapshot.json
   score_snapshot.md
   interview_evaluation.json

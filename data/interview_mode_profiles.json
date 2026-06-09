@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "kind": "interview_mode_profiles",
-  "source_of_truth_note": "This file is the source of truth for V1.0 multi-mode interview behavior. Maintain mode-specific stage sequence, default question counts, selection policy, scoring policy, report emphasis, and auto-judge bias here instead of scattering those decisions across scripts or docs.",
+  "source_of_truth_note": "This file is the source of truth for V1.0 multi-mode interview behavior. Maintain mode-specific stage sequence, default question counts, selection policy, scoring weights, and report emphasis here. Free-form answer scoring is LLM-led via references/semantic-judge-prompt.md.",
   "profiles": {
     "完整模拟": {
       "aliases": ["完整模拟", "full-mock"],
@@ -57,13 +57,7 @@
         "review_priorities",
         "next_round"
       ],
-      "candidate_output_style": "full_problem_statement",
-      "auto_judge_bias": {
-        "project_detail_weight": "balanced",
-        "fundamental_accuracy_weight": "balanced",
-        "algorithm_rigor_weight": "balanced",
-        "communication_weight": "balanced"
-      }
+      "candidate_output_style": "full_problem_statement"
     },
     "项目深挖": {
       "aliases": ["项目深挖", "project-deep-dive"],
@@ -103,13 +97,7 @@
         "review_priorities",
         "next_round"
       ],
-      "candidate_output_style": "structured_followups",
-      "auto_judge_bias": {
-        "project_detail_weight": "strict",
-        "fundamental_accuracy_weight": "light",
-        "algorithm_rigor_weight": "disabled",
-        "communication_weight": "medium"
-      }
+      "candidate_output_style": "structured_followups"
     },
     "八股快问快答": {
       "aliases": ["八股快问快答", "fundamentals"],
@@ -145,13 +133,7 @@
         "review_priorities",
         "next_round"
       ],
-      "candidate_output_style": "compact_question",
-      "auto_judge_bias": {
-        "project_detail_weight": "disabled",
-        "fundamental_accuracy_weight": "strict",
-        "algorithm_rigor_weight": "disabled",
-        "communication_weight": "light"
-      }
+      "candidate_output_style": "compact_question"
     },
     "算法陪练": {
       "aliases": ["算法陪练", "algorithm", "coding"],
@@ -189,13 +171,7 @@
         "review_priorities",
         "next_round"
       ],
-      "candidate_output_style": "full_problem_statement",
-      "auto_judge_bias": {
-        "project_detail_weight": "disabled",
-        "fundamental_accuracy_weight": "disabled",
-        "algorithm_rigor_weight": "strict",
-        "communication_weight": "medium"
-      }
+      "candidate_output_style": "full_problem_statement"
     },
     "JD 定向面": {
       "aliases": ["JD 定向面", "jd"],
@@ -236,13 +212,7 @@
         "module_focus": ["self_introduction", "project_depth", "cs_fundamentals", "communication", "candidate_questions"]
       },
       "report_sections": ["overall_conclusion", "jd_fit_gaps", "project_depth_summary", "fundamentals_gap_list", "resume_rewrite", "review_priorities", "next_round"],
-      "candidate_output_style": "structured_followups",
-      "auto_judge_bias": {
-        "project_detail_weight": "strict",
-        "fundamental_accuracy_weight": "strict",
-        "algorithm_rigor_weight": "light",
-        "communication_weight": "medium"
-      }
+      "candidate_output_style": "structured_followups"
     },
     "简历拷打": {
       "aliases": ["简历拷打", "resume-attack"],
@@ -278,13 +248,7 @@
         "module_focus": ["project_depth", "cs_fundamentals", "communication"]
       },
       "report_sections": ["overall_conclusion", "resume_risk_map", "ownership_gaps", "resume_rewrite", "review_priorities", "next_round"],
-      "candidate_output_style": "structured_followups",
-      "auto_judge_bias": {
-        "project_detail_weight": "strict",
-        "fundamental_accuracy_weight": "medium",
-        "algorithm_rigor_weight": "disabled",
-        "communication_weight": "medium"
-      }
+      "candidate_output_style": "structured_followups"
     },
     "复盘教练": {
       "aliases": ["复盘教练", "review-coach"],
@@ -309,13 +273,7 @@
         "module_focus": ["self_introduction", "project_depth", "cs_fundamentals", "algorithm_ability", "communication", "candidate_questions"]
       },
       "report_sections": ["overall_conclusion", "module_scores", "stage_scores", "weakness_tracking", "review_priorities", "next_round"],
-      "candidate_output_style": "transcript_only",
-      "auto_judge_bias": {
-        "project_detail_weight": "balanced",
-        "fundamental_accuracy_weight": "balanced",
-        "algorithm_rigor_weight": "balanced",
-        "communication_weight": "balanced"
-      }
+      "candidate_output_style": "transcript_only"
     }
   }
 }

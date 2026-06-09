@@ -32,6 +32,7 @@ Each interview session writes to its own directory, for example:
   interview_evaluation.json
   interview_evaluation.md
   session_brief.md
+  llm_judgements/
 ```
 
 如果不传 `--sessions-root`，session 默认写到：
@@ -143,7 +144,7 @@ REPORT_GENERATION -> DONE
 
 ## Dynamic Adjustment
 
-当前实现主要在“下一题”这个粒度上做动态调整：
+当前实现主要在“下一题”这个粒度上做动态调整，但判断来源应是当前大模型的语义评分，而不是 `session_router.py` 的规则启发式。
 
 - strong answer
   - 可以继续同主题深挖
@@ -155,6 +156,18 @@ REPORT_GENERATION -> DONE
   - 记入 transcript，并直接推进
 
 高 hint 使用和 skipped 都会保留在 transcript 里，供 `/score` 和 `/report` 读取。
+
+候选人自由回答的推荐流程：
+
+1. `scripts/session_router.py <session_dir> "<answer>"` 返回 `route=llm_judge_required` 和 `judgement_prompt`。
+2. 当前大模型按 `references/semantic-judge-prompt.md` 输出严格 JSON。
+3. 将 JSON 保存成文件并运行：
+
+```bash
+python cs-tech-interviewer/scripts/apply_llm_answer_judgement.py <session_dir> <judgement.json>
+```
+
+4. 写回脚本记录答案、推进当前问题，并把原始判分归档到 `llm_judgements/`。
 
 ## Mid-Session Reconfiguration
 

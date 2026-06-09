@@ -15,6 +15,68 @@ description: CS technical interview simulation and coaching for computer science
 
 开始正式面试前，要优先提醒用户提供目标 JD。这个 JD 不只是选题参考，还要被当作这场面试的岗位语境记住，用来决定面试官更在意什么、会追问什么、会按什么标准评价候选人的匹配度。
 
+## 模型与脚本分工
+
+当前大模型是面试官和运行协调者；脚本是持久化、检索和写回工具。不好用固定规则稳定实现的内容交给当前大模型判断，固定、可复用、需要落盘一致性的内容交给脚本执行。
+
+模型主导：
+
+- 理解用户自然语言意图，包括“开始吧”“给个提示”“这题跳过”“后面改成算法陪练”等非命令输入
+- 每轮读取 `SKILL.md` 指向的配置、状态和上下文文件，决定下一步应该调用哪个脚本
+- 根据 JD/简历生成候选人画像、项目结构、JD 匹配判断、简历/项目风险点、项目深挖追问、自由回答语义评分和反馈
+- 根据当前 `session_state.json`、`transcript.json`、`question_selection.json` 和 `session_brief.md` 判断当前处于什么状态、应该问什么、语气应该如何
+
+脚本主导：
+
+- 简历文件转 Markdown、大模型画像/风险/判分 JSON 写回固定文件
+- 本地题库和算法题检索、标签/关键词/角色权重排序
+- session 状态机落盘、命令执行、配置更新、pending reconfiguration、transcript 记录
+- 将当前大模型生成的风险评估或回答判分 JSON 写回固定文件
+
+不要让规则式 router 成为唯一决策者。可以用 `scripts/session_router.py` 辅助识别输入，但当前大模型必须结合上下文确认语义，并在需要时直接调用 `scripts/interview_session.py`、`scripts/apply_llm_answer_judgement.py` 或 `scripts/apply_llm_resume_risks.py` 完成状态修改。
+
+## 每轮状态读取
+
+只要已经存在 live session，每次回复用户前都要重新读取运行态，避免靠聊天历史猜状态。优先读取：
+
+- `<session_dir>/session_state.json`
+- `<session_dir>/session_brief.md`
+- `<session_dir>/transcript.json`
+- `<session_dir>/question_selection.json`
+- `<session_dir>/question_selection/question_selection.json`
+- `data/interview_mode_profiles.json`
+
+如果不确定 session 目录或状态，先运行：
+
+```bash
+python cs-tech-interviewer/scripts/interview_session.py status <session_dir>
+```
+
+读取后重点检查：
+
+- `runtime_status`
+- `config.role / strength / tone / level / mode / focus / jd_context`
+- `active_stage`
+- `current_question`
+- `pending_reconfiguration`
+- `available_commands`
+- `transcript.answers`
+- 当前 mode 的 `stage_sequence`、`default_question_counts`、`selection_policy`、`scoring_policy`、`candidate_output_style`
+
+回答语气必须由当前状态决定：
+
+- `tone=温和`：支持性更强，但仍要具体追问。
+- `tone=默认`：专业直接，适度施压。
+- `tone=铁面`：更短、更尖锐，优先追问证据和漏洞。
+- `strength=人上人/顶级/夯`：提高证据标准，追问 ownership、指标、tradeoff 和失败处理。
+- `strength=NPC/拉完了`：降低深度，给更多提示和引导。
+
+当用户输入自然语言控制意图时，由当前大模型判断应调用哪个命令。例如“开始吧”对应 `start`，“给个提示”对应 `hint`，“这题跳过”对应 `skip`，“后面改成算法陪练”对应 `configure --mode 算法陪练` 且运行中应进入 `pending_reconfiguration`。调用脚本后再次读取状态，再基于新状态给用户回应或继续提问。
+
+详细编排见：
+
+- `references/llm-session-orchestration.md`
+
 ## 默认配置
 
 如果用户没有显式指定配置，推荐默认值如下：
@@ -66,7 +128,7 @@ description: CS technical interview simulation and coaching for computer science
 整个 skill 的主链路如下：
 
 1. 解析输入：简历、JD、目标方向、显式命令、已有 transcript
-2. 生成候选人画像：教育、技能、项目、实习、亮点；风险点必须由大模型读取解析产物后评估并写回
+2. 生成候选人画像：教育、技能、项目、实习、亮点、项目结构和风险点必须由大模型读取解析产物/JD 后生成并写回
 3. 匹配 JD：提取要求技能、加分项、职责重点、面试偏向
 4. 展示面试前确认信息：推断岗位、核心技能、项目、简历风险、推荐配置
 5. 确认配置：`/role`、`/strength`、`/tone`、`/level`、`/mode`、`/focus`
@@ -105,7 +167,6 @@ description: CS technical interview simulation and coaching for computer science
 - selection policy
 - scoring policy
 - report emphasis
-- auto-judge bias
 
 ## 简历解析
 
@@ -124,6 +185,7 @@ description: CS technical interview simulation and coaching for computer science
 输出包括：
 
 - `source_resume.md`
+- `candidate_profile.llm.json`（大模型画像原始输出）
 - `candidate_profile.json`
 - `candidate_profile.md`
 - `resume_risks.llm.json`（大模型风险评估后生成）
@@ -134,22 +196,29 @@ description: CS technical interview simulation and coaching for computer science
 相关说明见：
 
 - `references/resume-parser.md`
+- `references/resume-profile-llm-generation.md`
 - `references/resume-risk-llm-evaluation.md`
 
-风险点生成要求：
+画像与风险点生成要求：
 
-1. 先运行 `scripts/parse_resume.py`，得到解析目录。
-2. 不要把 `scripts/parse_resume.py` 中基于规则的 `analyze_project_risks` 结果当作最终风险结论；它最多是启发式草稿。
-3. 让当前大模型按 `references/resume-risk-llm-evaluation.md` 的 prompt 读取解析后的简历路径：`<parsed_dir>/source_resume.md` 与 `<parsed_dir>/candidate_profile.json`；如果有 JD，也把 JD 路径或原文一起提供给模型。
-4. 大模型从面试官视角评估解析好的简历，规则清单只作为 prompt 检查表：个人职责边界、量化指标缺失、RAG/Agent/后端接口等专项追问都要纳入考虑，但不能无证据硬套。
-5. 将模型输出的严格 JSON 保存到 `<parsed_dir>/resume_risks.llm.json`，再运行：
+1. 先运行 `scripts/parse_resume.py`，主要目标是得到 `<parsed_dir>/source_resume.md`。脚本生成的 `candidate_profile.json` 只能当草稿，不是最终画像。
+2. 当前大模型按 `references/resume-profile-llm-generation.md` 读取 `<parsed_dir>/source_resume.md`、JD、用户修正和解析器草稿，生成候选人画像、项目结构、面试重点和首版风险点。
+3. 将模型输出的严格 JSON 保存到 `<parsed_dir>/candidate_profile.llm.json`，再运行：
+
+```bash
+python cs-tech-interviewer/scripts/apply_llm_candidate_profile.py <parsed_dir>/candidate_profile.llm.json --output-dir <parsed_dir> --source-resume-md <parsed_dir>/source_resume.md
+```
+
+4. 该脚本会写入/刷新 `candidate_profile.json`、`candidate_profile.md`、`resume_risks.md`、`resume_rewrite_suggestions.json` 和 `resume_rewrite_suggestions.md`。
+5. 如果后续只需要重新评估风险点，让当前大模型按 `references/resume-risk-llm-evaluation.md` 读取 `<parsed_dir>/source_resume.md`、`candidate_profile.json` 和 JD，把风险输出保存到 `<parsed_dir>/resume_risks.llm.json`，再运行：
 
 ```bash
 python cs-tech-interviewer/scripts/apply_llm_resume_risks.py <parsed_dir>/candidate_profile.json <parsed_dir>/resume_risks.llm.json
 ```
 
-6. 该脚本会把风险写回 `candidate_profile.json` 的 `resume_risks` 和各项目 `possible_risks`，刷新 `resume_risks.md` 与简历修改建议。后续选题、面试、复盘都以写回后的 `candidate_profile.json` 为 source of truth。
-7. 如果当前环境无法写文件，则直接把大模型风险评估 JSON 和简短 Markdown 摘要返回给用户，并明确说明未持久化。
+6. 风险规则清单只作为 prompt 检查表：个人职责边界、量化指标缺失、RAG/Agent/后端接口等专项追问都要纳入考虑，但不能无证据硬套。
+7. 后续选题、面试、复盘都以写回后的 `candidate_profile.json` 为 source of truth。
+8. 如果当前环境无法写文件，则直接把大模型画像/风险 JSON 和简短 Markdown 摘要返回给用户，并明确说明未持久化。
 
 ## Session 状态机
 
@@ -173,6 +242,7 @@ V1.0 使用：
 - `score_snapshot.md`
 - `interview_evaluation.json`
 - `interview_evaluation.md`
+- `llm_judgements/`
 
 注意：
 
@@ -181,16 +251,50 @@ V1.0 使用：
 - 不会默认写进 skill 仓库目录
 - `session_state.json.current_question` 应带 `jd_context`，保证运行态不会丢岗位语境
 
-## 自然语言路由
+## 自然语言编排与命令调用
 
-使用：
+当前大模型负责理解用户自然语言并决定是否调用状态机脚本。不要把 `scripts/session_router.py` 当作唯一入口；它可以辅助处理候选人自由回答并生成 `judgement_prompt`，但控制类意图应由当前大模型读状态后直接调用 `scripts/interview_session.py`。
+
+常用脚本：
 
 - `scripts/session_router.py`
+- `scripts/interview_session.py`
+- `scripts/apply_llm_answer_judgement.py`
 
-它负责两类事情：
+相关说明见：
 
-1. 把自然语言控制语句映射到底层 controller 命令
-2. 对候选人自由作答进行启发式判定，并自动调用 `record-answer`
+- `references/llm-session-orchestration.md`
+- `references/semantic-judge-prompt.md`
+
+当前大模型负责两类事情：
+
+1. 把自然语言控制语句映射到底层 controller 命令，并实际调用脚本修改状态
+2. 识别候选人自由作答，生成或使用语义评分 prompt/context，让当前大模型评分后写回 transcript
+
+自然语言控制示例：
+
+- “开始吧” -> 读取状态，若 `CONFIG_READY` 则运行 `python cs-tech-interviewer/scripts/interview_session.py start <session_dir>`
+- “给个提示” -> 若 `RUNNING` 且有 `current_question`，运行 `hint`
+- “这题跳过” -> 运行 `skip`，记录 skipped 并推进
+- “后面改成算法陪练” -> 运行 `configure <session_dir> --mode 算法陪练 --defer-if-running`，运行中应落入 `pending_reconfiguration`
+- “重点问 Redis 和 MySQL” -> 运行 `configure <session_dir> --focus Redis,MySQL --defer-if-running`
+- “这是 JD...” -> 运行 `jd <session_dir> --jd-text ... --defer-if-running`
+
+每次脚本调用后，都要重新读取 `session_state.json` 或使用脚本返回值，再决定下一句回复或下一道题。
+
+候选人自由回答不应再由 `session_router.py` 用启发式规则直接打分。当前对话里的大模型就是评分器，不需要额外 API key 或单独模型服务。流程是：
+
+1. `session_router.py` 对自由回答返回 `route=llm_judge_required`、`judgement_prompt` 和候选人原始回答。
+2. 当前大模型按 `references/semantic-judge-prompt.md` 输出严格 JSON：`quality`、`score`、`strengths`、`issues`、`answer_summary`、`feedback`、`confidence`，必要时包含 `next_followup`。
+3. 将 JSON 保存成文件后运行：
+
+```bash
+python cs-tech-interviewer/scripts/apply_llm_answer_judgement.py <session_dir> <judgement.json>
+```
+
+4. 写回脚本负责调用底层 `record-answer`、推进状态机，并把判分记录归档到 `<session_dir>/llm_judgements/`。
+
+规则式判断只能作为离线调试参考，不能作为正式评分来源。
 
 此外，每次给出当前状态、当前题目或阶段性反馈时，都应该补一组“当前可用命令”，避免用户必须翻手册。
 
@@ -214,11 +318,11 @@ V1.0 使用：
 6. 常见 CS 基础高频点
 7. 适配 `/level` 的算法题
 
-项目深挖时，默认追问链路是：
+项目深挖阶段必须由当前大模型基于项目内容动态生成追问。`scripts/interview_session.py` 中的 `PROJECT_DEEP_DIVE` plan 节点只是上下文包，不是最终要照读的问题。使用：
 
-```text
-是什么 -> 为什么 -> 怎么做 -> 为什么不这么做 -> 有什么问题 -> 怎么验证 -> 如何扩展 -> 如何优化
-```
+- `references/project-deep-dive-llm-prompt.md`
+
+把候选人项目内容、相关 `resume_risks`、JD 语境、历史回答证据交给当前大模型，让它决定下一句最有价值的追问。不要用固定模板题补齐项目深挖；CS 基础题 `CS_FUNDAMENTALS` 可以继续使用本地题库、`expected_points` 和规则式选题。
 
 ## 命令
 
@@ -247,7 +351,7 @@ V1.0 使用：
 补充说明：
 
 - 简历通常直接通过上传文件或粘贴文本提供，不要求用户显式输入 `/resume`
-- 候选人的正常作答不需要命令前缀，router 应自动识别为回答并判定质量
+- 候选人的正常作答不需要命令前缀，router 应自动识别为回答并返回当前大模型评分所需的 prompt/context
 - `record-answer`、`next` 等 controller 子命令属于底层运行命令，不作为主要用户心智暴露
 
 ## 评分与复盘

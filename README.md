@@ -120,7 +120,7 @@ pip install -U "mineru[pipeline]"
 data/interview_mode_profiles.json
 ```
 
-它统一维护 stage sequence、题量、选题策略、评分策略、报告重点和自动判题偏置。
+它统一维护 stage sequence、题量、选题策略、评分权重和报告重点；自由回答评分由当前大模型按上下文语义完成。
 
 <a id="session-artifacts"></a>
 

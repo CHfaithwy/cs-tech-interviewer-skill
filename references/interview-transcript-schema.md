@@ -80,6 +80,8 @@ Example:
   "issues": ["MVCC 原理回答不清"],
   "candidate_answer_summary": "能说出几个隔离级别，但 read view 和 undo log 讲不清。",
   "interviewer_feedback": "基础方向没错，但底层机制不稳。",
+  "judge_source": "llm",
+  "judge_confidence": 0.82,
   "hints_used": 1,
   "skipped": false,
   "duration_seconds": 95
@@ -117,6 +119,8 @@ Optional fields:
 - `question_text`
 - `candidate_answer_summary`
 - `interviewer_feedback`
+- `judge_source`
+- `judge_confidence`
 - `duration_seconds`
 
 ## Field Rules
@@ -125,6 +129,7 @@ Optional fields:
 - Prefer concrete issues such as `事务隔离级别理解不深入` over broad buckets like `数据库弱`.
 - If `skipped` is `true`, keep the record and let downstream scoring see that explicitly.
 - If `hints_used` is high, keep that in the record rather than hiding it in prose.
+- `judge_source` should be `llm` for normal free-form answers judged by the current model.
 - Do not invent transcript evidence after the fact.
 
 ## Relationship To Session State

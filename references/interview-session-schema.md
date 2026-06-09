@@ -111,6 +111,8 @@ Each node should look like:
 
 The important rule is: this is a runtime queue, not an evidence record.
 
+For `PROJECT_DEEP_DIVE`, `question_text` may be a short model-facing placeholder and `prompt_block` may contain the project context prompt. The current LLM should use `prompt_block` plus `metadata.project_context`, `metadata.risk_context`, JD context, and transcript evidence to generate the actual one-sentence interviewer question. Do not paste the full prompt to the candidate.
+
 ## `current_question`
 
 `current_question` is the active node being discussed right now.
@@ -118,6 +120,7 @@ The important rule is: this is a runtime queue, not an evidence record.
 It may add runtime-only fields such as:
 
 - `hint_level`
+- `llm_prompt_reference`
 
 These fields should not be backfilled into the transcript until the question is scored or skipped.
 

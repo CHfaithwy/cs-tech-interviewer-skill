@@ -294,6 +294,7 @@ def summarize_question(question: dict[str, Any]) -> dict[str, Any]:
         "question_id": question.get("question_id"),
         "question_text": question.get("question_text"),
         "hint_level": question.get("hint_level", 0),
+        "llm_prompt_reference": metadata.get("llm_prompt_reference", ""),
         "jd_context": metadata.get("jd_context", {}),
         "jd_summary": metadata.get("jd_summary", ""),
     }
@@ -738,6 +739,47 @@ def build_candidate_question_items(layer: str, mode_profile: dict[str, Any]) -> 
             )
         )
     return items
+
+
+def compact_project_context(project: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "name": project.get("name", ""),
+        "period": project.get("period", ""),
+        "background": project.get("background", ""),
+        "role": project.get("role", ""),
+        "tech_stack": project.get("tech_stack", []),
+        "metrics": project.get("metrics", []),
+        "claims": project.get("claims", [])[:8],
+        "results": project.get("results", ""),
+    }
+
+
+def build_project_deep_dive_prompt(
+    project: dict[str, Any],
+    risk: dict[str, Any] | None,
+    jd_context: dict[str, Any],
+    layer: str,
+) -> str:
+    project_context = compact_project_context(project)
+    risk_context = risk or {}
+    return "\n".join(
+        [
+            "请按 references/project-deep-dive-llm-prompt.md 生成 PROJECT_DEEP_DIVE 阶段的下一句追问。",
+            "不要直接把本段 prompt 念给候选人；你需要先生成追问 JSON，再只问 question_text。",
+            "",
+            f"面试强度层级：{layer}",
+            "目标 JD / 岗位语境 JSON：",
+            json.dumps(jd_context or {}, ensure_ascii=False, indent=2),
+            "",
+            "当前项目上下文 JSON：",
+            json.dumps(project_context, ensure_ascii=False, indent=2),
+            "",
+            "当前项目相关风险 JSON：",
+            json.dumps(risk_context, ensure_ascii=False, indent=2),
+        ]
+    )
+
+
 def build_project_items(
     profile: dict[str, Any],
     layer: str,
@@ -752,7 +794,6 @@ def build_project_items(
     project_policy = str(mode_profile.get("selection_policy", {}).get("project_policy", "resume_risks_plus_templates"))
     jd_context = jd_context or {}
     jd_summary = str(jd_context.get("summary", "") or "").strip()
-    intro_prefix = f"我会按这个岗位语境来追问：{jd_summary}\n\n" if jd_summary else ""
 
     project_map = {str(project.get("name", "")): project for project in projects}
     used_ids: set[str] = set()
@@ -768,63 +809,58 @@ def build_project_items(
     for risk in risk_candidates:
         if len(items) >= budget:
             break
-        followup = str(risk.get("likely_followup", "")).strip()
         project_name = str(risk.get("project", "")).strip()
-        if not followup or not project_name:
+        if not project_name:
             continue
         question_id = str(risk.get("id", "")).strip() or f"{slugify(project_name)}_{len(items)+1}"
         if question_id in used_ids:
             continue
         project = project_map.get(project_name, {})
+        if not project:
+            project = {"name": project_name}
         items.append(
             question_plan_item(
                 "PROJECT_DEEP_DIVE",
                 question_id,
-                followup,
+                f"项目深挖：请围绕「{project_name}」生成一个针对候选人的追问。",
                 metadata={
-                    "kind": "project_followup",
+                    "kind": "llm_project_deep_dive",
+                    "llm_prompt_reference": "references/project-deep-dive-llm-prompt.md",
                     "project": project_name,
+                    "project_context": compact_project_context(project),
+                    "risk_context": risk,
                     "risk_area": risk.get("area", ""),
                     "severity": risk.get("severity", ""),
-                    "background": project.get("background", ""),
                     "jd_context": jd_context,
                     "jd_summary": jd_summary,
                 },
-                prompt_block=(intro_prefix + followup) if not items and intro_prefix else followup,
+                prompt_block=build_project_deep_dive_prompt(project, risk, jd_context, layer),
             )
         )
         used_ids.add(question_id)
 
-    template_questions = [
-        "这个项目最核心的业务问题是什么？你为什么要这样设计？",
-        "你个人独立负责了哪些模块？边界怎么划分？",
-        "这个方案里最难的技术点是什么？你是怎么解决的？",
-        "这里最大的 tradeoff 是什么？为什么没有选别的方案？",
-        "你怎么评估这个方案的效果，指标从哪里来？",
-        "如果线上规模扩大 10 倍，哪里会先成为瓶颈？",
-        "线上出了问题你怎么定位、降级和回滚？",
-        "如果重做一次，你最想改哪个设计？为什么？",
-    ]
     project_index = 0
     if project_policy != "disabled":
         while len(items) < budget and projects:
             project = projects[project_index % len(projects)]
-            template = template_questions[len(items) % len(template_questions)]
-            question_id = f"{slugify(str(project.get('name', 'project')))}_template_{len(items)+1}"
+            project_name = str(project.get("name", "project"))
+            question_id = f"{slugify(project_name)}_llm_{len(items)+1}"
             if question_id not in used_ids:
                 items.append(
                     question_plan_item(
                         "PROJECT_DEEP_DIVE",
                         question_id,
-                        template,
+                        f"项目深挖：请围绕「{project_name}」生成一个针对候选人的追问。",
                         metadata={
-                            "kind": "project_template",
-                            "project": project.get("name", ""),
-                            "background": project.get("background", ""),
+                            "kind": "llm_project_deep_dive",
+                            "llm_prompt_reference": "references/project-deep-dive-llm-prompt.md",
+                            "project": project_name,
+                            "project_context": compact_project_context(project),
+                            "risk_context": {},
                             "jd_context": jd_context,
                             "jd_summary": jd_summary,
                         },
-                        prompt_block=(intro_prefix + template) if not items and intro_prefix else template,
+                        prompt_block=build_project_deep_dive_prompt(project, None, jd_context, layer),
                     )
                 )
                 used_ids.add(question_id)
@@ -1315,6 +1351,7 @@ def command_start(args: argparse.Namespace) -> dict[str, Any]:
         "runtime_status": state["runtime_status"],
         "active_stage": active_stage,
         "current_question": summarize_question(current or {}),
+        "prompt_block": (current or {}).get("prompt_block", ""),
         "jd_context": jd_context,
         "opening_guidance": (
             f"已按该 JD 建立面试偏置：{jd_context.get('summary')}"
@@ -1595,6 +1632,11 @@ def command_skip(args: argparse.Namespace) -> dict[str, Any]:
     args.quality = "wrong"
     args.score = 0
     args.skipped = True
+    args.strengths = None
+    args.issues = None
+    args.answer_summary = None
+    args.duration_seconds = None
+    args.hints_used = None
     if not args.feedback:
         args.feedback = "候选人选择跳过当前问题。"
     return command_record_answer(args)

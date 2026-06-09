@@ -62,6 +62,8 @@ JD 用来决定追问权重：
 
 ## 项目深挖维度
 
+`PROJECT_DEEP_DIVE` 是模型主导阶段。不要把下表或后续模板链当作最终题目列表；它们只是当前大模型生成追问时的检查维度。实际追问必须按 `references/project-deep-dive-llm-prompt.md`，结合项目内容、JD、`resume_risks`、历史回答和当前强度动态生成。
+
 | 维度 | 常见问题 |
 | --- | --- |
 | 背景 | 这个项目解决了什么问题，为什么值得做？ |
@@ -74,7 +76,9 @@ JD 用来决定追问权重：
 | 扩展性 | 如果流量或数据量涨 10 倍，先坏在哪里？ |
 | 复盘 | 现在回头看，你会怎么重构？ |
 
-## 常见追问链模板
+## 常见追问链参考
+
+以下链路只能作为大模型生成追问时的参考，不应直接机械照问。若候选人的项目上下文或上一轮回答暴露出更高价值漏洞，优先沿漏洞追问。
 
 ### Redis 缓存
 
@@ -180,7 +184,7 @@ python cs-tech-interviewer/scripts/select_questions.py <candidate_profile.json> 
 - 可选的 JD 文本和 `/focus`
 - `candidate_profile.json`
 
-它会输出 `question_selection.json` 和 `question_selection.md`。这份结果应该被当作起始计划，而不是不可变的死板剧本。
+它会输出 `question_selection.json` 和 `question_selection.md`。这份结果应该被当作起始计划，而不是不可变的死板剧本。尤其是 `PROJECT_DEEP_DIVE`，题单节点应作为项目上下文包使用，最终问题由当前大模型生成；`CS_FUNDAMENTALS` 和算法题可以继续主要依赖本地题库。
 
 如果你要调整本地题库结构或选题字段，先阅读 [question-bank.md](./question-bank.md)。
 

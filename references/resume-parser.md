@@ -4,12 +4,12 @@ Use this reference when running or modifying `scripts/parse_resume.py`.
 
 ## Purpose
 
-The parser implements V0.3 structured resume parsing:
+The parser is now the deterministic front half of the resume workflow:
 
 1. Convert supported resume files into normalized Markdown
-2. Extract a candidate profile: contact, education, skills, projects, research/experience, awards
-3. Prepare parsed artifacts for LLM-based resume risk evaluation
-4. Emit both machine-readable JSON and human-readable Markdown reports
+2. Emit a draft parser profile if useful
+3. Hand normalized Markdown, JD, and user corrections to the current LLM
+4. Apply the LLM-generated final profile and risks into fixed files
 
 ## Supported Inputs
 
@@ -35,6 +35,7 @@ Default output directory:
 ```text
 <resume stem>_parsed/
   source_resume.md
+  candidate_profile.llm.json    # created after LLM profile generation
   candidate_profile.json
   candidate_profile.md
   resume_risks.llm.json        # created after LLM risk evaluation
@@ -77,7 +78,7 @@ mineru -p <resume.pdf> -o <resume_stem>_parsed/mineru_output -b pipeline -m auto
 
 ## JSON Shape
 
-`candidate_profile.json` contains:
+The final `candidate_profile.json` should be written from the current LLM's profile output, not treated as the parser's final authority. Its shape is:
 
 ```json
 {
@@ -120,7 +121,7 @@ mineru -p <resume.pdf> -o <resume_stem>_parsed/mineru_output -b pipeline -m auto
 
 ## Profile Confirmation
 
-Before a live interview starts, show the user a short checkpoint based on `candidate_profile.md`:
+Before a live interview starts, first generate/apply the LLM profile, then show the user a short checkpoint based on `candidate_profile.md`:
 
 - inferred target roles
 - top skills and projects
@@ -129,7 +130,24 @@ Before a live interview starts, show the user a short checkpoint based on `candi
 
 Ask the user to confirm or correct the profile. Use user corrections as higher-priority evidence than the parser output.
 
-Before showing final resume risks or selecting questions, run the LLM risk evaluation workflow below and use the updated `candidate_profile.json` as the source of truth.
+Before showing final resume risks or selecting questions, use the updated LLM-written `candidate_profile.json` as the source of truth.
+
+## LLM Profile Generation
+
+After `source_resume.md` exists, instruct the current LLM to read:
+
+- `<parsed_dir>/source_resume.md`
+- optional JD text or JD file
+- optional parser draft `<parsed_dir>/candidate_profile.json`
+- user corrections or target direction
+
+Use `references/resume-profile-llm-generation.md` as the prompt and workflow reference. Save the model output to `<parsed_dir>/candidate_profile.llm.json`, then apply it:
+
+```bash
+python cs-tech-interviewer/scripts/apply_llm_candidate_profile.py <parsed_dir>/candidate_profile.llm.json --output-dir <parsed_dir> --source-resume-md <parsed_dir>/source_resume.md
+```
+
+This writes the canonical `candidate_profile.json`, `candidate_profile.md`, `resume_risks.md`, and resume rewrite suggestions.
 
 ## Question Selection
 
@@ -151,7 +169,7 @@ The selector writes:
 
 `scripts/parse_resume.py` may still emit heuristic draft risks from `analyze_project_risks`, but those rules are not the final assessment. Treat them only as a fallback hint for the current LLM.
 
-After parsing, instruct the model to read:
+If the existing profile is already good and only risks need refreshing, instruct the model to read:
 
 - `<parsed_dir>/source_resume.md`
 - `<parsed_dir>/candidate_profile.json`
