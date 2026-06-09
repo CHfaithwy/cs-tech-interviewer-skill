@@ -85,7 +85,12 @@ If the user changes core config mid-session, write those changes into `pending_r
   "score_snapshot_json": ".../score_snapshot.json",
   "score_snapshot_md": ".../score_snapshot.md",
   "evaluation_json": ".../interview_evaluation.json",
-  "evaluation_md": ".../interview_evaluation.md"
+  "evaluation_md": ".../interview_evaluation.md",
+  "llm_post_interview_outputs_json": ".../post_interview_outputs.llm.json",
+  "next_round_recommendation_json": ".../next_round_recommendation.json",
+  "next_round_recommendation_md": ".../next_round_recommendation.md",
+  "resume_rewrite_suggestions_json": ".../resume_rewrite_suggestions.json",
+  "resume_rewrite_suggestions_md": ".../resume_rewrite_suggestions.md"
 }
 ```
 

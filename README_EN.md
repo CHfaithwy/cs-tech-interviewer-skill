@@ -40,7 +40,7 @@ The JD is not only a question-filtering condition. The skill remembers the JD as
 | Multi-mode interviews | Supports modes such as full mock, project deep dive, CS fundamentals fast drill, and algorithm practice |
 | Session state machine | Each interview is persisted independently, with pause, continue, skip, hint, and mid-session scoring |
 | Structured review | Uniformly outputs `interview_evaluation.json / md` |
-| Resume rewrite suggestions | Supports static suggestions, and transcript-enhanced suggestions after the interview |
+| Resume rewrite suggestions | Generated after the interview by the LLM from the review, transcript, candidate profile, and resume risks |
 
 <a id="installation"></a>
 
@@ -198,10 +198,3 @@ The goal of the skill is to help candidates find problems, organize their answer
 
 If there is any infringement, it will be removed immediately.
 
-## Project Status
-
-Current version V1.0:
-
-```text
-Resume parsing -> automatic question selection -> multi-mode interview -> answer recording -> stage scoring -> structured review -> resume rewrite suggestions
-```

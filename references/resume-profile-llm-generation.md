@@ -32,10 +32,10 @@ The apply script writes:
 - `<parsed_dir>/candidate_profile.md`
 - `<parsed_dir>/candidate_profile.llm.json`
 - `<parsed_dir>/resume_risks.md`
-- `<parsed_dir>/resume_rewrite_suggestions.json`
-- `<parsed_dir>/resume_rewrite_suggestions.md`
 
 If only risks need refreshing later, use `references/resume-risk-llm-evaluation.md` and `scripts/apply_llm_resume_risks.py`.
+
+Resume rewrite suggestions are generated after interview evidence exists. Do not generate them from parser/profile rules here.
 
 ## Prompt Template
 

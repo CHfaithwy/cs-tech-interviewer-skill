@@ -1098,6 +1098,11 @@ def bootstrap_state(
         "score_snapshot_md": "",
         "evaluation_json": "",
         "evaluation_md": "",
+        "llm_post_interview_outputs_json": "",
+        "next_round_recommendation_json": "",
+        "next_round_recommendation_md": "",
+        "resume_rewrite_suggestions_json": "",
+        "resume_rewrite_suggestions_md": "",
     }
 
     if profile:
@@ -1742,6 +1747,11 @@ def command_reset(args: argparse.Namespace) -> dict[str, Any]:
         "score_snapshot.md",
         "interview_evaluation.json",
         "interview_evaluation.md",
+        "post_interview_outputs.llm.json",
+        "next_round_recommendation.json",
+        "next_round_recommendation.md",
+        "resume_rewrite_suggestions.json",
+        "resume_rewrite_suggestions.md",
     ):
         path = session_dir / name
         if path.exists():
@@ -1778,6 +1788,11 @@ def command_reset(args: argparse.Namespace) -> dict[str, Any]:
             "score_snapshot_md": "",
             "evaluation_json": "",
             "evaluation_md": "",
+            "llm_post_interview_outputs_json": "",
+            "next_round_recommendation_json": "",
+            "next_round_recommendation_md": "",
+            "resume_rewrite_suggestions_json": "",
+            "resume_rewrite_suggestions_md": "",
             "transcript_json": str(transcript_path(session_dir)),
         },
         "selection_summary": {},

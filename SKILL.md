@@ -24,16 +24,17 @@ description: CS technical interview simulation and coaching for computer science
 - 理解用户自然语言意图，包括“开始吧”“给个提示”“这题跳过”“后面改成算法陪练”等非命令输入
 - 每轮读取 `SKILL.md` 指向的配置、状态和上下文文件，决定下一步应该调用哪个脚本
 - 根据 JD/简历生成候选人画像、项目结构、JD 匹配判断、简历/项目风险点、项目深挖追问、自由回答语义评分和反馈
+- 在 `/report` 后读取 `interview_evaluation.json`、`transcript.json`、`candidate_profile.json` 和 `resume_risks.md`，生成下一轮模拟配置和简历改写建议
 - 根据当前 `session_state.json`、`transcript.json`、`question_selection.json` 和 `session_brief.md` 判断当前处于什么状态、应该问什么、语气应该如何
 
 脚本主导：
 
-- 简历文件转 Markdown、大模型画像/风险/判分 JSON 写回固定文件
+- 简历文件转 Markdown、大模型画像/风险/判分/复盘建议 JSON 写回固定文件
 - 本地题库和算法题检索、标签/关键词/角色权重排序
 - session 状态机落盘、命令执行、配置更新、pending reconfiguration、transcript 记录
-- 将当前大模型生成的风险评估或回答判分 JSON 写回固定文件
+- 校验当前大模型生成的 JSON schema，并写入固定 JSON/Markdown 文件
 
-不要让规则式 router 成为唯一决策者。可以用 `scripts/session_router.py` 辅助识别输入，但当前大模型必须结合上下文确认语义，并在需要时直接调用 `scripts/interview_session.py`、`scripts/apply_llm_answer_judgement.py` 或 `scripts/apply_llm_resume_risks.py` 完成状态修改。
+不要让规则式 router 成为唯一决策者。可以用 `scripts/session_router.py` 辅助识别输入，但当前大模型必须结合上下文确认语义，并在需要时直接调用 `scripts/interview_session.py`、`scripts/apply_llm_answer_judgement.py`、`scripts/apply_llm_resume_risks.py` 或 `scripts/apply_llm_post_interview_outputs.py` 完成状态修改。
 
 ## 每轮状态读取
 
@@ -61,7 +62,7 @@ python cs-tech-interviewer/scripts/interview_session.py status <session_dir>
 - `pending_reconfiguration`
 - `available_commands`
 - `transcript.answers`
-- 当前 mode 的 `stage_sequence`、`default_question_counts`、`selection_policy`、`scoring_policy`、`candidate_output_style`
+- 当前 mode 的 `stage_sequence`、`default_question_counts`、`selection_policy`、`scoring_policy`
 
 回答语气必须由当前状态决定：
 
@@ -190,8 +191,6 @@ python cs-tech-interviewer/scripts/interview_session.py status <session_dir>
 - `candidate_profile.md`
 - `resume_risks.llm.json`（大模型风险评估后生成）
 - `resume_risks.md`
-- `resume_rewrite_suggestions.json`
-- `resume_rewrite_suggestions.md`
 
 相关说明见：
 
@@ -209,7 +208,7 @@ python cs-tech-interviewer/scripts/interview_session.py status <session_dir>
 python cs-tech-interviewer/scripts/apply_llm_candidate_profile.py <parsed_dir>/candidate_profile.llm.json --output-dir <parsed_dir> --source-resume-md <parsed_dir>/source_resume.md
 ```
 
-4. 该脚本会写入/刷新 `candidate_profile.json`、`candidate_profile.md`、`resume_risks.md`、`resume_rewrite_suggestions.json` 和 `resume_rewrite_suggestions.md`。
+4. 该脚本会写入/刷新 `candidate_profile.json`、`candidate_profile.md` 和 `resume_risks.md`。不要在这里用规则脚本生成简历改写建议。
 5. 如果后续只需要重新评估风险点，让当前大模型按 `references/resume-risk-llm-evaluation.md` 读取 `<parsed_dir>/source_resume.md`、`candidate_profile.json` 和 JD，把风险输出保存到 `<parsed_dir>/resume_risks.llm.json`，再运行：
 
 ```bash
@@ -243,6 +242,11 @@ V1.0 使用：
 - `interview_evaluation.json`
 - `interview_evaluation.md`
 - `llm_judgements/`
+- `post_interview_outputs.llm.json`
+- `next_round_recommendation.json`
+- `next_round_recommendation.md`
+- `resume_rewrite_suggestions.json`
+- `resume_rewrite_suggestions.md`
 
 注意：
 
@@ -260,6 +264,7 @@ V1.0 使用：
 - `scripts/session_router.py`
 - `scripts/interview_session.py`
 - `scripts/apply_llm_answer_judgement.py`
+- `scripts/apply_llm_post_interview_outputs.py`
 
 相关说明见：
 
@@ -368,6 +373,80 @@ python cs-tech-interviewer/scripts/apply_llm_answer_judgement.py <session_dir> <
 作为 machine-readable source of truth。
 
 `/score` 应保持轻量，适合中途看阶段表现；`/report` 则输出完整结构化复盘，并在适用模式下包含简历修改建议。
+
+`/report` 的基础报告可以由脚本聚合已经写入 `transcript.json` 的 LLM 判分证据，但“下一轮模拟建议”和“简历改写建议”必须由当前大模型生成，不能用总分/最弱模块/关键词等规则硬推。执行顺序：
+
+1. 先运行 `python cs-tech-interviewer/scripts/interview_session.py report <session_dir>`，得到基础 `interview_evaluation.json` 和 `interview_evaluation.md`。
+2. 当前大模型必须读取：
+   - `<session_dir>/interview_evaluation.json`
+   - `<session_dir>/transcript.json`
+   - `<parsed_dir>/candidate_profile.json`
+   - `<parsed_dir>/resume_risks.md`
+3. 基于这四个文件生成严格 JSON，保存为 `<session_dir>/post_interview_outputs.llm.json`。
+4. 运行：
+
+```bash
+python cs-tech-interviewer/scripts/apply_llm_post_interview_outputs.py <session_dir> <session_dir>/post_interview_outputs.llm.json
+```
+
+5. 写回脚本只负责 schema 校验、固定文件写入和同步 `interview_evaluation.json`；不得在脚本里生成推荐内容。
+
+当前大模型生成 post-interview JSON 时使用这个提示词：
+
+```text
+你是资深 CS 技术面试官和简历修改教练。请读取 interview_evaluation.json、transcript.json、candidate_profile.json、resume_risks.md，基于真实作答证据生成下一轮模拟配置和简历改写建议。
+
+要求：
+- 下一轮配置要结合总体现状、阶段表现、候选人目标、JD 语境、答题证据和简历风险，不要只按总分或单个弱项机械判断。
+- 简历改写建议要把“面试暴露的问题”回流到简历原表述，优先绑定到 candidate_profile.projects[].claims[] 或明确的项目/技能表述。
+- 不编造数字、规模、指标、ownership 或线上效果；缺失信息必须使用 {baseline}、{目标值}、{样本量}、{统计口径}、{个人负责模块} 等占位符。
+- 可以把旧规则当检查清单：个人职责边界、量化指标缺失、RAG 的切分/召回/重排/评估/幻觉控制、Agent 的状态/工具调用/重试/失败恢复、后端接口的鉴权/异常/限流/日志/部署/测试。但必须结合证据判断，不能硬套。
+- 输出只能是 JSON，不要输出 Markdown。
+
+JSON schema：
+{
+  "schema_version": "1.0",
+  "kind": "llm_post_interview_outputs",
+  "next_round_recommendation": {
+    "strength": "NPC | 人上人 | 顶级 | 夯 | 拉完了",
+    "tone": "温和 | 默认 | 铁面",
+    "mode": "完整模拟 | 项目深挖 | 八股快问快答 | 算法陪练 | JD 定向面 | 简历拷打 | 复盘教练",
+    "focus": ["..."],
+    "recommended_questions": ["..."],
+    "rationale": "...",
+    "evidence": ["引用 transcript/evaluation 中的证据"],
+    "commands": ["/strength ...", "/tone ...", "/mode ...", "/focus ..."]
+  },
+  "resume_rewrite_suggestions": [
+    {
+      "id": "rewrite_001",
+      "scope": "project | experience | skills | summary | education | other",
+      "target_label": "...",
+      "target_area": "...",
+      "original_text": "...",
+      "source_anchor": {
+        "source_kind": "project_claim | project_role | skills | summary | other",
+        "path": "candidate_profile.projects[0].claims[2]",
+        "claim_index": 2,
+        "matched_by": ["..."],
+        "match_score": 0
+      },
+      "problem_types": ["missing_metrics | ownership_unclear | rag_depth | agent_reliability | tradeoff_unclear | engineering_closure | jd_mismatch | expression_unclear"],
+      "why_it_is_weak": "...",
+      "evidence": ["面试问题/回答暴露的问题"],
+      "rewrite_strategy": "...",
+      "suggested_rewrite": "...",
+      "rewrite_diff": {
+        "before": "...",
+        "after": "..."
+      },
+      "placeholders_to_confirm": ["baseline", "目标值", "样本量"],
+      "priority": "P0 | P1 | P2",
+      "confidence": "high | medium | low"
+    }
+  ]
+}
+```
 
 ## 边界
 

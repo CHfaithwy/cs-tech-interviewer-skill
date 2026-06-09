@@ -33,10 +33,10 @@ The apply script writes or refreshes:
 - `<parsed_dir>/candidate_profile.json` (`resume_risks`, project `possible_risks`, and `risk_evaluation`)
 - `<parsed_dir>/resume_risks.llm.json`
 - `<parsed_dir>/resume_risks.md`
-- `<parsed_dir>/resume_rewrite_suggestions.json`
-- `<parsed_dir>/resume_rewrite_suggestions.md`
 
 If file writes are not possible, return the JSON and Markdown risk summary directly to the user and state clearly that the result was not persisted.
+
+Resume rewrite suggestions are generated after `/report`, when transcript and evaluation evidence are available. Do not generate them from risk rules in this step.
 
 ## Evaluation Principles
 

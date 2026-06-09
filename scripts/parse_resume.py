@@ -36,9 +36,6 @@ from typing import Any
 import docx
 from docx.table import Table
 from docx.text.paragraph import Paragraph
-from suggest_resume_rewrites import generate_resume_rewrite_suggestions
-
-
 MINERU_AGENT_BASE_URL = "https://mineru.net/api/v1/agent"
 
 
@@ -1176,14 +1173,11 @@ def write_outputs(profile: dict[str, Any], output_dir: Path) -> dict[str, str]:
     write_text(json_path, json.dumps(profile, ensure_ascii=False, indent=2))
     write_text(profile_md_path, render_profile_md(profile))
     write_text(risks_md_path, render_risks_md(profile))
-    _, rewrite_outputs = generate_resume_rewrite_suggestions(json_path, output_dir=output_dir)
     return {
         "profile_json": str(json_path),
         "profile_markdown": str(profile_md_path),
         "risk_report": str(risks_md_path),
         "source_markdown": profile["markdown_path"],
-        "rewrite_json": rewrite_outputs["rewrite_json"],
-        "rewrite_markdown": rewrite_outputs["rewrite_markdown"],
     }
 
 

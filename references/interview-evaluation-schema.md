@@ -18,8 +18,8 @@ Read together with:
 
 - final `/report`
 - structured review exports
-- resume rewrite suggestions enhanced by interview evidence
-- next-round mock recommendations
+- resume rewrite suggestions enhanced by interview evidence after the current LLM writes them back
+- next-round mock recommendations after the current LLM writes them back
 
 ## Top-Level Shape
 
@@ -68,6 +68,8 @@ Read together with:
 - `resume_rewrite_suggestions`
 
 These are populated according to `data/interview_mode_profiles.json`.
+
+`resume_rewrite_suggestions` and `next_round_recommendation` are semantic post-interview outputs. `scripts/evaluate_interview.py` may leave them empty or marked as `llm_required`; the current LLM must read `interview_evaluation.json`, `transcript.json`, `candidate_profile.json`, and `resume_risks.md`, then persist its JSON with `scripts/apply_llm_post_interview_outputs.py`.
 
 ## `overall_conclusion`
 
@@ -137,6 +139,30 @@ Rules:
 - use placeholders when exact metrics are unknown
 - preserve uncertainty explicitly
 - for project-scoped suggestions, prefer binding to the most relevant original `projects[].claims[]` sentence
+
+## `next_round_recommendation`
+
+When filled by the current LLM, this block uses:
+
+```json
+{
+  "strength": "人上人",
+  "tone": "默认",
+  "mode": "项目深挖",
+  "focus": ["项目指标与量化结果", "算法复杂度分析"],
+  "recommended_questions": [],
+  "rationale": "结合本轮项目深挖证据和算法回答表现，下一轮先压实项目指标。",
+  "evidence": ["PROJECT_DEEP_DIVE 中指标口径回答不清"],
+  "commands": ["/strength 人上人", "/tone 默认", "/mode 项目深挖", "/focus 项目指标与量化结果"]
+}
+```
+
+Rules:
+
+- do not choose mode only from total score or a single weakest module
+- consider transcript evidence, JD context, resume risks, candidate target, and current configuration
+- raise or lower strength only when the evidence supports it
+- keep `commands` executable by the live session controller
 
 ## `report_sections`
 

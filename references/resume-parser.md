@@ -40,8 +40,6 @@ Default output directory:
   candidate_profile.md
   resume_risks.llm.json        # created after LLM risk evaluation
   resume_risks.md
-  resume_rewrite_suggestions.json
-  resume_rewrite_suggestions.md
   mineru_agent_output.md
   mineru_output/
 ```
@@ -147,7 +145,7 @@ Use `references/resume-profile-llm-generation.md` as the prompt and workflow ref
 python cs-tech-interviewer/scripts/apply_llm_candidate_profile.py <parsed_dir>/candidate_profile.llm.json --output-dir <parsed_dir> --source-resume-md <parsed_dir>/source_resume.md
 ```
 
-This writes the canonical `candidate_profile.json`, `candidate_profile.md`, `resume_risks.md`, and resume rewrite suggestions.
+This writes the canonical `candidate_profile.json`, `candidate_profile.md`, and `resume_risks.md`.
 
 ## Question Selection
 
@@ -192,15 +190,17 @@ Save the model output to `<parsed_dir>/resume_risks.llm.json`, then apply it:
 python cs-tech-interviewer/scripts/apply_llm_resume_risks.py <parsed_dir>/candidate_profile.json <parsed_dir>/resume_risks.llm.json
 ```
 
-This updates `candidate_profile.json`, `resume_risks.md`, and resume rewrite suggestions. Downstream question selection, interview sessions, and reports should use this updated profile.
+This updates `candidate_profile.json` and `resume_risks.md`. Downstream question selection, interview sessions, and reports should use this updated profile.
 
 Treat LLM risk output as interview preparation, not as ground truth. When parsing looks wrong, inspect `source_resume.md` and correct assumptions in the interview setup.
 
 ## Resume Rewrite Suggestions
 
-`parse_resume.py` also emits:
+Resume rewrite suggestions are post-interview outputs, not parser outputs. After `/report`, the current LLM must read:
 
-- `resume_rewrite_suggestions.json`
-- `resume_rewrite_suggestions.md`
+- `<session_dir>/interview_evaluation.json`
+- `<session_dir>/transcript.json`
+- `<parsed_dir>/candidate_profile.json`
+- `<parsed_dir>/resume_risks.md`
 
-These suggestions are generated only from parsed profile and resume risk evidence. They do not invent metrics. When exact values are unknown, they use placeholders that the candidate must replace with real numbers or verified context.
+Then save `<session_dir>/post_interview_outputs.llm.json` and run `scripts/apply_llm_post_interview_outputs.py` to write `resume_rewrite_suggestions.json` and `resume_rewrite_suggestions.md`.

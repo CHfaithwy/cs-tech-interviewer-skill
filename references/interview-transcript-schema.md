@@ -157,6 +157,6 @@ That means:
 - `module_scores`
 - `stage_scores`
 - `weakness_tracking`
-- `next_round_recommendation`
+- `next_round_recommendation` placeholder; the current LLM fills the final value with `scripts/apply_llm_post_interview_outputs.py`
 
 Any future `/score` or `/report` implementation should either emit this schema directly or be convertible into it without lossy ad hoc parsing.

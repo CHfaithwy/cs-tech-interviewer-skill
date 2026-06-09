@@ -31,6 +31,11 @@ Each interview session writes to its own directory, for example:
   score_snapshot.md
   interview_evaluation.json
   interview_evaluation.md
+  post_interview_outputs.llm.json
+  next_round_recommendation.json
+  next_round_recommendation.md
+  resume_rewrite_suggestions.json
+  resume_rewrite_suggestions.md
   session_brief.md
   llm_judgements/
 ```

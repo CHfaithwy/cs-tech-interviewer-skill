@@ -56,8 +56,7 @@
         "resume_rewrite",
         "review_priorities",
         "next_round"
-      ],
-      "candidate_output_style": "full_problem_statement"
+      ]
     },
     "项目深挖": {
       "aliases": ["项目深挖", "project-deep-dive"],
@@ -96,8 +95,7 @@
         "resume_rewrite",
         "review_priorities",
         "next_round"
-      ],
-      "candidate_output_style": "structured_followups"
+      ]
     },
     "八股快问快答": {
       "aliases": ["八股快问快答", "fundamentals"],
@@ -132,8 +130,7 @@
         "fundamentals_gap_list",
         "review_priorities",
         "next_round"
-      ],
-      "candidate_output_style": "compact_question"
+      ]
     },
     "算法陪练": {
       "aliases": ["算法陪练", "algorithm", "coding"],
@@ -170,8 +167,7 @@
         "recommended_next_questions",
         "review_priorities",
         "next_round"
-      ],
-      "candidate_output_style": "full_problem_statement"
+      ]
     },
     "JD 定向面": {
       "aliases": ["JD 定向面", "jd"],
@@ -211,8 +207,7 @@
         },
         "module_focus": ["self_introduction", "project_depth", "cs_fundamentals", "communication", "candidate_questions"]
       },
-      "report_sections": ["overall_conclusion", "jd_fit_gaps", "project_depth_summary", "fundamentals_gap_list", "resume_rewrite", "review_priorities", "next_round"],
-      "candidate_output_style": "structured_followups"
+      "report_sections": ["overall_conclusion", "jd_fit_gaps", "project_depth_summary", "fundamentals_gap_list", "resume_rewrite", "review_priorities", "next_round"]
     },
     "简历拷打": {
       "aliases": ["简历拷打", "resume-attack"],
@@ -247,8 +242,7 @@
         },
         "module_focus": ["project_depth", "cs_fundamentals", "communication"]
       },
-      "report_sections": ["overall_conclusion", "resume_risk_map", "ownership_gaps", "resume_rewrite", "review_priorities", "next_round"],
-      "candidate_output_style": "structured_followups"
+      "report_sections": ["overall_conclusion", "resume_risk_map", "ownership_gaps", "resume_rewrite", "review_priorities", "next_round"]
     },
     "复盘教练": {
       "aliases": ["复盘教练", "review-coach"],
@@ -272,8 +266,7 @@
         },
         "module_focus": ["self_introduction", "project_depth", "cs_fundamentals", "algorithm_ability", "communication", "candidate_questions"]
       },
-      "report_sections": ["overall_conclusion", "module_scores", "stage_scores", "weakness_tracking", "review_priorities", "next_round"],
-      "candidate_output_style": "transcript_only"
+      "report_sections": ["overall_conclusion", "module_scores", "stage_scores", "weakness_tracking", "review_priorities", "next_round"]
     }
   }
 }

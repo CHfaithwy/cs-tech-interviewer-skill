@@ -10,9 +10,6 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from suggest_resume_rewrites import build_rewrite_suggestions
-
-
 SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_DIR = SCRIPT_DIR.parent
 DEFAULT_MODE_PROFILES = SKILL_DIR / "data" / "interview_mode_profiles.json"
@@ -44,15 +41,6 @@ STAGE_TO_MODULE = {
 }
 VALID_STAGES = set(STAGE_TO_MODULE)
 VALID_QUALITIES = {"strong", "partial", "weak", "wrong"}
-
-STRENGTH_NEXT = {
-    "拉完了": "NPC",
-    "NPC": "人上人",
-    "人上人": "顶级",
-    "顶级": "夯",
-    "夯": "夯",
-}
-
 
 def read_text(path: Path) -> str:
     for encoding in ("utf-8-sig", "utf-8", "gb18030", "cp936"):
@@ -421,57 +409,24 @@ def build_weakness_tracking(aggregated: dict[str, Any], profile: dict[str, Any] 
     return deduped[:12]
 
 
-def build_next_round_recommendation(
-    transcript: dict[str, Any],
-    module_scores: dict[str, Any],
-    weakness_items: list[dict[str, Any]],
-    selection: dict[str, Any] | None,
-) -> dict[str, Any]:
-    current_strength = str(transcript.get("session", {}).get("strength", "人上人"))
-    current_mode = str(transcript.get("session", {}).get("mode", "完整模拟"))
-    current_tone = str(transcript.get("session", {}).get("tone", "默认"))
-    current_focus = transcript.get("session", {}).get("focus", []) or []
-
-    total_score = sum(value["score"] for value in module_scores.values())
-    next_strength = current_strength
-    if total_score >= 80:
-        next_strength = STRENGTH_NEXT.get(current_strength, current_strength)
-    elif total_score < 60 and current_strength in {"夯", "顶级", "人上人"}:
-        next_strength = "NPC"
-
-    effective_modules = [
-        (name, item)
-        for name, item in module_scores.items()
-        if item.get("weight", 0) > 0 and name != "communication"
-    ]
-    weakest_modules = sorted(effective_modules, key=lambda item: item[1]["score"] / max(item[1]["weight"], 1))[:2]
-    weakest_module_names = [item[0] for item in weakest_modules]
-    if "project_depth" in weakest_module_names and "algorithm_ability" in weakest_module_names:
-        next_mode = "完整模拟"
-    elif "project_depth" in weakest_module_names:
-        next_mode = "项目深挖"
-    elif "algorithm_ability" in weakest_module_names:
-        next_mode = "算法陪练"
-    elif "cs_fundamentals" in weakest_module_names:
-        next_mode = "八股快问快答"
-    else:
-        next_mode = current_mode
-
-    next_focus = unique_keep_order([item["focus_hint"] for item in weakness_items if item.get("focus_hint")][:4])
-    if not next_focus:
-        next_focus = list(current_focus)[:4]
-
-    recommended_questions = []
-    if selection:
-        algorithms = selection.get("view_payloads", {}).get("candidate_mode", {}).get("algorithms", [])
-        recommended_questions = [item.get("title") for item in algorithms[:2] if item.get("title")]
-
+def build_llm_required_next_round_placeholder(transcript: dict[str, Any]) -> dict[str, Any]:
+    session = transcript.get("session", {}) or {}
     return {
-        "strength": next_strength,
-        "tone": current_tone,
-        "mode": next_mode,
-        "focus": next_focus,
-        "recommended_questions": recommended_questions,
+        "status": "llm_required",
+        "reason": "下一轮配置需要由当前大模型读取完整复盘、作答证据、候选人画像和简历风险后生成。",
+        "current_context": {
+            "strength": session.get("strength"),
+            "tone": session.get("tone"),
+            "mode": session.get("mode"),
+            "focus": session.get("focus", []) or [],
+        },
+        "required_inputs": [
+            "interview_evaluation.json",
+            "transcript.json",
+            "candidate_profile.json",
+            "resume_risks.md",
+        ],
+        "apply_script": "scripts/apply_llm_post_interview_outputs.py",
     }
 
 
@@ -664,17 +619,6 @@ def build_jd_fit_gaps(
     ]
 
 
-def build_resume_rewrite_block(
-    profile: dict[str, Any] | None,
-    transcript: dict[str, Any],
-    partial_result: dict[str, Any],
-) -> list[dict[str, Any]]:
-    if not profile:
-        return []
-    rewrite_result = build_rewrite_suggestions(profile, transcript=transcript, evaluation=partial_result)
-    return rewrite_result.get("suggestions", []) or []
-
-
 def render_table(lines: list[str], headers: list[str], rows: list[list[str]]) -> None:
     lines.append("| " + " | ".join(headers) + " |")
     lines.append("|" + "|".join("---" for _ in headers) + "|")
@@ -686,7 +630,7 @@ def render_evaluation_md(result: dict[str, Any]) -> str:
     conclusion = result["overall_conclusion"]
     module_scores = result["module_scores"]
     weakness_items = result["weakness_tracking"]
-    next_round = result["next_round_recommendation"]
+    next_round = result.get("next_round_recommendation") or {}
     stage_scores = result["stage_scores"]
     report_sections = result.get("report_sections", []) or []
 
@@ -820,13 +764,17 @@ def render_evaluation_md(result: dict[str, Any]) -> str:
 
     if section_enabled(report_sections, "next_round"):
         lines.extend(["", "## 14. 下一轮模拟建议"])
-        lines.append(f"- `/strength {next_round.get('strength')}`")
-        lines.append(f"- `/tone {next_round.get('tone')}`")
-        lines.append(f"- `/mode {next_round.get('mode')}`")
-        if next_round.get("focus"):
-            lines.append(f"- `/focus {', '.join(next_round.get('focus', []))}`")
-        if next_round.get("recommended_questions"):
-            lines.append("- 推荐算法题：" + "、".join(next_round.get("recommended_questions", [])))
+        if next_round.get("status") == "llm_required":
+            lines.append("- 待当前大模型读取 `interview_evaluation.json`、`transcript.json`、`candidate_profile.json` 和 `resume_risks.md` 后生成。")
+            lines.append("- 生成后运行 `scripts/apply_llm_post_interview_outputs.py` 写回固定文件。")
+        else:
+            lines.append(f"- `/strength {next_round.get('strength')}`")
+            lines.append(f"- `/tone {next_round.get('tone')}`")
+            lines.append(f"- `/mode {next_round.get('mode')}`")
+            if next_round.get("focus"):
+                lines.append(f"- `/focus {', '.join(next_round.get('focus', []))}`")
+            if next_round.get("recommended_questions"):
+                lines.append("- 推荐算法题：" + "、".join(next_round.get("recommended_questions", [])))
 
     lines.append("")
     return "\n".join(lines)
@@ -848,24 +796,18 @@ def evaluate_transcript(
     aggregated = aggregate_stages(transcript)
     module_scores = compute_module_scores(aggregated, weights)
     weakness_items = build_weakness_tracking(aggregated, profile)
-    next_round = build_next_round_recommendation(transcript, module_scores, weakness_items, selection)
+    next_round = build_llm_required_next_round_placeholder(transcript)
     conclusion = build_overall_conclusion(module_scores, transcript)
     highlights = extract_highlights(module_scores)
     issues = extract_issues(module_scores)
     review_priorities = build_review_priorities(weakness_items, current_mode)
 
-    partial_result = {
-        "weakness_tracking": weakness_items,
-        "overall_conclusion": conclusion,
-        "module_scores": module_scores,
-        "stage_scores": aggregated["stage_stats"],
-    }
     project_risk_map = build_project_risk_map(profile, transcript, current_mode)
     fundamentals_gap_list = build_fundamentals_gap_list(transcript, current_mode)
     algorithm_breakdown = build_algorithm_breakdown(transcript, current_mode)
     jd_fit_gaps = build_jd_fit_gaps(transcript, profile, selection, current_mode)
     resume_risk_map = build_resume_risk_map(profile, transcript, current_mode)
-    resume_rewrite_suggestions = build_resume_rewrite_block(profile, transcript, partial_result)
+    resume_rewrite_suggestions: list[dict[str, Any]] = []
 
     return {
         "schema_version": "1.0",

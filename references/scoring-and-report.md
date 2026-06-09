@@ -14,6 +14,8 @@ Mode-specific scoring and report emphasis come from:
 
 Free-form answer scoring must already be recorded in `transcript.json` from the current LLM's judgement. Do not use `session_router.py` keyword heuristics as the official score source. For each candidate answer, first use `references/semantic-judge-prompt.md`, then persist the JSON with `scripts/apply_llm_answer_judgement.py`.
 
+Next-round recommendations and resume rewrite suggestions are also LLM-led. The report script can aggregate already recorded scores and evidence, but it must not invent the next configuration or rewrite copy from heuristics.
+
 ## V1.0 Session-Aware Flow
 
 For a live V1.0 session, prefer using `scripts/interview_session.py`:
@@ -40,7 +42,6 @@ Use `scripts/evaluate_interview.py` when you already have a structured transcrip
 
 - stage-level scoring
 - weakness tracking
-- next-round mock recommendations
 - a compact machine-readable evaluation artifact
 
 Examples:
@@ -137,24 +138,36 @@ Use this shape for `/report`:
 ## 8. 下一次模拟建议
 ```
 
-## Resume Rewrite Outputs
+## LLM Post-Interview Outputs
 
-You can generate static rewrite suggestions directly from parsed resume artifacts:
+After `/report` writes `interview_evaluation.json`, the current LLM must read:
+
+- `<session_dir>/interview_evaluation.json`
+- `<session_dir>/transcript.json`
+- `<parsed_dir>/candidate_profile.json`
+- `<parsed_dir>/resume_risks.md`
+
+The LLM then writes a strict JSON file:
+
+```text
+<session_dir>/post_interview_outputs.llm.json
+```
+
+Apply it with:
 
 ```bash
-python cs-tech-interviewer/scripts/suggest_resume_rewrites.py <candidate_profile.json>
+python cs-tech-interviewer/scripts/apply_llm_post_interview_outputs.py <session_dir> <session_dir>/post_interview_outputs.llm.json
 ```
 
 This writes:
 
 ```text
-<parsed_dir>/
+<session_dir>/
+  post_interview_outputs.llm.json
+  next_round_recommendation.json
+  next_round_recommendation.md
   resume_rewrite_suggestions.json
   resume_rewrite_suggestions.md
 ```
 
-When `/report` runs with both profile and transcript evidence, the final `interview_evaluation.json` also includes:
-
-- `resume_rewrite_suggestions`
-
-and the markdown report adds a dedicated resume-rewrite section when the current mode requires it.
+The apply script only validates schema, writes fixed files, and syncs `next_round_recommendation` plus `resume_rewrite_suggestions` back into `interview_evaluation.json`.
