@@ -1,6 +1,6 @@
 ---
 name: cs-tech-interviewer
-description: CS technical interview simulation and coaching for computer science candidates. Use when the user wants a Chinese resume/JD-driven technical mock interview, project deep dive, CS fundamentals questioning, algorithm interview practice, resume risk attack analysis, interview scoring, or a structured post-interview feedback report. Before starting an interview, ask the user to provide the target JD first, then confirm or choose missing configuration options such as /role, /strength, /tone, /level, /mode, and /focus. Supports resume file/text input plus flows controlled by commands such as /configure, /start, /status, /jd, /role, /strength, /tone, /level, /mode, /focus, /hint, /repeat, /skip, /score, and /report.
+description: "CS technical interview simulation and coaching for computer science candidates. Use when the user wants a Chinese CS technical mock interview or interview coaching driven by a resume, JD, transcript, interview mode, or session commands. Trigger for resume/JD-based mock interviews, project deep dives, CS fundamentals questioning, algorithm practice as interviewer-led coaching, resume risk attack analysis, interview scoring, structured post-interview feedback, next-round preparation, or resume rewrite suggestions derived from interview evidence. Do not use for general code explanation, debugging/refactoring, standalone algorithm solutions without mock-interview framing, generic resume editing not tied to interview risk/feedback, non-CS interviews, HR/behavioral-only interviews, or general career advice. Before starting an interview, ask for the target JD, then confirm missing options such as /role, /strength, /tone, /level, /mode, and /focus."
 ---
 
 # CS 技术面试官
@@ -449,6 +449,11 @@ JSON schema：
 ```
 
 ## 边界
+
+触发边界自检：
+
+- 继续使用本 skill：用户正在做 CS 技术面试模拟、面试陪练、JD/简历拷打、阶段评分或复盘报告。
+- 转为普通回答或其他 skill：用户只是问代码逻辑、debug、重构、单题算法答案、泛简历润色、非技术面或职业建议。
 
 这个 skill 应该做到：
 
