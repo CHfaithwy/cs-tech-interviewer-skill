@@ -126,7 +126,7 @@ python cs-tech-interviewer/scripts/interview_session.py status <session_dir>
 
 ## 工作流
 
-整个 skill 的主链路如下：
+整个 skill 的主链路概览如下，具体执行顺序见下一节“快速执行路径”：
 
 1. 解析输入：简历、JD、目标方向、显式命令、已有 transcript
 2. 生成候选人画像：教育、技能、项目、实习、亮点、项目结构和风险点必须由大模型读取解析产物/JD 后生成并写回
@@ -137,6 +137,36 @@ python cs-tech-interviewer/scripts/interview_session.py status <session_dir>
 7. 逐题运行面试状态机
 8. 记录作答证据：亮点、问题、hint 使用、跳题、表达问题、项目漏洞
 9. 输出 `/score` 与 `/report`
+
+## 快速执行路径
+
+接到用户请求后，按下面顺序判断和执行：
+
+1. 如果已经存在 live session，先读取 `session_state.json`、`session_brief.md`、`transcript.json` 和 `question_selection.json`，确认 `runtime_status`、`active_stage`、`current_question`、`pending_reconfiguration` 和 `available_commands`，再决定继续提问、执行控制命令、生成 `/score` 或生成 `/report`。
+2. 如果是新面试，先确认目标 JD。用户没有提供 JD 时，先提醒提供 JD，或让用户明确“没有 JD，直接继续”。用户粘贴整段岗位描述时，直接当作 `/jd` 处理。
+3. 如果用户提供了简历文件或简历文本，先运行 `scripts/parse_resume.py` 得到 `<parsed_dir>/source_resume.md`，再按 `references/resume-profile-llm-generation.md` 生成候选人画像 JSON，并运行 `scripts/apply_llm_candidate_profile.py` 写回 `candidate_profile.json`、`candidate_profile.md` 和 `resume_risks.md`。
+4. 拿到 JD、简历或目标方向后，确认 `/role`、`/strength`、`/tone`、`/level`、`/mode` 和 `/focus`。用户说“随便”“默认”“推荐”时，使用默认配置；只追问缺失或有歧义的配置。
+5. 配置确认后，生成本场 question plan，并通过 `scripts/interview_session.py` 创建或推进 session。用户说“开始吧”时，读取状态；若状态为 `CONFIG_READY`，再运行 `start`。
+6. 每轮候选人回答后，用 `scripts/session_router.py` 获取评分上下文；当前大模型按 `references/semantic-judge-prompt.md` 输出严格 JSON；保存 judgement 文件后运行 `scripts/apply_llm_answer_judgement.py` 写回 transcript 并推进状态。
+7. 每次脚本调用后，都重新读取 `session_state.json` 或使用脚本返回值，再决定下一句追问、下一道题、配置确认或阶段性反馈。
+8. 用户请求 `/score` 时，走轻量阶段评分路径；用户请求 `/report` 时，先生成基础报告，再读取 transcript、evaluation、candidate profile 和 resume risks，最后按 post-interview reference 生成下一轮建议和基于面试证据的简历改写建议。
+
+## Reference 读取矩阵
+
+只在对应任务发生时读取 reference，避免把无关上下文提前加载：
+
+| 任务 | 必读 reference | 触发条件 |
+| --- | --- | --- |
+| live session 或自然语言控制 | `references/llm-session-orchestration.md` | 已有 session，或用户说“开始吧”“提示”“跳过”“暂停”“改配置”等 |
+| 简历解析细节 | `references/resume-parser.md` | 需要处理 PDF/DOCX/Markdown/TXT 简历输入 |
+| 候选人画像生成 | `references/resume-profile-llm-generation.md` | 已得到 `source_resume.md`，需要生成或刷新 `candidate_profile.json` |
+| 简历风险重评估 | `references/resume-risk-llm-evaluation.md` | 只需要重新生成 `resume_risks.llm.json` 或刷新风险点 |
+| 选题策略或题库字段 | `references/question-strategy.md`、`references/question-bank.md` | 生成 question plan，或需要理解本地题库字段 |
+| 项目深挖追问 | `references/project-deep-dive-llm-prompt.md` | 当前阶段是项目深挖，或需要基于项目/JD/风险点生成下一问 |
+| 自由回答语义评分 | `references/semantic-judge-prompt.md` | 候选人提交自然语言回答，需要当前大模型评分 |
+| `/score` 或 `/report` 基础报告 | `references/scoring-and-report.md`、`references/interview-evaluation-schema.md` | 需要生成阶段评分或最终基础复盘 |
+| `/report` 后的下一轮建议/简历改写 | `references/post-interview-output-generation.md` | 基础报告已生成，需要基于面试证据输出下一轮配置和简历改写建议 |
+| 状态或 transcript schema 不确定 | `references/interview-session-schema.md`、`references/interview-transcript-schema.md` | 需要确认 session/transcript 字段含义或写回格式 |
 
 ## 面试模式
 
@@ -398,6 +428,18 @@ python cs-tech-interviewer/scripts/apply_llm_post_interview_outputs.py <session_
 - `references/post-interview-output-generation.md`
 
 仅在 `/report` 需要生成下一轮模拟配置或基于面试证据的简历改写建议时读取该 reference；不要在普通评分、简历解析或非面试上下文中加载。
+
+## 回复与汇报规范
+
+面向用户的回复要短而可操作，并且和当前 session 状态一致：
+
+- 面试前配置确认：说明 JD 状态、推断岗位、推荐配置、可调整命令，以及还缺哪些确认项。
+- 每道题：只问当前题，说明当前阶段和可用命令；不要一次性泄露整份题单或后续所有追问。
+- `hint` / `skip` / 运行中改配置后：说明状态变化、是否记录了 hint/skip/pending reconfiguration，并给下一道题、下一句追问或需要用户确认的配置。
+- `/score` 后：给阶段性表现、关键证据、薄弱点、下一步训练建议，并说明 `score_snapshot.json` 和 `score_snapshot.md` 的路径。
+- `/report` 后：给总评、分项结论、下一轮模拟建议、基于面试证据的简历改写建议摘要，并说明完整 `interview_evaluation`、`next_round_recommendation` 和 `resume_rewrite_suggestions` 文件路径。
+- 无法写文件时：明确说明“未持久化”，直接返回必要的 JSON/Markdown 摘要，并告诉用户哪些产物没有落盘。
+- 每次脚本调用、状态变化或写回文件后：重新读取状态或使用脚本返回值，再回复用户。
 
 ## 边界
 
