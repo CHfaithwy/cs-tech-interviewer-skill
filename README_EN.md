@@ -95,10 +95,15 @@ Common commands:
 | `/mode <value>` | Set the interview mode |
 | `/focus <topics>` | Specify the main follow-up direction |
 | `/start` | Start the current session |
+| `/status` | Show the current stage, question, and artifact paths |
 | `/hint` | Get a hint |
 | `/skip` | Skip the current question |
+| `/pause` | Pause the current interview and keep the breakpoint |
+| `/continue` | Resume a paused interview |
 | `/score` | Generate a score snapshot for the current stage |
 | `/report` | Generate the final structured review |
+
+If you reopen the conversation, provide the original `<session_dir>` so the skill can recover from `session_state.json` and `transcript.json`: `RUNNING` resumes the current question, `PAUSED` uses `/continue`, and `CONFIG_READY` uses `/start`.
 
 <a id="interview-modes"></a>
 
@@ -149,6 +154,12 @@ Typical artifacts:
   score_snapshot.md
   interview_evaluation.json
   interview_evaluation.md
+  llm_judgements/
+  post_interview_outputs.llm.json
+  next_round_recommendation.json
+  next_round_recommendation.md
+  resume_rewrite_suggestions.json
+  resume_rewrite_suggestions.md
 ```
 
 Among them:
@@ -163,6 +174,25 @@ Among them:
 - `score_snapshot.json / md` are mid-session scoring outputs
 - `interview_evaluation.json` is the machine-readable source of truth for the final review
 - `interview_evaluation.md` is the review report
+- `llm_judgements/` archives semantic judgement JSON for free-form answers; temporary `current_judgement_*` files should not remain in the session root
+- `next_round_recommendation.*` and `resume_rewrite_suggestions.*` are optional post-`/report` outputs generated from interview evidence
+
+## Resume Parsing Artifacts
+
+The parsed resume directory usually contains:
+
+```text
+<parsed_dir>/
+  source_resume.md
+  candidate_profile.json
+  candidate_profile.md
+  resume_risks.md
+```
+
+- `source_resume.md` is the normalized Markdown converted from the resume
+- `candidate_profile.json` is the source of truth for question selection, interviews, and reviews
+- `candidate_profile.md` and `resume_risks.md` are human-readable derived summaries
+- `candidate_profile.llm.json` is not kept by default; use `--keep-llm-json` only when debugging raw model output
 
 ## Repository Structure
 

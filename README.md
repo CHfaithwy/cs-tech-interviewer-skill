@@ -95,10 +95,15 @@ pip install -U "mineru[pipeline]"
 | `/mode <value>` | 设置面试模式 |
 | `/focus <topics>` | 指定重点追问方向 |
 | `/start` | 开始当前 session |
+| `/status` | 查看当前阶段、当前题和产物路径 |
 | `/hint` | 获取提示 |
 | `/skip` | 跳过当前题 |
+| `/pause` | 暂停当前面试并保留断点 |
+| `/continue` | 从暂停状态继续当前面试 |
 | `/score` | 生成当前阶段评分 |
 | `/report` | 生成最终结构化复盘 |
+
+如果重新打开对话，只要提供原来的 `<session_dir>`，skill 就可以通过 `session_state.json` 和 `transcript.json` 恢复当前状态；`RUNNING` 可继续当前题，`PAUSED` 先 `/continue`，`CONFIG_READY` 用 `/start`。
 
 <a id="interview-modes"></a>
 
@@ -149,6 +154,12 @@ data/interview_mode_profiles.json
   score_snapshot.md
   interview_evaluation.json
   interview_evaluation.md
+  llm_judgements/
+  post_interview_outputs.llm.json
+  next_round_recommendation.json
+  next_round_recommendation.md
+  resume_rewrite_suggestions.json
+  resume_rewrite_suggestions.md
 ```
 
 其中：
@@ -163,6 +174,25 @@ data/interview_mode_profiles.json
 - `score_snapshot.json / md` 是中途评分
 - `interview_evaluation.json` 是最终复盘的 machine-readable source of truth
 - `interview_evaluation.md` 是可读复盘报告
+- `llm_judgements/` 归档每次自由回答的语义判分 JSON；临时 `current_judgement_*` 不应长期留在 session 根目录
+- `next_round_recommendation.*` 与 `resume_rewrite_suggestions.*` 是 `/report` 后基于面试证据生成的可选复盘扩展产物
+
+## 简历解析产物
+
+简历解析目录通常包含：
+
+```text
+<parsed_dir>/
+  source_resume.md
+  candidate_profile.json
+  candidate_profile.md
+  resume_risks.md
+```
+
+- `source_resume.md` 是简历转出的规范 Markdown
+- `candidate_profile.json` 是候选人画像的 source of truth，后续选题、面试和复盘都读它
+- `candidate_profile.md` 和 `resume_risks.md` 是给人看的派生摘要
+- `candidate_profile.llm.json` 默认不保留；只有调试原始模型输出时才用 `--keep-llm-json`
 
 ## 仓库结构
 
