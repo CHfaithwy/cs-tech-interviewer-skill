@@ -19,19 +19,26 @@ Always tell the model the exact local paths it must read.
 
 ## Output Targets
 
-1. Save the raw LLM JSON as `<parsed_dir>/candidate_profile.llm.json`.
-2. Apply it with:
+1. Validate that the response is parseable JSON.
+2. Save it to a temporary UTF-8 JSON file and delete it after a successful apply:
 
 ```bash
-python cs-tech-interviewer/scripts/apply_llm_candidate_profile.py <parsed_dir>/candidate_profile.llm.json --output-dir <parsed_dir> --source-resume-md <parsed_dir>/source_resume.md
+python cs-tech-interviewer/scripts/apply_llm_candidate_profile.py <temp_profile_json> --output-dir <parsed_dir> --source-resume-md <parsed_dir>/source_resume.md --delete-input
+```
+
+If the environment is known to preserve UTF-8 through stdin, piping is also supported:
+
+```bash
+python cs-tech-interviewer/scripts/apply_llm_candidate_profile.py - --output-dir <parsed_dir> --source-resume-md <parsed_dir>/source_resume.md
 ```
 
 The apply script writes:
 
 - `<parsed_dir>/candidate_profile.json`
 - `<parsed_dir>/candidate_profile.md`
-- `<parsed_dir>/candidate_profile.llm.json`
 - `<parsed_dir>/resume_risks.md`
+
+Only add `--keep-llm-json` when debugging requires preserving `<parsed_dir>/candidate_profile.llm.json`.
 
 If only risks need refreshing later, use `references/resume-risk-llm-evaluation.md` and `scripts/apply_llm_resume_risks.py`.
 
@@ -128,5 +135,4 @@ Resume rewrite suggestions are generated after interview evidence exists. Do not
 - Validate that the response is parseable JSON.
 - Remove invented metrics or claims.
 - Ensure projects and risks use consistent project names.
-- Save as `<parsed_dir>/candidate_profile.llm.json`.
-- Run `scripts/apply_llm_candidate_profile.py`.
+- Apply it with `scripts/apply_llm_candidate_profile.py <temp_profile_json> --delete-input`. Use stdin only when the pipe is UTF-8 safe.

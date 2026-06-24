@@ -4,7 +4,7 @@ This script turns the documented interview flow into local session artifacts:
 
 - session_state.json: runtime state, current question, command history
 - transcript.json: structured evidence records aligned with V0.5
-- question_selection.json: frozen selection artifact for the current plan
+- question_selection/question_selection.json: frozen selection artifact for the current plan
 - score_snapshot.json / score_snapshot.md: mid-session score outputs
 - interview_evaluation.json / interview_evaluation.md: final report outputs
 """
@@ -623,62 +623,39 @@ def write_final_report(session_dir: Path, result: dict[str, Any]) -> tuple[Path,
 
 
 def write_session_brief(session_dir: Path, state: dict[str, Any]) -> Path:
-    config = state.get("config", {}) or {}
-    summary = state.get("selection_summary", {}) or {}
-    stage_sequence = state.get("stage_sequence", []) or []
     artifacts = state.get("artifacts", {}) or {}
     available_commands = available_commands_for_state(state)
     status_message = build_status_message(state)
     next_step_hint = build_next_step_hint(state)
+    current_question = state.get("current_question") or {}
+    progress = state.get("progress", {}) or {}
+    selection_path = artifacts.get("question_selection_json") or artifacts.get("question_selection_json_root") or ""
 
-    selection_root = artifacts.get("question_selection_json_root")
-    selection = load_json(Path(selection_root)) if selection_root and Path(selection_root).exists() else None
-    keyword_summary = (selection or {}).get("keyword_summary", {}) or {}
-    top_keywords = [item[0] for item in keyword_summary.get("profile_top_keywords", [])[:5] if isinstance(item, list) and item]
-    if not top_keywords:
-        top_keywords = list(config.get("focus", []) or [])[:5]
-    jd_context = config.get("jd_context", {}) or summarize_jd_text(config.get("jd_text", ""))
-    jd_keywords = keyword_summary.get("jd_matched_keywords", [])[:5]
-    jd_keyword_labels = [item[0] for item in jd_keywords if isinstance(item, list) and item]
+    key_artifacts = [
+        ("session_state", str(session_state_path(session_dir))),
+        ("transcript", artifacts.get("transcript_json") or str(transcript_path(session_dir))),
+        ("question_selection", selection_path or "not generated"),
+        ("score_snapshot", artifacts.get("score_snapshot_md") or artifacts.get("score_snapshot_json") or "not generated"),
+        ("interview_evaluation", artifacts.get("evaluation_md") or artifacts.get("evaluation_json") or "not generated"),
+        ("llm_judgements", str(session_dir / "llm_judgements")),
+    ]
 
     lines = [
         "# Session Brief",
         "",
-        "## Opening Card",
-        f"- role: `{config.get('role') or 'auto'}`",
-        f"- strength: `{config.get('strength', DEFAULT_CONFIG['strength'])}`",
-        f"- mode: `{config.get('mode', DEFAULT_CONFIG['mode'])}`",
-        f"- focus: {', '.join(config.get('focus', []) or []) or 'auto'}",
-        f"- top 5 selected topics: {', '.join(top_keywords) if top_keywords else 'N/A'}",
-        f"- JD soul: {jd_context.get('summary') or 'not set yet'}",
-        f"- status: `{state.get('runtime_status', 'INIT')}`",
+        "Derived quick view only. Source of truth: `session_state.json` for runtime, `transcript.json` for evidence.",
         "",
-        "## Config",
-        f"- `/role {config.get('role') or 'auto'}`",
-        f"- `/strength {config.get('strength', DEFAULT_CONFIG['strength'])}`",
-        f"- `/tone {config.get('tone', DEFAULT_CONFIG['tone'])}`",
-        f"- `/level {config.get('level', DEFAULT_CONFIG['level'])}`",
-        f"- `/mode {config.get('mode', DEFAULT_CONFIG['mode'])}`",
-        f"- `/focus {', '.join(config.get('focus', []) or []) or 'auto'}`",
-        f"- `/jd {'configured' if jd_context.get('has_jd') else 'missing'}`",
-        "",
-        "## Why This Bias",
-        f"- explicit /role: {summary.get('role') or 'not set explicitly'}",
-        f"- strength bias: {summary.get('strength') or config.get('strength', DEFAULT_CONFIG['strength'])}",
-        f"- inferred roles: {', '.join(summary.get('inferred_roles', []) or []) or 'N/A'}",
-        f"- priority roles: {', '.join(summary.get('priority_roles', []) or []) or 'N/A'}",
-        f"- expanded roles: {', '.join(summary.get('expanded_priority_roles', []) or []) or 'N/A'}",
-        f"- role bias active: {'yes' if summary.get('role_bias_explained') else 'no'}",
-        f"- JD matched keywords: {', '.join(jd_keyword_labels) if jd_keyword_labels else 'N/A'}",
-        "",
-        "## Flow",
-        f"- stage sequence: {' -> '.join(stage_sequence) if stage_sequence else 'not configured'}",
-        f"- root question selection: {artifacts.get('question_selection_json_root') or 'not generated'}",
-        f"- nested question selection: {artifacts.get('question_selection_json') or 'not generated'}",
-        "",
-        "## Current State",
-        f"- status message: {status_message}",
+        "## Current",
+        f"- runtime_status: `{state.get('runtime_status', 'INIT')}`",
+        f"- active_stage: `{state.get('active_stage') or 'N/A'}`",
+        f"- current_question_id: `{current_question.get('question_id') or 'N/A'}`",
+        f"- status: {status_message}",
         f"- next step: {next_step_hint}",
+        "",
+        "## Progress",
+        f"- completed questions: {len(progress.get('completed_question_ids', []) or [])}",
+        f"- skipped: {progress.get('skipped_total', 0)}",
+        f"- hints used: {progress.get('hints_used_total', 0)}",
         "",
         "## Available Commands",
     ]
@@ -689,17 +666,9 @@ def write_session_brief(session_dir: Path, state: dict[str, Any]) -> Path:
     else:
         lines.append("- N/A")
 
-    lines.extend(
-        [
-            "",
-            "## JD",
-            f"- configured: {'yes' if jd_context.get('has_jd') else 'no'}",
-            f"- title: {jd_context.get('title') or 'N/A'}",
-            f"- summary: {jd_context.get('summary') or 'Please provide the JD so the interviewer can keep the target role in mind.'}",
-        ]
-    )
-    if jd_context.get("keywords"):
-        lines.append(f"- extracted keywords: {', '.join(jd_context.get('keywords', [])[:8])}")
+    lines.extend(["", "## Key Artifacts"])
+    for label, path in key_artifacts:
+        lines.append(f"- {label}: {path}")
 
     brief_path = session_dir / "session_brief.md"
     write_text(brief_path, "\n".join(lines) + "\n")
@@ -1055,16 +1024,16 @@ def generate_selection_for_session(session_dir: Path, state: dict[str, Any], pro
     output_dir = session_dir / "question_selection"
     output_dir.mkdir(parents=True, exist_ok=True)
     json_path = output_dir / "question_selection.json"
-    root_json_path = session_dir / "question_selection.json"
-    default_md_path = output_dir / "question_selection.md"
+    interview_md_path = output_dir / "question_selection_interview_mode.md"
+    candidate_md_path = output_dir / "question_selection_candidate_mode.md"
     write_json(json_path, selection)
-    write_json(root_json_path, selection)
-    write_text(default_md_path, render_question_selection_md(selection, "interview_mode"))
-    write_text(output_dir / "question_selection_interview_mode.md", render_question_selection_md(selection, "interview_mode"))
-    write_text(output_dir / "question_selection_candidate_mode.md", render_question_selection_md(selection, "candidate_mode"))
+    write_text(interview_md_path, render_question_selection_md(selection, "interview_mode"))
+    write_text(candidate_md_path, render_question_selection_md(selection, "candidate_mode"))
     state["artifacts"]["question_selection_json"] = str(json_path)
-    state["artifacts"]["question_selection_json_root"] = str(root_json_path)
-    state["artifacts"]["question_selection_md"] = str(default_md_path)
+    state["artifacts"]["question_selection_interview_md"] = str(interview_md_path)
+    state["artifacts"]["question_selection_candidate_md"] = str(candidate_md_path)
+    state["artifacts"].pop("question_selection_json_root", None)
+    state["artifacts"].pop("question_selection_md", None)
     state["selection_summary"] = {
         "role": config.get("role", ""),
         "strength": config.get("strength", DEFAULT_CONFIG["strength"]),
@@ -1092,7 +1061,8 @@ def bootstrap_state(
     artifacts = {
         "candidate_profile_json": profile_outputs.get("profile_json", "") if profile_outputs else (args.profile_json or ""),
         "question_selection_json": "",
-        "question_selection_json_root": "",
+        "question_selection_interview_md": "",
+        "question_selection_candidate_md": "",
         "transcript_json": str(transcript_path(session_dir)),
         "score_snapshot_json": "",
         "score_snapshot_md": "",
@@ -1782,7 +1752,8 @@ def command_reset(args: argparse.Namespace) -> dict[str, Any]:
         "artifacts": {
             **artifacts,
             "question_selection_json": "",
-            "question_selection_json_root": "",
+            "question_selection_interview_md": "",
+            "question_selection_candidate_md": "",
             "session_brief_md": "",
             "score_snapshot_json": "",
             "score_snapshot_md": "",
@@ -1797,6 +1768,8 @@ def command_reset(args: argparse.Namespace) -> dict[str, Any]:
         },
         "selection_summary": {},
     }
+    reset_state["artifacts"].pop("question_selection_json_root", None)
+    reset_state["artifacts"].pop("question_selection_md", None)
     append_command_history(reset_state, "reset", {"archive_dir": str(archive_dir)})
     save_session_state(session_dir, reset_state)
 

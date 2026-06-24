@@ -184,7 +184,7 @@ python cs-tech-interviewer/scripts/select_questions.py <candidate_profile.json> 
 - 可选的 JD 文本和 `/focus`
 - `candidate_profile.json`
 
-它会输出 `question_selection.json` 和 `question_selection.md`。这份结果应该被当作起始计划，而不是不可变的死板剧本。尤其是 `PROJECT_DEEP_DIVE`，题单节点应作为项目上下文包使用，最终问题由当前大模型生成；`CS_FUNDAMENTALS` 和算法题可以继续主要依赖本地题库。
+它会输出 `question_selection/question_selection.json` 和明确视图的 Markdown，例如 `question_selection_interview_mode.md` 或 `question_selection_candidate_mode.md`。这份结果应该被当作起始计划，而不是不可变的死板剧本。尤其是 `PROJECT_DEEP_DIVE`，题单节点应作为项目上下文包使用，最终问题由当前大模型生成；`CS_FUNDAMENTALS` 和算法题可以继续主要依赖本地题库。
 
 如果你要调整本地题库结构或选题字段，先阅读 [question-bank.md](./question-bank.md)。
 

@@ -35,7 +35,6 @@ Default output directory:
 ```text
 <resume stem>_parsed/
   source_resume.md
-  candidate_profile.llm.json    # created after LLM profile generation
   candidate_profile.json
   candidate_profile.md
   resume_risks.llm.json        # created after LLM risk evaluation
@@ -43,6 +42,8 @@ Default output directory:
   mineru_agent_output.md
   mineru_output/
 ```
+
+`candidate_profile.llm.json` is not a default artifact. Preserve it only with `--keep-llm-json` when debugging raw model output.
 
 ## MinerU PDF Path
 
@@ -139,10 +140,16 @@ After `source_resume.md` exists, instruct the current LLM to read:
 - optional parser draft `<parsed_dir>/candidate_profile.json`
 - user corrections or target direction
 
-Use `references/resume-profile-llm-generation.md` as the prompt and workflow reference. Save the model output to `<parsed_dir>/candidate_profile.llm.json`, then apply it:
+Use `references/resume-profile-llm-generation.md` as the prompt and workflow reference. Save the model JSON to a temporary UTF-8 file, then apply and delete it:
 
 ```bash
-python cs-tech-interviewer/scripts/apply_llm_candidate_profile.py <parsed_dir>/candidate_profile.llm.json --output-dir <parsed_dir> --source-resume-md <parsed_dir>/source_resume.md
+python cs-tech-interviewer/scripts/apply_llm_candidate_profile.py <temp_profile_json> --output-dir <parsed_dir> --source-resume-md <parsed_dir>/source_resume.md --delete-input
+```
+
+If the environment is known to preserve UTF-8 through stdin, piping is also supported:
+
+```bash
+python cs-tech-interviewer/scripts/apply_llm_candidate_profile.py - --output-dir <parsed_dir> --source-resume-md <parsed_dir>/source_resume.md
 ```
 
 This writes the canonical `candidate_profile.json`, `candidate_profile.md`, and `resume_risks.md`.
@@ -160,7 +167,8 @@ The selector writes:
 ```text
 <parsed_dir>/question_selection/
   question_selection.json
-  question_selection.md
+  question_selection_interview_mode.md
+  question_selection_candidate_mode.md
 ```
 
 ## LLM Risk Evaluation

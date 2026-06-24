@@ -2,3 +2,5 @@ sessions/
 
 *.pyc
 __pycache__/
+
+SKILL_example.md

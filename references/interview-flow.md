@@ -22,7 +22,6 @@ Each interview session writes to its own directory, for example:
 <name>_session_<timestamp>/
   session_state.json
   transcript.json
-  question_selection.json
   question_selection/
     question_selection.json
     question_selection_interview_mode.md

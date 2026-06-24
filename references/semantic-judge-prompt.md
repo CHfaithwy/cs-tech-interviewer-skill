@@ -103,10 +103,10 @@ Candidate Answer:
 
 ## Applying The Result
 
-Save the JSON to a file, then apply it with:
+Save the JSON to a temporary file, then apply it with:
 
 ```bash
 python cs-tech-interviewer/scripts/apply_llm_answer_judgement.py <session_dir> <judgement.json>
 ```
 
-The apply script records the answer through `interview_session.py record-answer`, advances the state machine, and stores a copy under `<session_dir>/llm_judgements/`.
+The apply script records the answer through `interview_session.py record-answer`, advances the state machine, and stores the archive under `<session_dir>/llm_judgements/`. If the temporary source file is inside the session directory and outside `llm_judgements/`, the apply script removes it after a successful archive/writeback.

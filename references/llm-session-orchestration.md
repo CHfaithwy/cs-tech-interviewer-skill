@@ -7,10 +7,11 @@ Use this reference whenever a live interview session exists or the user sends a 
 Before replying to the user during a live session, inspect:
 
 - `<session_dir>/session_state.json`
-- `<session_dir>/session_brief.md`
 - `<session_dir>/transcript.json`
-- `<session_dir>/question_selection.json` or `<session_dir>/question_selection/question_selection.json`
+- `<session_dir>/question_selection/question_selection.json`
 - `data/interview_mode_profiles.json`
+
+`session_brief.md` is a derived quick view for humans. Read it only for a fast orientation when useful; do not treat it as source of truth.
 
 Use these to determine:
 

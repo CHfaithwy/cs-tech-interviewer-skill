@@ -141,9 +141,8 @@ data/interview_mode_profiles.json
   session_state.json
   session_brief.md
   transcript.json
-  question_selection.json
   question_selection/
-    question_selection.md
+    question_selection.json
     question_selection_interview_mode.md
     question_selection_candidate_mode.md
   score_snapshot.json
@@ -156,10 +155,11 @@ data/interview_mode_profiles.json
 
 - `session_state.json` 记录当前状态机运行状态
 - `session_state.json.current_question` 会带 `jd_context`，保证运行态也记住岗位语境
-- `session_brief.md` 是这场 session 的开场摘要卡，方便快速查看 `/role`、`/strength`、`/focus` 与 Top 5 selected topics
+- `session_brief.md` 是派生 quick view，只用于快速查看当前状态、下一步和关键产物路径；source of truth 仍是 `session_state.json` 与 `transcript.json`
 - `transcript.json` 记录作答证据
-- `question_selection.json` 记录本场选题结果
-- `question_selection.md` 是默认的人类可读选题摘要，并显式展示 `JD Context`
+- `question_selection/question_selection.json` 记录本场选题结果
+- `question_selection/question_selection_interview_mode.md` 是面试官视图的人类可读选题摘要，并显式展示 `JD Context`
+- `question_selection/question_selection_candidate_mode.md` 是候选人视图，主要用于只展示候选人可见的算法题信息
 - `score_snapshot.json / md` 是中途评分
 - `interview_evaluation.json` 是最终复盘的 machine-readable source of truth
 - `interview_evaluation.md` 是可读复盘报告
@@ -197,4 +197,3 @@ cs-tech-interviewer/
 - 算法题的高频分布参考了 [`afatcoder/LeetcodeTop`](https://github.com/afatcoder/LeetcodeTop)
 
 若有侵权将立即删除。
-

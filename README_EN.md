@@ -141,9 +141,8 @@ Typical artifacts:
   session_state.json
   session_brief.md
   transcript.json
-  question_selection.json
   question_selection/
-    question_selection.md
+    question_selection.json
     question_selection_interview_mode.md
     question_selection_candidate_mode.md
   score_snapshot.json
@@ -156,10 +155,11 @@ Among them:
 
 - `session_state.json` records the current state-machine runtime state
 - `session_state.json.current_question` carries `jd_context`, so the runtime view also remembers the role context
-- `session_brief.md` is the opening summary card for the session, so you can quickly inspect `/role`, `/strength`, `/focus`, and the Top 5 selected topics
+- `session_brief.md` is a derived quick view for current status, next step, and key artifact paths; the sources of truth remain `session_state.json` and `transcript.json`
 - `transcript.json` records answer evidence
-- `question_selection.json` records the selected questions for this interview
-- `question_selection.md` is the default human-readable selection summary and explicitly shows `JD Context`
+- `question_selection/question_selection.json` records the selected questions for this interview
+- `question_selection/question_selection_interview_mode.md` is the interviewer-facing human-readable selection summary and explicitly shows `JD Context`
+- `question_selection/question_selection_candidate_mode.md` is the candidate-facing view, mainly for candidate-visible algorithm prompts
 - `score_snapshot.json / md` are mid-session scoring outputs
 - `interview_evaluation.json` is the machine-readable source of truth for the final review
 - `interview_evaluation.md` is the review report
@@ -197,4 +197,3 @@ The goal of the skill is to help candidates find problems, organize their answer
 - The high-frequency distribution of algorithm questions references [`afatcoder/LeetcodeTop`](https://github.com/afatcoder/LeetcodeTop)
 
 If there is any infringement, it will be removed immediately.
-

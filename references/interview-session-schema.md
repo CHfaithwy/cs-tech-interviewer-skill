@@ -6,6 +6,7 @@ Use this reference as the canonical runtime schema for the V1.0 interview state 
 
 - `session_state.json` answers: “Where is the interview right now?”
 - `transcript.json` answers: “What evidence has already happened?”
+- `session_brief.md` is a derived quick view only; it must not override either source of truth.
 
 That split keeps runtime control, deferred reconfiguration, and current-question navigation out of the transcript evidence model.
 
@@ -195,5 +196,6 @@ Use this split consistently:
 
 - `session_state.json`: runtime control and navigation
 - `transcript.json`: scored question records
+- `session_brief.md`: derived human-readable quick view
 
 Future `/score`, `/report`, and evaluation scripts should read transcript evidence, while `/start`, `/pause`, `/continue`, `/next`, and deferred reconfiguration should read session state.

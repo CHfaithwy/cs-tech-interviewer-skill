@@ -25,6 +25,21 @@ def write_json(path: Path, payload: Any) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def is_relative_to(path: Path, parent: Path) -> bool:
+    try:
+        path.relative_to(parent)
+        return True
+    except ValueError:
+        return False
+
+
+def should_remove_source_judgement(source: Path, session_dir: Path, archive_dir: Path) -> bool:
+    source = source.resolve()
+    session_dir = session_dir.resolve()
+    archive_dir = archive_dir.resolve()
+    return source.is_file() and is_relative_to(source, session_dir) and not is_relative_to(source, archive_dir)
+
+
 def one_line(value: Any) -> str:
     text = "" if value is None else str(value)
     return re.sub(r"\s+", " ", text).strip()
@@ -101,10 +116,15 @@ def apply_judgement(session_dir: Path, judgement_json: Path) -> dict[str, Any]:
     )
 
     result = controller.record_answer_from_dict(session_dir, payload)
+    source_removed = False
+    if should_remove_source_judgement(judgement_json, session_dir, archive_dir):
+        judgement_json.unlink()
+        source_removed = True
     return {
         "ok": True,
         "session_dir": str(session_dir),
         "archived_judgement": str(archive_path),
+        "source_judgement_removed": source_removed,
         "record_result": result,
         "next_followup": one_line(raw.get("next_followup")),
     }

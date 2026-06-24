@@ -5,7 +5,7 @@ text/focus/configuration, then emits a deterministic question plan.
 
 Outputs:
 - question_selection.json
-- question_selection.md
+- question_selection_<view>.md
 """
 
 from __future__ import annotations
@@ -1028,10 +1028,8 @@ def main(argv: list[str] | None = None) -> int:
     output_dir.mkdir(parents=True, exist_ok=True)
     json_path = output_dir / "question_selection.json"
     md_path = output_dir / f"question_selection_{args.view}.md"
-    default_md_path = output_dir / "question_selection.md"
     write_text(json_path, json.dumps(selection, ensure_ascii=False, indent=2))
     write_text(md_path, render_question_selection_md(selection, args.view))
-    write_text(default_md_path, render_question_selection_md(selection, "interview_mode"))
 
     print(
         json.dumps(
@@ -1040,7 +1038,6 @@ def main(argv: list[str] | None = None) -> int:
                 "outputs": {
                     "question_selection_json": str(json_path),
                     "question_selection_md": str(md_path),
-                    "question_selection_md_default": str(default_md_path),
                     "view": args.view,
                 },
             },
