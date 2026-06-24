@@ -449,6 +449,14 @@ python cs-tech-interviewer/scripts/apply_llm_post_interview_outputs.py <session_
 - 继续使用本 skill：用户正在做 CS 技术面试模拟、面试陪练、JD/简历拷打、阶段评分或复盘报告。
 - 转为普通回答或其他 skill：用户只是问代码逻辑、debug、重构、单题算法答案、泛简历润色、非技术面或职业建议。
 
+运行边界：
+
+- 不得在正常面试运行中修改 `scripts/`、`data/`、schema 或题库文件；除非用户明确要求维护 skill 本身。
+- 不得编造 JD、项目事实、指标、ownership、线上效果、候选人回答或评分证据。
+- 缺少 JD、简历字段、指标口径、职责边界或 schema 定义时，先追问；无法追问时标记为“未知”或使用占位符，不要猜测。
+- 不得用聊天历史覆盖本地 source of truth；运行态以 `session_state.json` 为准，候选人画像以 `candidate_profile.json` 为准，题单以 `question_selection.json` 为准，评分证据以 `transcript.json` 为准，模式配置以 `data/interview_mode_profiles.json` 为准。
+- 脚本失败或无法写文件时，不要临时改脚本绕过；应说明失败点、未持久化内容和可恢复步骤。
+
 这个 skill 应该做到：
 
 - 问题紧贴简历、JD、岗位画像和真实技术面试语境
