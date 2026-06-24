@@ -146,7 +146,7 @@ python cs-tech-interviewer/scripts/interview_session.py status <session_dir>
 2. 如果是新面试，先确认目标 JD。用户没有提供 JD 时，先提醒提供 JD，或让用户明确“没有 JD，直接继续”。用户粘贴整段岗位描述时，直接当作 `/jd` 处理。
 3. 如果用户提供了简历文件或简历文本，先运行 `scripts/parse_resume.py` 得到 `<parsed_dir>/source_resume.md`，再按 `references/resume-profile-llm-generation.md` 生成候选人画像 JSON，并运行 `scripts/apply_llm_candidate_profile.py` 写回 `candidate_profile.json`、`candidate_profile.md` 和 `resume_risks.md`。
 4. 拿到 JD、简历或目标方向后，确认 `/role`、`/strength`、`/tone`、`/level`、`/mode` 和 `/focus`。用户说“随便”“默认”“推荐”时，使用默认配置；只追问缺失或有歧义的配置。
-5. 配置确认后，生成本场 question plan，并通过 `scripts/interview_session.py` 创建或推进 session。用户说“开始吧”时，读取状态；若状态为 `CONFIG_READY`，再运行 `start`。
+5. 配置确认后，生成本场 question plan。生成 question plan 时，优先按 `references/question-strategy.md` 调用 `scripts/select_questions.py`，不要手写整份题单；再通过 `scripts/interview_session.py` 创建或推进 session。用户说“开始吧”时，读取状态；若状态为 `CONFIG_READY`，再运行 `start`。
 6. 每轮候选人回答后，用 `scripts/session_router.py` 获取评分上下文；当前大模型按 `references/semantic-judge-prompt.md` 输出严格 JSON；保存 judgement 文件后运行 `scripts/apply_llm_answer_judgement.py` 写回 transcript 并推进状态。
 7. 每次脚本调用后，都重新读取 `session_state.json` 或使用脚本返回值，再决定下一句追问、下一道题、配置确认或阶段性反馈。
 8. 用户请求 `/score` 时，走轻量阶段评分路径；用户请求 `/report` 时，先生成基础报告，再读取 transcript、evaluation、candidate profile 和 resume risks，最后按 post-interview reference 生成下一轮建议和基于面试证据的简历改写建议。
@@ -162,6 +162,7 @@ python cs-tech-interviewer/scripts/interview_session.py status <session_dir>
 | 候选人画像生成 | `references/resume-profile-llm-generation.md` | 已得到 `source_resume.md`，需要生成或刷新 `candidate_profile.json` |
 | 简历风险重评估 | `references/resume-risk-llm-evaluation.md` | 只需要重新生成 `resume_risks.llm.json` 或刷新风险点 |
 | 选题策略或题库字段 | `references/question-strategy.md`、`references/question-bank.md` | 生成 question plan，或需要理解本地题库字段 |
+| 本地题库和岗位/模式配置 | `data/fundamental_questions.json`、`data/fundamental_knowledge_base.json`、`data/algorithm_questions.json`、`data/role_profiles.json`、`data/interview_mode_profiles.json`、`references/question-bank.md` | 生成题单或解释题库、岗位画像、面试模式字段时读取 |
 | 项目深挖追问 | `references/project-deep-dive-llm-prompt.md` | 当前阶段是项目深挖，或需要基于项目/JD/风险点生成下一问 |
 | 自由回答语义评分 | `references/semantic-judge-prompt.md` | 候选人提交自然语言回答，需要当前大模型评分 |
 | `/score` 或 `/report` 基础报告 | `references/scoring-and-report.md`、`references/interview-evaluation-schema.md` | 需要生成阶段评分或最终基础复盘 |
